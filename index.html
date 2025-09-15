@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hevin Design: Creative consultancy crafting brands and digital experiences for startups and businesses. Affordable custom website design, SEO, and more.">
     <title>Hevin Design - Elevate Your Brand</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -13,16 +14,17 @@
             color: #333;
             background-color: #f9f9f9;
             line-height: 1.6;
+            font-size: 1rem; /* Use rem for flexible sizing */
         }
         header {
             background-color: #1E3A8A; /* Navy blue */
             color: white;
-            padding: 20px;
+            padding: 1.25rem;
             text-align: center;
         }
         nav {
             background-color: #3B82F6; /* Blue accent */
-            padding: 10px;
+            padding: 0.625rem;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -33,9 +35,10 @@
             padding: 0;
             display: flex;
             justify-content: center;
+            flex-wrap: wrap; /* Better for mobile */
         }
         nav ul li {
-            margin: 0 15px;
+            margin: 0 0.9375rem;
         }
         nav ul li a {
             color: white;
@@ -45,41 +48,82 @@
         nav ul li a:hover {
             text-decoration: underline;
         }
+        /* Hamburger menu for mobile */
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: white;
+        }
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                top: 0.625rem;
+                right: 1.25rem;
+            }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+            }
+            nav ul.active {
+                display: flex;
+            }
+            nav ul li {
+                margin: 0.625rem 0;
+            }
+        }
         .hero {
-            background: url('https://via.placeholder.com/1920x600?text=Hero+Image') no-repeat center/cover;
+            background: url('https://via.placeholder.com/1920x600?text=Professional+Hero+Image') no-repeat center/cover;
             color: white;
             text-align: center;
-            padding: 100px 20px;
+            padding: 6.25rem 1.25rem;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4); /* Overlay for readability */
+        }
+        .hero > * {
+            position: relative;
+            z-index: 1;
         }
         .hero h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
+            font-size: 3rem;
+            margin-bottom: 0.625rem;
         }
         .hero p {
-            font-size: 1.5em;
-            margin-bottom: 20px;
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
         }
         .cta-button {
             background-color: #FFD700; /* Gold accent */
             color: #1E3A8A;
-            padding: 15px 30px;
+            padding: 0.9375rem 1.875rem;
             text-decoration: none;
             font-weight: bold;
-            border-radius: 5px;
+            border-radius: 0.3125rem;
             transition: background-color 0.3s;
         }
         .cta-button:hover {
             background-color: #E5C100;
         }
         section {
-            padding: 60px 20px;
-            max-width: 1200px;
+            padding: 3.75rem 1.25rem;
+            max-width: 75rem;
             margin: 0 auto;
         }
         h2 {
             text-align: center;
             color: #1E3A8A;
-            margin-bottom: 40px;
+            margin-bottom: 2.5rem;
+            font-size: 2rem;
         }
         .achievements {
             display: flex;
@@ -88,109 +132,143 @@
         }
         .achievement-item {
             text-align: center;
-            margin: 20px;
-            flex: 1 1 200px;
+            margin: 1.25rem;
+            flex: 1 1 12.5rem;
         }
         .achievement-item h3 {
-            font-size: 2.5em;
+            font-size: 2.5rem;
             color: #3B82F6;
         }
         .services {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(15.625rem, 1fr));
+            gap: 1.875rem;
         }
         .service-card {
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 1.25rem;
+            border-radius: 0.625rem;
+            box-shadow: 0 0.25rem 0.375rem rgba(0,0,0,0.1);
             text-align: center;
             transition: transform 0.3s;
         }
         .service-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-0.3125rem);
         }
         .projects {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
+            gap: 1.875rem;
         }
         .project-card {
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 1.25rem;
+            border-radius: 0.625rem;
+            box-shadow: 0 0.25rem 0.375rem rgba(0,0,0,0.1);
         }
         .project-card img {
             width: 100%;
-            border-radius: 10px;
+            height: auto;
+            object-fit: cover; /* Better image handling */
+            border-radius: 0.625rem;
+            loading: lazy; /* Lazy loading */
         }
         .faq {
-            max-width: 800px;
+            max-width: 50rem;
             margin: 0 auto;
         }
         .faq-item {
-            margin-bottom: 20px;
+            margin-bottom: 1.25rem;
         }
         .faq-item h4 {
             color: #1E3A8A;
+            font-size: 1.25rem;
         }
-        .testimonials {
+        .process {
             background-color: #e9f2ff;
         }
-        .testimonial {
-            margin: 20px auto;
-            max-width: 600px;
-            text-align: center;
-            font-style: italic;
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1.875rem;
+        }
+        .process-step {
+            background: white;
+            padding: 1.25rem;
+            border-radius: 0.625rem;
+            box-shadow: 0 0.25rem 0.375rem rgba(0,0,0,0.1);
         }
         footer {
             background-color: #1E3A8A;
             color: white;
             text-align: center;
-            padding: 20px;
+            padding: 1.25rem;
         }
         footer a {
             color: #FFD700;
             text-decoration: none;
+            margin: 0 0.625rem;
         }
         form {
-            max-width: 600px;
+            max-width: 37.5rem;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 0.9375rem;
         }
         input, textarea {
-            padding: 10px;
+            padding: 0.625rem;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 0.3125rem;
+            font-size: 1rem;
         }
         button {
             background-color: #3B82F6;
             color: white;
-            padding: 15px;
+            padding: 0.9375rem;
             border: none;
-            border-radius: 5px;
+            border-radius: 0.3125rem;
             cursor: pointer;
+            font-size: 1rem;
         }
         button:hover {
             background-color: #2563EB;
         }
-        @media (max-width: 768px) {
-            .hero {
-                padding: 60px 20px;
-            }
+        /* Additional breakpoints for better responsiveness */
+        @media (max-width: 1024px) {
             .hero h1 {
-                font-size: 2em;
+                font-size: 2.5rem;
             }
             .hero p {
-                font-size: 1.2em;
+                font-size: 1.25rem;
+            }
+            section {
+                padding: 2.5rem 1.25rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .hero {
+                padding: 3.75rem 1.25rem;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero p {
+                font-size: 1.2rem;
+            }
+            h2 {
+                font-size: 1.75rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .cta-button {
+                padding: 0.75rem 1.5rem;
+            }
+            .achievement-item h3 {
+                font-size: 2rem;
             }
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -199,12 +277,13 @@
     </header>
 
     <nav>
-        <ul>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <ul id="nav-menu">
             <li><a href="#home">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#achievements">Achievements</a></li>
+            <li><a href="#process">Process</a></li>
             <li><a href="#faq">FAQ</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
@@ -212,74 +291,20 @@
 
     <section id="home" class="hero">
         <h1>Elevate Your Brand 🔥</h1>
-        <p>Creative consultancy crafting successful brands and experiences. Trusted by startups, creatives, and suits alike.</p>
-        <a href="#contact" class="cta-button">Transform Your Brand Today</a>
+        <p>Creative consultancy crafting successful brands and experiences. Tailored for startups, creatives, and businesses on a budget.</p>
+        <a href="#contact" class="cta-button">Get Started Today</a>
     </section>
 
     <section id="about">
         <h2>Vision, Attention to Detail, and Passion for a Flawless Final Product</h2>
-        <p>We ground our work in concepts, strategize thoughtfully, and execute creatively, crafting brands, designing websites, and delivering outstanding digital experiences.</p>
-        <p>Using design, technology, and marketing, we shape digital brand experiences that propel your success in the digital realm.</p>
+        <p>As a new creative consultancy, we ground our work in innovative concepts, thoughtful strategy, and creative execution. We're passionate about crafting brands, designing websites, and delivering outstanding digital experiences.</p>
+        <p>Using design, technology, and marketing, we shape digital brand experiences that propel your success in the digital realm. Starting fresh, we're eager to partner with our first clients and build lasting relationships.</p>
         <!-- Team Bios Placeholder -->
         <div class="team">
-            <h3>Our Team</h3>
-            <p>Meet our experienced designers and developers passionate about your success.</p>
-            <!-- Add team photos/bios here -->
+            <h3>About the Founder</h3>
+            <p>Driven by a passion for design, our founder brings fresh ideas and dedication to every project. Connect with us on <a href="https://www.linkedin.com/in/your-profile" target="_blank">LinkedIn</a> or <a href="https://www.behance.net/your-profile" target="_blank">Behance</a> for more.</p>
+            <!-- Add photo/bio here -->
         </div>
-    </section>
-
-    <section id="achievements">
-        <h2>Our Achievements</h2>
-        <div class="achievements">
-            <div class="achievement-item">
-                <h3>8+</h3>
-                <p>Years in Business</p>
-            </div>
-            <div class="achievement-item">
-                <h3>100+</h3>
-                <p>Businesses Supported</p>
-            </div>
-            <div class="achievement-item">
-                <h3>150+</h3>
-                <p>Website Designs</p>
-            </div>
-            <div class="achievement-item">
-                <h3>50+</h3>
-                <p>SEO Campaigns</p>
-            </div>
-        </div>
-        <canvas id="achievementsChart" width="400" height="200"></canvas>
-        <script>
-            const ctx = document.getElementById('achievementsChart').getContext('2d');
-            const chart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Years in Business', 'Businesses Supported', 'Website Designs', 'SEO Campaigns'],
-                    datasets: [{
-                        label: 'Achievements',
-                        data: [8, 100, 150, 50],
-                        backgroundColor: ['#1E3A8A', '#3B82F6', '#60A5FA', '#93C5FD'],
-                        borderColor: ['#1E3A8A', '#3B82F6', '#60A5FA', '#93C5FD'],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: { display: true, text: 'Count' }
-                        },
-                        x: {
-                            title: { display: true, text: 'Metrics' }
-                        }
-                    },
-                    plugins: {
-                        legend: { display: false },
-                        title: { display: true, text: 'Our Achievements' }
-                    }
-                }
-            });
-        </script>
     </section>
 
     <section id="services" style="background-color: #f0f4f8;">
@@ -287,11 +312,11 @@
         <div class="services">
             <div class="service-card">
                 <h3>Custom Website Design</h3>
-                <p>We create unique, visually stunning websites that reflect your brand identity.</p>
+                <p>We create unique, visually stunning websites that reflect your brand identity, starting at affordable prices for startups.</p>
             </div>
             <div class="service-card">
                 <h3>SEO Optimization</h3>
-                <p>Improve your search engine rankings with our on-page SEO services.</p>
+                <p>Improve your search engine rankings with our on-page SEO services to attract more traffic.</p>
             </div>
             <div class="service-card">
                 <h3>Google Business</h3>
@@ -309,39 +334,52 @@
     </section>
 
     <section id="portfolio">
-        <h2>Projects We Are Proud Of 📂</h2>
+        <h2>Sample Projects 📂</h2>
+        <p>As we're just starting out, here are some demo projects showcasing our capabilities. We're excited to add your project soon!</p>
         <div class="projects">
             <div class="project-card">
-                <img src="https://via.placeholder.com/300x200?text=Tech+Startup+Website" alt="Tech Startup Website">
-                <h3>Tech Startup Website</h3>
-                <p>A modern site for a cutting-edge company. Increased conversions by 30%.</p>
-                <a href="#">View Case Study</a>
+                <img src="https://via.placeholder.com/300x200?text=Demo+Tech+Startup+Website" alt="Demo Tech Startup Website" loading="lazy">
+                <h3>Demo Tech Startup Website</h3>
+                <p>A modern site concept for a cutting-edge company. Features responsive design and user-friendly navigation.</p>
+                <a href="#">View Demo</a>
             </div>
             <div class="project-card">
-                <img src="https://via.placeholder.com/300x200?text=E-commerce+Store" alt="E-commerce Store">
-                <h3>E-commerce Store</h3>
-                <p>Intuitive online shop with high conversions.</p>
-                <a href="#">View Case Study</a>
+                <img src="https://via.placeholder.com/300x200?text=Demo+E-commerce+Store" alt="Demo E-commerce Store" loading="lazy">
+                <h3>Demo E-commerce Store</h3>
+                <p>Intuitive online shop layout with high-conversion potential.</p>
+                <a href="#">View Demo</a>
             </div>
             <div class="project-card">
-                <img src="https://via.placeholder.com/300x200?text=Brand+Experience" alt="Brand Experience">
-                <h3>Brand Experience</h3>
-                <p>Digital branding for a creative agency.</p>
-                <a href="#">View Case Study</a>
+                <img src="https://via.placeholder.com/300x200?text=Demo+Brand+Experience" alt="Demo Brand Experience" loading="lazy">
+                <h3>Demo Brand Experience</h3>
+                <p>Digital branding concept for a creative agency.</p>
+                <a href="#">View Demo</a>
             </div>
         </div>
     </section>
 
-    <section id="testimonials" class="testimonials">
-        <h2>What Our Clients Say</h2>
-        <div class="testimonial">
-            <p>"Hevin Design transformed our brand with stunning visuals and seamless functionality. Highly recommend!"</p>
-            <p>- John Doe, Startup Founder</p>
+    <section id="process" class="process">
+        <h2>Our Process</h2>
+        <p>We follow a structured yet flexible approach to deliver high-quality results efficiently.</p>
+        <div class="process-steps">
+            <div class="process-step">
+                <h3>1. Discovery & Strategy</h3>
+                <p>Understand your needs, goals, and brand vision through consultations.</p>
+            </div>
+            <div class="process-step">
+                <h3>2. Design & Prototyping</h3>
+                <p>Create wireframes and mockups, iterating based on your feedback.</p>
+            </div>
+            <div class="process-step">
+                <h3>3. Development & Testing</h3>
+                <p>Build the site with responsive features, test across devices, and optimize for speed.</p>
+            </div>
+            <div class="process-step">
+                <h3>4. Launch & Support</h3>
+                <p>Deploy your site, provide training, and offer ongoing 24/7 support.</p>
+            </div>
         </div>
-        <div class="testimonial">
-            <p>"Their SEO services boosted our traffic by 50%. Professional and reliable team."</p>
-            <p>- Jane Smith, E-commerce Owner</p>
-        </div>
+        <p>From concept to launch in 4-8 weeks, tailored to your budget and timeline.</p>
     </section>
 
     <section id="faq">
@@ -353,7 +391,7 @@
             </div>
             <div class="faq-item">
                 <h4>Where are you located?</h4>
-                <p>We are based in [Your City], serving clients worldwide.</p>
+                <p>We are based in Your City, serving clients worldwide remotely.</p>
             </div>
             <div class="faq-item">
                 <h4>How long does it take to build a website?</h4>
@@ -378,11 +416,18 @@
 
     <footer>
         <p>&copy; 2025 Hevin Design. All rights reserved.</p>
-        <p>Contact: [Your City] | Phone: (123) 456-7890 | Email: info@hevin.design</p>
-        <p><a href="#">LinkedIn</a> | <a href="#">Instagram</a></p>
+        <p>Contact: Your City | Phone: (123) 456-7890 | Email: info@hevin.design</p>
+        <p><a href="https://www.linkedin.com/in/your-profile" target="_blank">LinkedIn</a> | <a href="https://www.instagram.com/your-profile" target="_blank">Instagram</a> | <a href="https://www.behance.net/your-profile" target="_blank">Behance</a></p>
         <!-- Google Maps Embed Placeholder -->
         <!-- <iframe src="https://www.google.com/maps/embed?pb=..." width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe> -->
     </footer>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('nav-menu');
+            menu.classList.toggle('active');
+        }
+    </script>
 
 </body>
 </html>
