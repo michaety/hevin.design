@@ -3,146 +3,386 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hevin Design - Freelance Web Design & Development in [Your City]</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <title>Hevin Design - Elevate Your Brand</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f9f9f9;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #1E3A8A; /* Navy blue */
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #3B82F6; /* Blue accent */
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+        .hero {
+            background: url('https://via.placeholder.com/1920x600?text=Hero+Image') no-repeat center/cover;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        .hero p {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .cta-button {
+            background-color: #FFD700; /* Gold accent */
+            color: #1E3A8A;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .cta-button:hover {
+            background-color: #E5C100;
+        }
+        section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h2 {
+            text-align: center;
+            color: #1E3A8A;
+            margin-bottom: 40px;
+        }
+        .achievements {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .achievement-item {
+            text-align: center;
+            margin: 20px;
+            flex: 1 1 200px;
+        }
+        .achievement-item h3 {
+            font-size: 2.5em;
+            color: #3B82F6;
+        }
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .service-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .project-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .project-card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .faq {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            margin-bottom: 20px;
+        }
+        .faq-item h4 {
+            color: #1E3A8A;
+        }
+        .testimonials {
+            background-color: #e9f2ff;
+        }
+        .testimonial {
+            margin: 20px auto;
+            max-width: 600px;
+            text-align: center;
+            font-style: italic;
+        }
+        footer {
+            background-color: #1E3A8A;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        footer a {
+            color: #FFD700;
+            text-decoration: none;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        input, textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #3B82F6;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2563EB;
+        }
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 20px;
+            }
+            .hero h1 {
+                font-size: 2em;
+            }
+            .hero p {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+
     <header>
-        <div class="header-container">
-            <button id="menu-toggle" class="hamburger">☰</button>
-            <h1>Hevin Design</h1>
-        </div>
-        <nav id="nav-menu">
-            <a href="#services">Services</a>
-            <a href="#portfolio">Portfolio</a>
-            <a href="#faq">FAQ</a>
-            <a href="#contact">Contact</a>
-        </nav>
+        <h1>Hevin Design</h1>
     </header>
 
-    <section class="hero">
-        <h2>Elevate Your Brand 🔥</h2>
-        <p>Creative consultancy crafting successful brands and experiences.</p>
-        <p>Trusted by startups, creatives, and suits alike.</p>
-        <a href="#contact" class="btn">Transform Your Brand Today</a>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#achievements">Achievements</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <h1>Elevate Your Brand 🔥</h1>
+        <p>Creative consultancy crafting successful brands and experiences. Trusted by startups, creatives, and suits alike.</p>
+        <a href="#contact" class="cta-button">Transform Your Brand Today</a>
     </section>
 
-    <section id="intro">
+    <section id="about">
         <h2>Vision, Attention to Detail, and Passion for a Flawless Final Product</h2>
         <p>We ground our work in concepts, strategize thoughtfully, and execute creatively, crafting brands, designing websites, and delivering outstanding digital experiences.</p>
         <p>Using design, technology, and marketing, we shape digital brand experiences that propel your success in the digital realm.</p>
+        <!-- Team Bios Placeholder -->
+        <div class="team">
+            <h3>Our Team</h3>
+            <p>Meet our experienced designers and developers passionate about your success.</p>
+            <!-- Add team photos/bios here -->
+        </div>
     </section>
 
-    <section id="stats">
+    <section id="achievements">
         <h2>Our Achievements</h2>
-        <div class="stats-grid">
-            <div class="stat-item">
+        <div class="achievements">
+            <div class="achievement-item">
                 <h3>8+</h3>
                 <p>Years in Business</p>
             </div>
-            <div class="stat-item">
+            <div class="achievement-item">
                 <h3>100+</h3>
                 <p>Businesses Supported</p>
             </div>
-            <div class="stat-item">
+            <div class="achievement-item">
                 <h3>150+</h3>
                 <p>Website Designs</p>
             </div>
-            <div class="stat-item">
+            <div class="achievement-item">
                 <h3>50+</h3>
                 <p>SEO Campaigns</p>
             </div>
         </div>
+        <canvas id="achievementsChart" width="400" height="200"></canvas>
+        <script>
+            const ctx = document.getElementById('achievementsChart').getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Years in Business', 'Businesses Supported', 'Website Designs', 'SEO Campaigns'],
+                    datasets: [{
+                        label: 'Achievements',
+                        data: [8, 100, 150, 50],
+                        backgroundColor: ['#1E3A8A', '#3B82F6', '#60A5FA', '#93C5FD'],
+                        borderColor: ['#1E3A8A', '#3B82F6', '#60A5FA', '#93C5FD'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Count' }
+                        },
+                        x: {
+                            title: { display: true, text: 'Metrics' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: 'Our Achievements' }
+                    }
+                }
+            });
+        </script>
     </section>
 
-    <section id="services">
+    <section id="services" style="background-color: #f0f4f8;">
         <h2>Our Services 🔷</h2>
-        <ul>
-            <li>
+        <div class="services">
+            <div class="service-card">
                 <h3>Custom Website Design</h3>
                 <p>We create unique, visually stunning websites that reflect your brand identity.</p>
-            </li>
-            <li>
+            </div>
+            <div class="service-card">
                 <h3>SEO Optimization</h3>
                 <p>Improve your search engine rankings with our on-page SEO services.</p>
-            </li>
-            <li>
+            </div>
+            <div class="service-card">
                 <h3>Google Business</h3>
                 <p>Enable customers to find you more easily on the biggest search engine on the web.</p>
-            </li>
-            <li>
+            </div>
+            <div class="service-card">
                 <h3>Digital Branding</h3>
                 <p>Craft successful brands and experiences with strategic design and marketing.</p>
-            </li>
-            <li>
+            </div>
+            <div class="service-card">
                 <h3>24/7 Support</h3>
-                <p>Reciever around the clock support for a fraction of the price of competitors</p>
-            </li>
-        </ul>
+                <p>Receive around-the-clock support for a fraction of the price of competitors.</p>
+            </div>
+        </div>
     </section>
 
     <section id="portfolio">
         <h2>Projects We Are Proud Of 📂</h2>
-        <div class="portfolio-grid">
-            <div class="portfolio-item">
-                <img src="https://via.placeholder.com/300x200?text=Project+1" alt="Project 1">
+        <div class="projects">
+            <div class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Tech+Startup+Website" alt="Tech Startup Website">
                 <h3>Tech Startup Website</h3>
-                <p>A modern site for a cutting-edge company. <a href="#">View Case Study</a></p>
+                <p>A modern site for a cutting-edge company. Increased conversions by 30%.</p>
+                <a href="#">View Case Study</a>
             </div>
-            <div class="portfolio-item">
-                <img src="https://via.placeholder.com/300x200?text=Project+2" alt="Project 2">
+            <div class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=E-commerce+Store" alt="E-commerce Store">
                 <h3>E-commerce Store</h3>
-                <p>Intuitive online shop with high conversions. <a href="#">View Case Study</a></p>
+                <p>Intuitive online shop with high conversions.</p>
+                <a href="#">View Case Study</a>
             </div>
-            <div class="portfolio-item">
-                <img src="https://via.placeholder.com/300x200?text=Project+3" alt="Project 3">
+            <div class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Brand+Experience" alt="Brand Experience">
                 <h3>Brand Experience</h3>
-                <p>Digital branding for a creative agency. <a href="#">View Case Study</a></p>
+                <p>Digital branding for a creative agency.</p>
+                <a href="#">View Case Study</a>
             </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="testimonials">
+        <h2>What Our Clients Say</h2>
+        <div class="testimonial">
+            <p>"Hevin Design transformed our brand with stunning visuals and seamless functionality. Highly recommend!"</p>
+            <p>- John Doe, Startup Founder</p>
+        </div>
+        <div class="testimonial">
+            <p>"Their SEO services boosted our traffic by 50%. Professional and reliable team."</p>
+            <p>- Jane Smith, E-commerce Owner</p>
         </div>
     </section>
 
     <section id="faq">
         <h2>Frequently Asked Questions 📰</h2>
-        <div class="faq-item">
-            <h3>How much does a website cost?</h3>
-            <p>Website prices vary depending on your needs. We offer affordable packages starting from $1,000 for small business websites.</p>
-        </div>
-        <div class="faq-item">
-            <h3>Where are you located?</h3>
-            <p>We are based in [Your City], serving clients worldwide.</p>
-        </div>
-        <div class="faq-item">
-            <h3>How long does it take to build a website?</h3>
-            <p>Typically 4-8 weeks, depending on complexity and revisions.</p>
-        </div>
-        <div class="faq-item">
-            <h3>Do you offer SEO services?</h3>
-            <p>Yes, we specialize in SEO to help your site rank higher and attract more traffic.</p>
+        <div class="faq">
+            <div class="faq-item">
+                <h4>How much does a website cost?</h4>
+                <p>Website prices vary depending on your needs. We offer affordable packages starting from $1,000 for small business websites. <a href="#">View Pricing Details</a></p>
+            </div>
+            <div class="faq-item">
+                <h4>Where are you located?</h4>
+                <p>We are based in [Your City], serving clients worldwide.</p>
+            </div>
+            <div class="faq-item">
+                <h4>How long does it take to build a website?</h4>
+                <p>Typically 4-8 weeks, depending on complexity and revisions.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Do you offer SEO services?</h4>
+                <p>Yes, we specialize in SEO to help your site rank higher and attract more traffic.</p>
+            </div>
         </div>
     </section>
 
     <section id="contact">
         <h2>Let's Elevate Your Brand</h2>
-        <p>Fill out the form below to get started on your project.</p>
-        <form action="#" method="post">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-            <button type="submit" class="btn">Send Message</button>
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Get Started</button>
         </form>
     </section>
 
     <footer>
-        <p>&copy; 2025 hevin.design. All rights reserved.</p>
-        <p>Email: info@hevin.design | Phone: (123) 456-7890 | Location: Sydney, NSW</p>
+        <p>&copy; 2025 Hevin Design. All rights reserved.</p>
+        <p>Contact: [Your City] | Phone: (123) 456-7890 | Email: info@hevin.design</p>
+        <p><a href="#">LinkedIn</a> | <a href="#">Instagram</a></p>
+        <!-- Google Maps Embed Placeholder -->
+        <!-- <iframe src="https://www.google.com/maps/embed?pb=..." width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe> -->
     </footer>
 
-    <script>
-        document.getElementById('menu-toggle').addEventListener('click', function() {
-            document.getElementById('nav-menu').classList.toggle('active');
-        });
-    </script>
 </body>
 </html>
