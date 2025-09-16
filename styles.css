@@ -52,7 +52,6 @@ header h1 {
 }
 /* Navigation */
 nav {
-    background-color: #2B6CB0; /* Blue accent */
     padding: 0.75rem;
     position: sticky;
     top: 0;
