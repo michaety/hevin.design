@@ -1,19 +1,12 @@
-/* Custom CSS to complement Material Design 3 */
+/* Custom CSS to complement Material Design 3 with new color scheme */
 
 body {
-    font-family: var(--md-ref-typeface-brand);
+    font-family: 'Poppins', sans-serif;
     color: var(--md-sys-color-on-surface);
     background-color: var(--md-sys-color-background);
-    line-height: 1.6;
+    line-height: 1.8;
     font-size: 1.1rem;
     overflow-x: hidden;
-    --md-sys-motion-duration-short1: 150ms;
-    --md-sys-motion-duration-short2: 200ms;
-    --md-sys-motion-duration-medium1: 250ms;
-}
-
-main {
-    padding-bottom: 2rem;
 }
 
 /* Header */
@@ -21,38 +14,25 @@ md-top-app-bar {
     background-color: var(--md-sys-color-primary);
     color: var(--md-sys-color-on-primary);
     box-shadow: 0 2px 4px var(--md-sys-color-shadow);
-    border-bottom: 1px solid var(--md-sys-color-outline);
 }
 
 md-icon-button {
     color: var(--md-sys-color-on-primary);
-    --md-icon-button-container-shape: var(--md-sys-shape-corner-medium);
-    transition: transform var(--md-sys-motion-duration-short1) ease;
 }
 
-md-icon-button:hover {
-    transform: scale(1.1);
+md-top-app-bar span[slot="headline"] {
+    font-size: 1.8rem;
+    font-weight: 500;
 }
 
 /* Navigation */
 .nav-menu {
-    position: fixed;
-    top: 0;
-    left: -100%;
-    height: 100%;
-    width: 250px;
+    display: none;
     background-color: var(--md-sys-color-surface);
-    transition: transform var(--md-sys-motion-duration-medium1) ease;
-    z-index: 1000;
 }
 
 .nav-menu.active {
-    transform: translateX(0);
-}
-
-md-navigation-drawer {
-    height: 100%;
-    padding: 1rem 0;
+    display: block;
 }
 
 md-list {
@@ -63,8 +43,7 @@ md-list-item {
     color: var(--md-sys-color-on-surface);
     padding: 1rem 2rem;
     text-decoration: none;
-    border-radius: var(--md-sys-shape-corner-small);
-    transition: background-color var(--md-sys-motion-duration-short2) ease;
+    transition: background-color 0.3s ease;
 }
 
 md-list-item:hover {
@@ -75,7 +54,7 @@ md-list-item:hover {
 /* Hero Section */
 .hero {
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1516321310766-66f1cc6a6786?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center/cover;
-    color: var(--md-sys-color-on-primary);
+    color: #FFFFFF;
     text-align: center;
     padding: 10rem 2rem;
     position: relative;
@@ -89,15 +68,17 @@ md-list-item:hover {
 
 .hero h1 {
     font-size: 4rem;
-    font-weight: var(--md-ref-typeface-weight-bold);
+    font-weight: 700;
     margin-bottom: 1.5rem;
     letter-spacing: -0.03em;
+    color: var(--md-sys-color-on-primary);
 }
 
 .hero p {
     font-size: 1.6rem;
     max-width: 40rem;
     margin-bottom: 2.5rem;
+    color: var(--md-sys-color-on-primary);
 }
 
 /* General Section Styling */
@@ -113,7 +94,7 @@ h2 {
     text-align: center;
     color: var(--md-sys-color-on-surface);
     font-size: 2.5rem;
-    font-weight: var(--md-ref-typeface-weight-bold);
+    font-weight: 700;
     margin-bottom: 3.5rem;
     letter-spacing: -0.03em;
 }
@@ -135,13 +116,12 @@ h2 {
     font-size: 2rem;
     color: var(--md-sys-color-primary);
     margin-bottom: 1.5rem;
-    font-weight: var(--md-ref-typeface-weight-medium);
 }
 
 .team a {
     color: var(--md-sys-color-primary);
     text-decoration: none;
-    font-weight: var(--md-ref-typeface-weight-medium);
+    font-weight: 500;
 }
 
 .team a:hover {
@@ -152,7 +132,7 @@ h2 {
 .services {
     background-color: var(--md-sys-color-surface-variant);
     padding: 3rem;
-    border-radius: var(--md-sys-shape-corner-medium);
+    border-radius: 0.75rem;
 }
 
 .services-grid {
@@ -162,27 +142,26 @@ h2 {
     max-width: 100%;
 }
 
-md-card {
+md-filled-card {
     background-color: var(--md-sys-color-surface);
     padding: 2rem;
-    border-radius: var(--md-sys-shape-corner-small);
+    border-radius: 0.75rem;
     box-shadow: 0 2px 4px var(--md-sys-color-shadow);
-    transition: transform var(--md-sys-motion-duration-short2) ease, box-shadow var(--md-sys-motion-duration-short2) ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-md-card:hover {
+md-filled-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 8px var(--md-sys-color-shadow);
 }
 
-md-card h3 {
+md-filled-card h3 {
     font-size: 1.6rem;
     color: var(--md-sys-color-on-surface);
     margin-bottom: 1rem;
-    font-weight: var(--md-ref-typeface-weight-medium);
 }
 
-md-card p {
+md-filled-card p {
     font-size: 1.1rem;
     color: var(--md-sys-color-on-surface-variant);
 }
@@ -207,7 +186,7 @@ md-card p {
     width: 100%;
     height: 14rem;
     object-fit: cover;
-    border-radius: var(--md-sys-shape-corner-small);
+    border-radius: 0.5rem;
     margin-bottom: 1.5rem;
     max-width: 100%;
 }
@@ -255,7 +234,6 @@ md-filled-text-field, md-filled-textarea {
     --md-filled-text-field-input-text-color: var(--md-sys-color-on-surface);
     --md-filled-text-field-focus-container-color: var(--md-sys-color-primary-container);
     --md-filled-text-field-focus-label-text-color: var(--md-sys-color-primary);
-    --md-filled-text-field-container-shape: var(--md-sys-shape-corner-medium);
 }
 
 md-filled-textarea {
@@ -279,7 +257,7 @@ footer a {
     color: var(--md-sys-color-inverse-primary);
     text-decoration: none;
     margin: 0 1rem;
-    font-weight: var(--md-ref-typeface-weight-medium);
+    font-weight: 500;
 }
 
 footer a:hover {
@@ -399,3 +377,9 @@ section {
         font-size: 1.4rem;
     }
 }
+</xaiArtifact>
+
+### Deployment Instructions
+1. **Update GitHub Repo**:
+   - Save `index.html`, `styles.css`, and `script.js` in the root directory.
+   - Example structure:
