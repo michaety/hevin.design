@@ -15,37 +15,26 @@ body {
 }
 
 .logo {
-    max-width: 20%; /* Scales to 20% of the parent (header) width; adjust percentage as needed (e.g., 15% for smaller) */
-    height: auto; /* Maintains aspect ratio */
+    height: 40px; /* Set a fixed height to make it smaller; adjust as needed (e.g., 30px for even smaller) */
+    width: auto;  /* Maintains aspect ratio */
+    max-width: 100%; /* Prevents overflowing the header on small screens */
     display: block;
-    margin: 0 auto !important; /* Ensures horizontal centering */
-}
-
-/* Make it even more responsive with viewport units as a fallback */
-@media (max-width: 768px) {
-    .logo {
-        max-width: 50vw !important; /* 50% of viewport width on mobile; prevents filling the screen */
-    }
-}
-
-@media (max-width: 480px) {
-    .logo {
-        max-width: 80vw !important; /* Slightly larger relative size on very small screens for visibility, but still responsive */
-    }
+    margin: 0 auto;
 }
 
 /* Header */
 header {
     background-color: #1A202C;
     color: #FFFFFF;
-    padding: 1rem 1.5rem; /* Slightly reduced for compactness; adjust if needed */
+    padding: 0.5rem 1.5rem; /* Reduced vertical padding for a snug fit; keeps horizontal for spacing */
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex !important; /* Flexbox for perfect centering */
-    align-items: center !important; /* Vertical center */
-    justify-content: center !important; /* Horizontal center */
-    flex-direction: column; /* Stack if needed, but for single image it's fine */
+    display: flex; /* Added for better centering */
+    align-items: center; /* Vertically centers the logo */
+    justify-content: center; /* Horizontally centers the logo */
+    height: 60px; /* Optional fixed height to lock the header size; adjust based on logo height + padding */
 }
+
 header h1 {
     font-size: 2.5rem;
     font-weight: 700;
@@ -61,7 +50,6 @@ header h1 {
         padding: 0.25rem 1rem; /* Even tighter on small screens */
     }
 }
-
 /* Navigation */
 nav {
     background-color: #2B6CB0; /* Blue accent */
