@@ -164,16 +164,18 @@ h2 {
     max-width: 80rem;
     margin: 0 auto;
     text-align: center;
+    overflow: hidden; /* Prevent overflow issues */
 }
 
 .services-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Corrected to two columns */
+    display: grid !important; /* Force grid application */
+    grid-template-columns: repeat(2, 1fr) !important; /* Explicit two columns */
     gap: 2rem; /* Space between cards */
     margin-top: 2rem;
+    /* Debug: Add a border to see the container */
+    border: 1px solid red; /* Remove after testing */
 }
 
-/* Ensure service-card inherits grid behavior */
 .service-card {
     background: #FFFFFF;
     padding: 2rem;
@@ -181,12 +183,13 @@ h2 {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
-    opacity: 0; /* Start hidden for animation */
-    transform: scale(0.95); /* Initial scale for animation */
+    opacity: 0;
+    transform: scale(0.95);
     height: 100%; /* Ensure consistent height */
+    /* Debug: Add an outline to see each card */
+    outline: 1px solid blue; /* Remove after testing */
 }
 
-/* Animation trigger */
 .service-card.visible {
     opacity: 1;
     transform: scale(1);
@@ -211,7 +214,7 @@ h2 {
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     .services-container {
-        grid-template-columns: 1fr; /* Stack into one column on smaller screens */
+        grid-template-columns: 1fr !important; /* Stack into one column on smaller screens */
     }
 
     .services {
@@ -221,18 +224,6 @@ h2 {
     .service-card {
         padding: 1rem;
     }
-}
-
-/* Ensure IntersectionObserver works with services */
-section#services {
-    opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-section#services.visible {
-    opacity: 1;
-    transform: translateY(0);
 }
 /* Portfolio Section */
 #portfolio p {
