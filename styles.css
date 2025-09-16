@@ -251,6 +251,14 @@ h2 {
 /* Process Section */
 .process {
     background-color: #F7FAFC;
+    text-align: center; /* Center all text content */
+}
+
+.process-description {
+    max-width: 50rem;
+    margin: 0 auto 2rem;
+    font-size: 1.1rem;
+    color: #4A5568;
 }
 
 .process-steps {
@@ -258,7 +266,7 @@ h2 {
     flex-direction: column;
     gap: 2rem;
     max-width: 50rem;
-    margin: 0 auto;
+    margin: 0 auto; /* Center the steps container */
 }
 
 .process-step {
@@ -266,7 +274,15 @@ h2 {
     padding: 1.5rem;
     border-radius: 0.5rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, opacity 0.5s ease;
+    opacity: 0;
+    transform: translateY(30px);
+    text-align: center; /* Center text within each step */
+}
+
+.process-step.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .process-step:hover {
@@ -284,14 +300,26 @@ h2 {
     color: #4A5568;
 }
 
+.process-timeline {
+    max-width: 50rem;
+    margin: 2rem auto 0;
+    font-size: 1.1rem;
+    color: #4A5568;
+}
+
 /* FAQ Section */
 .faq {
     max-width: 50rem;
-    margin: 0 auto;
+    margin: 0 auto; /* Center the FAQ container */
+    text-align: center; /* Center all text content */
 }
 
 .faq-item {
     margin-bottom: 2rem;
+    text-align: left; /* Left-align text within items for readability */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the item as a whole */
 }
 
 .faq-item h4 {
@@ -303,15 +331,31 @@ h2 {
 .faq-item p {
     font-size: 1rem;
     color: #4A5568;
+    margin-bottom: 1rem; /* Add space below text to prevent overlap */
+    display: inline; /* Ensure text and button align properly */
 }
 
-.faq-item a {
-    color: #2B6CB0;
-    text-decoration: none;
+.pricing-button {
+    display: inline-block; /* Ensure button behaves as an inline element */
+    margin-top: 0.5rem; /* Add space above the button */
+    vertical-align: middle; /* Align button with text */
 }
 
-.faq-item a:hover {
-    text-decoration: underline;
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .process-steps, .faq {
+        padding: 0 1rem; /* Add padding to prevent crowding on smaller screens */
+    }
+
+    .faq-item p {
+        text-align: center; /* Center text on smaller screens for better readability */
+    }
+
+    .pricing-button {
+        margin-top: 1rem; /* Increase space on mobile to avoid overlap */
+        display: block; /* Stack button below text on mobile */
+        width: auto; /* Ensure button fits content */
+    }
 }
 
 /* Contact Section */
