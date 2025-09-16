@@ -168,11 +168,12 @@ h2 {
 
 .services-container {
     display: grid;
-    grid-template-columns: repeat(2fr); /* Explicitly set to two columns */
+    grid-template-columns: repeat(2, 1fr); /* Corrected to two equal columns */
     gap: 2rem; /* Space between cards */
     margin-top: 2rem;
 }
 
+/* Ensure service-card inherits grid behavior */
 .service-card {
     background: #FFFFFF;
     padding: 2rem;
@@ -180,11 +181,12 @@ h2 {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
-    opacity: 0;
-    transform: scale(0.95);
+    opacity: 0; /* Start hidden for animation */
+    transform: scale(0.95); /* Initial scale for animation */
     height: 100%; /* Ensure consistent height */
 }
 
+/* Animation trigger */
 .service-card.visible {
     opacity: 1;
     transform: scale(1);
@@ -219,6 +221,18 @@ h2 {
     .service-card {
         padding: 1rem;
     }
+}
+
+/* Ensure IntersectionObserver works with services */
+section#services {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+section#services.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 /* Portfolio Section */
 #portfolio p {
