@@ -15,7 +15,7 @@ body {
 }
 
 .logo {
-    height: 40px; /* Set a fixed height to make it smaller; adjust as needed (e.g., 30px for even smaller) */
+    height: 48px; /* Increased from 40px */
     width: auto;  /* Maintains aspect ratio */
     max-width: 100%; /* Prevents overflowing the header on small screens */
     display: block;
@@ -28,23 +28,9 @@ header {
     color: #FFFFFF;
     padding: 0.5rem 1.5rem; /* Reduced vertical padding for a snug fit; keeps horizontal for spacing */
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px  Veilchen4px rgba(0, 0, 0, 0.1);
 }
 
-header h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    letter-spacing: -0.025em;
-}
-
-@media (max-width: 768px) {
-    .logo {
-        height: 30px; /* Slightly smaller on mobile to avoid filling the screen */
-    }
-    header {
-        padding: 0.25rem 1rem; /* Even tighter on small screens */
-    }
-}
 /* Navigation */
 nav {
     background-color: #1A202C;
@@ -64,7 +50,7 @@ nav ul {
 }
 
 nav ul li a {
-    color: #FFFFFF;
+    color: #63B3ED; /* Changed from #FFFFFF to light blue */
     text-decoration: none;
     font-weight: 500;
     font-size: 1.1rem;
@@ -79,7 +65,7 @@ nav ul li a:hover {
     display: none;
     cursor: pointer;
     font-size: 1.75rem;
-    color: #FFFFFF;
+    color: #63B3ED; /* Match nav links color */
     padding: 0.5rem;
 }
 
@@ -184,11 +170,10 @@ h2 {
 }
 
 .services-container {
-    display: grid !important; /* Force grid application */
-    grid-template-columns: repeat(2, 1fr) !important; /* Explicit two columns */
-    gap: 2rem; /* Space between cards */
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 2rem;
     margin-top: 2rem;
-    /* Debug: Add a border to see the container */
     border: 1px solid red; /* Remove after testing */
 }
 
@@ -201,8 +186,7 @@ h2 {
     transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
     opacity: 0;
     transform: scale(0.95);
-    height: 100%; /* Ensure consistent height */
-    /* Debug: Add an outline to see each card */
+    height: 100%;
     outline: 1px solid blue; /* Remove after testing */
 }
 
@@ -229,18 +213,23 @@ h2 {
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-    .services-container {
-        grid-template-columns: 1fr !important; /* Stack into one column on smaller screens */
+    .logo {
+        height: 36px; /* Increased from 30px */
     }
-
+    header {
+        padding: 0.25rem 1rem;
+    }
+    .services-container {
+        grid-template-columns: 1fr !important;
+    }
     .services {
         padding: 1rem;
     }
-
     .service-card {
         padding: 1rem;
     }
 }
+
 /* Portfolio Section */
 #portfolio p {
     max-width: 50rem;
@@ -301,7 +290,7 @@ h2 {
 /* Process Section */
 .process {
     background-color: #F7FAFC;
-    text-align: center; /* Center all text content */
+    text-align: center;
 }
 
 .process-description {
@@ -317,7 +306,7 @@ h2 {
     flex-direction: column;
     gap: 2rem;
     max-width: 50rem;
-    margin: 0 auto; /* Center the steps container */
+    margin: 0 auto;
     text-align: center;
 }
 
@@ -329,7 +318,7 @@ h2 {
     transition: transform 0.3s ease, opacity 0.5s ease;
     opacity: 0;
     transform: translateY(30px);
-    text-align: center; /* Center text within each step */
+    text-align: center;
 }
 
 .process-step.visible {
@@ -362,16 +351,16 @@ h2 {
 /* FAQ Section */
 .faq {
     max-width: 50rem;
-    margin: 0 auto; /* Center the FAQ container */
-    text-align: center; /* Center all text content */
+    margin: 0 auto;
+    text-align: center;
 }
 
 .faq-item {
     margin-bottom: 2rem;
-    text-align: left; /* Left-align text within items for readability */
+    text-align: left;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center the item as a whole */
+    align-items: center;
 }
 
 .faq-item h4 {
@@ -383,30 +372,28 @@ h2 {
 .faq-item p {
     font-size: 1rem;
     color: #4A5568;
-    margin-bottom: 1rem; /* Add space below text to prevent overlap */
-    display: inline; /* Ensure text and button align properly */
+    margin-bottom: 1rem;
+    display: inline;
 }
 
 .pricing-button {
-    display: inline-block; /* Ensure button behaves as an inline element */
-    margin-top: 0.5rem; /* Add space above the button */
-    vertical-align: middle; /* Align button with text */
+    display: inline-block;
+    margin-top: 0.5rem;
+    vertical-align: middle;
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     .process-steps, .faq {
-        padding: 0 1rem; /* Add padding to prevent crowding on smaller screens */
+        padding: 0 1rem;
     }
-
     .faq-item p {
-        text-align: center; /* Center text on smaller screens for better readability */
+        text-align: center;
     }
-
     .pricing-button {
-        margin-top: 1rem; /* Increase space on mobile to avoid overlap */
-        display: block; /* Stack button below text on mobile */
-        width: auto; /* Ensure button fits content */
+        margin-top: 1rem;
+        display: block;
+        width: auto;
     }
 }
 
@@ -535,9 +522,6 @@ section {
 }
 
 @media (max-width: 480px) {
-    header h1 {
-        font-size: 2rem;
-    }
     .hero {
         padding: 3rem 1rem;
     }
