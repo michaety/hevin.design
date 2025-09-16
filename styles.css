@@ -15,7 +15,7 @@ body {
 }
 
 .logo {
-    height: 48px; /* Increased from 40px */
+    height: 150px; /* Increased from 40px */
     width: auto;  /* Maintains aspect ratio */
     max-width: 100%; /* Prevents overflowing the header on small screens */
     display: block;
