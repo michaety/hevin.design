@@ -158,20 +158,19 @@ h2 {
 
 /* Services Section */
 .services {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); /* Adjusted for two columns */
-    gap: 2rem;
-    background-color: #EDF2F7;
     padding: 2rem;
+    background-color: #EDF2F7;
     border-radius: 0.5rem;
     max-width: 80rem;
-    margin: 0 auto; /* Center the section */
+    margin: 0 auto;
+    text-align: center;
 }
 
-.services-grid {
+.services-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Force two columns */
-    gap: 2rem;
+    grid-template-columns: repeat(2, 1fr); /* Explicitly set to two columns */
+    gap: 2rem; /* Space between cards */
+    margin-top: 2rem;
 }
 
 .service-card {
@@ -183,6 +182,7 @@ h2 {
     transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
     opacity: 0;
     transform: scale(0.95);
+    height: 100%; /* Ensure consistent height */
 }
 
 .service-card.visible {
@@ -208,18 +208,16 @@ h2 {
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-    .services-grid {
+    .services-container {
         grid-template-columns: 1fr; /* Stack into one column on smaller screens */
     }
 
     .services {
-        padding: 1rem; /* Reduce padding on mobile */
+        padding: 1rem;
     }
-}
 
-@media (max-width: 480px) {
     .service-card {
-        padding: 1rem; /* Reduce padding for smaller screens */
+        padding: 1rem;
     }
 }
 /* Portfolio Section */
