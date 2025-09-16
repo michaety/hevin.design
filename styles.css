@@ -168,7 +168,7 @@ h2 {
 
 .services-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Explicitly set to two columns */
+    grid-template-columns: repeat(2fr); /* Explicitly set to two columns */
     gap: 2rem; /* Space between cards */
     margin-top: 2rem;
 }
