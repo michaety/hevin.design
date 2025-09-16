@@ -12,30 +12,64 @@
     <title>Hevin Design - Elevate Your Brand</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
+    <!-- Material Web Theme Styles -->
+    <style>
+        :root {
+            --md-sys-color-primary: hsl(270, 60%, 52%);
+            --md-sys-color-on-primary: hsl(0, 0%, 100%);
+            --md-sys-color-primary-container: hsl(270, 50%, 90%);
+            --md-sys-color-on-primary-container: hsl(270, 60%, 30%);
+            --md-sys-color-secondary: hsl(200, 50%, 50%);
+            --md-sys-color-on-secondary: hsl(0, 0%, 100%);
+            --md-sys-color-secondary-container: hsl(200, 40%, 90%);
+            --md-sys-color-on-secondary-container: hsl(200, 50%, 30%);
+            --md-sys-color-tertiary: hsl(160, 60%, 50%);
+            --md-sys-color-on-tertiary: hsl(0, 0%, 100%);
+            --md-sys-color-tertiary-container: hsl(160, 50%, 90%);
+            --md-sys-color-on-tertiary-container: hsl(160, 60%, 30%);
+            --md-sys-color-error: hsl(0, 60%, 50%);
+            --md-sys-color-on-error: hsl(0, 0%, 100%);
+            --md-sys-color-error-container: hsl(0, 50%, 90%);
+            --md-sys-color-on-error-container: hsl(0, 60%, 30%);
+            --md-sys-color-background: hsl(0, 0%, 98%);
+            --md-sys-color-on-background: hsl(0, 0%, 10%);
+            --md-sys-color-surface: hsl(0, 0%, 98%);
+            --md-sys-color-on-surface: hsl(0, 0%, 10%);
+            --md-sys-color-surface-variant: hsl(0, 0%, 90%);
+            --md-sys-color-on-surface-variant: hsl(0, 0%, 30%);
+            --md-sys-color-outline: hsl(0, 0%, 60%);
+            --md-sys-color-shadow: hsl(0, 0%, 0%);
+            --md-sys-color-inverse-surface: hsl(0, 0%, 20%);
+            --md-sys-color-inverse-on-surface: hsl(0, 0%, 90%);
+            --md-sys-color-inverse-primary: hsl(270, 50%, 80%);
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Hevin Design</h1>
+        <md-top-app-bar>
+            <md-icon-button slot="start" onclick="toggleMenu()">menu</md-icon-button>
+            <span slot="headline">Hevin Design</span>
+        </md-top-app-bar>
     </header>
 
-    <nav>
-        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-        <ul id="nav-menu">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#why-us">Why Us</a></li>
-            <li><a href="#process">Process</a></li>
-            <li><a href="#faq">FAQ</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
+    <nav id="nav-menu" class="nav-menu">
+        <md-list>
+            <md-list-item href="#home">Home</md-list-item>
+            <md-list-item href="#about">About</md-list-item>
+            <md-list-item href="#services">Services</md-list-item>
+            <md-list-item href="#portfolio">Portfolio</md-list-item>
+            <md-list-item href="#why-us">Why Us</md-list-item>
+            <md-list-item href="#process">Process</md-list-item>
+            <md-list-item href="#faq">FAQ</md-list-item>
+            <md-list-item href="#contact">Contact</md-list-item>
+        </md-list>
     </nav>
 
     <section id="home" class="hero">
         <h1>Elevate Your Brand</h1>
         <p>Creative consultancy crafting successful brands and experiences. Tailored for startups, creatives, and businesses on a budget.</p>
-        <a href="#contact" class="cta-button">Get Started Today</a>
+        <md-filled-button href="#contact">Get Started Today</md-filled-button>
     </section>
 
     <section id="about">
@@ -51,26 +85,26 @@
     <section id="services" class="services">
         <h2>Our Services</h2>
         <div class="services-grid">
-            <div class="service-card">
+            <md-filled-card>
                 <h3>Custom Website Design</h3>
                 <p>We create unique, visually stunning websites that reflect your brand identity, starting at affordable prices for startups.</p>
-            </div>
-            <div class="service-card">
+            </md-filled-card>
+            <md-filled-card>
                 <h3>SEO Optimization</h3>
                 <p>Improve your search engine rankings with our on-page SEO services to attract more traffic.</p>
-            </div>
-            <div class="service-card">
+            </md-filled-card>
+            <md-filled-card>
                 <h3>Google Business</h3>
                 <p>Enable customers to find you more easily on the biggest search engine on the web.</p>
-            </div>
-            <div class="service-card">
+            </md-filled-card>
+            <md-filled-card>
                 <h3>Digital Branding</h3>
                 <p>Craft successful brands and experiences with strategic design and marketing.</p>
-            </div>
-            <div class="service-card">
+            </md-filled-card>
+            <md-filled-card>
                 <h3>24/7 Support</h3>
                 <p>Receive around-the-clock support for a fraction of the price of competitors.</p>
-            </div>
+            </md-filled-card>
         </div>
     </section>
 
@@ -78,42 +112,42 @@
         <h2>Sample Projects</h2>
         <p>As we're just starting out, here are demo projects showcasing our capabilities. We're excited to add your project soon!</p>
         <div class="projects">
-            <div class="project-card">
+            <md-filled-card>
                 <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Demo Tech Startup Website" loading="lazy">
                 <h3>Demo Tech Startup Website</h3>
                 <p>A modern site concept for a cutting-edge company. Features responsive design and user-friendly navigation.</p>
-                <a href="#" class="cta-button">View Demo</a>
-            </div>
-            <div class="project-card">
+                <md-filled-button>View Demo</md-filled-button>
+            </md-filled-card>
+            <md-filled-card>
                 <img src="https://images.unsplash.com/photo-1556740738-8876e8e9f1a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Demo E-commerce Store" loading="lazy">
                 <h3>Demo E-commerce Store</h3>
                 <p>Intuitive online shop layout with high-conversion potential.</p>
-                <a href="#" class="cta-button">View Demo</a>
-            </div>
-            <div class="project-card">
+                <md-filled-button>View Demo</md-filled-button>
+            </md-filled-card>
+            <md-filled-card>
                 <img src="https://images.unsplash.com/photo-1542744094-3ea9c1f8b5e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Demo Brand Experience" loading="lazy">
                 <h3>Demo Brand Experience</h3>
                 <p>Digital branding concept for a creative agency.</p>
-                <a href="#" class="cta-button">View Demo</a>
-            </div>
+                <md-filled-button>View Demo</md-filled-button>
+            </md-filled-card>
         </div>
     </section>
 
     <section id="why-us">
         <h2>Why Choose Hevin Design</h2>
         <div class="services-grid">
-            <div class="service-card">
+            <md-filled-card>
                 <h3>Affordable for Startups</h3>
                 <p>High-quality design and marketing solutions starting at just $1,000, tailored to tight budgets.</p>
-            </div>
-            <div class="service-card">
+            </md-filled-card>
+            <md-filled-card>
                 <h3>Agile and Responsive</h3>
                 <p>We deliver fast, flexible solutions to meet your deadlines without compromising quality.</p>
-            </div>
-            <div class="service-card">
+            </md-filled-card>
+            <md-filled-card>
                 <h3>Personalized Partnership</h3>
                 <p>We work closely with you, acting as an extension of your team to bring your vision to life.</p>
-            </div>
+            </md-filled-card>
         </div>
     </section>
 
@@ -121,22 +155,22 @@
         <h2>Our Process</h2>
         <p>We follow a structured yet flexible approach to deliver high-quality results efficiently.</p>
         <div class="process-steps">
-            <div class="process-step">
+            <md-filled-card>
                 <h3>1. Discovery & Strategy</h3>
                 <p>Understand your needs, goals, and brand vision through consultations.</p>
-            </div>
-            <div class="process-step">
+            </md-filled-card>
+            <md-filled-card>
                 <h3>2. Design & Prototyping</h3>
                 <p>Create wireframes and mockups, iterating based on your feedback.</p>
-            </div>
-            <div class="process-step">
+            </md-filled-card>
+            <md-filled-card>
                 <h3>3. Development & Testing</h3>
                 <p>Build the site with responsive features, test across devices, and optimize for speed.</p>
-            </div>
-            <div class="process-step">
+            </md-filled-card>
+            <md-filled-card>
                 <h3>4. Launch & Support</h3>
                 <p>Deploy your site, provide training, and offer ongoing 24/7 support.</p>
-            </div>
+            </md-filled-card>
         </div>
         <p>From concept to launch in 4-8 weeks, tailored to your budget and timeline.</p>
     </section>
@@ -144,32 +178,32 @@
     <section id="faq">
         <h2>Frequently Asked Questions</h2>
         <div class="faq">
-            <div class="faq-item">
+            <md-filled-card class="faq-item">
                 <h4>How much does a website cost?</h4>
-                <p>Website prices vary depending on your needs. We offer affordable packages starting from $1,000 for small business websites. <a href="#" class="cta-button">View Pricing Details</a></p>
-            </div>
-            <div class="faq-item">
+                <p>Website prices vary depending on your needs. We offer affordable packages starting from $1,000 for small business websites. <md-filled-button>View Pricing Details</md-filled-button></p>
+            </md-filled-card>
+            <md-filled-card class="faq-item">
                 <h4>Where are you located?</h4>
                 <p>We are a remote team serving clients worldwide, with a base in New York, NY.</p>
-            </div>
-            <div class="faq-item">
+            </md-filled-card>
+            <md-filled-card class="faq-item">
                 <h4>How long does it take to build a website?</h4>
                 <p>Typically 4-8 weeks, depending on complexity and revisions.</p>
-            </div>
-            <div class="faq-item">
+            </md-filled-card>
+            <md-filled-card class="faq-item">
                 <h4>Do you offer SEO services?</h4>
                 <p>Yes, we specialize in SEO to help your site rank higher and attract more traffic.</p>
-            </div>
+            </md-filled-card>
         </div>
     </section>
 
     <section id="contact">
         <h2>Let's Elevate Your Brand</h2>
         <form>
-            <input type="text" placeholder="Your Name" required>
-            <input type="email" placeholder="Your Email" required>
-            <textarea placeholder="Your Message" rows="5" required></textarea>
-            <button type="submit">Get Started</button>
+            <md-filled-text-field label="Your Name" type="text" required></md-filled-text-field>
+            <md-filled-text-field label="Your Email" type="email" required></md-filled-text-field>
+            <md-filled-textarea label="Your Message" rows="5" required></md-filled-textarea>
+            <md-filled-button type="submit">Get Started</md-filled-button>
         </form>
     </section>
 
@@ -181,8 +215,20 @@
             <a href="https://www.instagram.com/your-profile" target="_blank">Instagram</a> |
             <a href="https://www.behance.net/your-profile" target="_blank">Behance</a>
         </p>
-        <p><a href="#contact" class="cta-button">Ready to Start? Get in Touch</a></p>
+        <p><md-filled-button href="#contact">Ready to Start? Get in Touch</md-filled-button></p>
     </footer>
+
+    <script type="module">
+        import '@material/web/button/filled-button.js';
+        import '@material/web/button/outlined-button.js';
+        import '@material/web/card/filled-card.js';
+        import '@material/web/textfield/filled-text-field.js';
+        import '@material/web/textarea/filled-textarea.js';
+        import '@material/web/iconbutton/icon-button.js';
+        import '@material/web/top-app-bar/top-app-bar.js';
+        import '@material/web/list/list.js';
+        import '@material/web/list/list-item.js';
+    </script>
 
     <script>
         function toggleMenu() {
