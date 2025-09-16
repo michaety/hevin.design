@@ -3,21 +3,19 @@ function toggleMenu() {
     menu.classList.toggle('active');
 }
 
+// Scroll animation for sections
 document.addEventListener('DOMContentLoaded', () => {
-    const elements = document.querySelectorAll('section, .service-card, .project-card, .process-step');
+    const sections = document.querySelectorAll('section');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
             }
         });
-    }, { 
-        threshold: 0.1,
-        rootMargin: '50px'
-    });
+    }, { threshold: 0.1 });
 
-    elements.forEach(element => {
-        observer.observe(element);
+    sections.forEach(section => {
+        section.classList.add('animate-on-scroll');
+        observer.observe(section);
     });
 });

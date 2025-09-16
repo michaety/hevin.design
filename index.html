@@ -11,7 +11,547 @@
     <meta property="og:url" content="https://hevin.design">
     <title>Hevin Design - Elevate Your Brand</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #2D3748;
+            background-color: #F7FAFC;
+            line-height: 1.8;
+            font-size: 1rem;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background-color: #1A202C;
+            color: #FFFFFF;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* New: Add subtle slide-in animation for header */
+            animation: slideInDown 1s ease-out;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: #2B6CB0;
+            padding: 0.75rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        nav ul li a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s ease, transform 0.2s ease;
+            /* New: Scale on hover */
+            display: inline-block;
+        }
+
+        nav ul li a:hover {
+            color: #FFD700;
+            transform: scale(1.1);
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.75rem;
+            color: #FFFFFF;
+            padding: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            transform: rotate(90deg);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://via.placeholder.com/1920x600?text=Professional+Hero+Image') no-repeat center/cover;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 8rem 1.5rem;
+            position: relative;
+            min-height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            /* New: Parallax effect */
+            background-attachment: fixed;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 36rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1.2s ease-in-out;
+        }
+
+        .cta-button {
+            background-color: #FFD700;
+            color: #1A202C;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #ECC94B;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* General Section Styling */
+        section {
+            padding: 5rem 1.5rem;
+            max-width: 80rem;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            text-align: center;
+            color: #1A202C;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            letter-spacing: -0.025em;
+            /* New: Animation for section headers */
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* About Section */
+        #about p {
+            max-width: 50rem;
+            margin: 0 auto 1.5rem;
+            font-size: 1.1rem;
+            color: #4A5568;
+        }
+
+        .team {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .team h3 {
+            font-size: 1.75rem;
+            color: #2B6CB0;
+            margin-bottom: 1rem;
+        }
+
+        .team a {
+            color: #2B6CB0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .team a:hover {
+            color: #1A202C;
+            transform: translateX(5px);
+        }
+
+        /* Services Section */
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+            gap: 2rem;
+            background-color: #EDF2F7;
+            padding: 2rem;
+            border-radius: 0.5rem;
+        }
+
+        .service-card {
+            background: #FFFFFF;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        .service-card.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            color: #1A202C;
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            font-size: 1rem;
+            color: #4A5568;
+        }
+
+        /* Portfolio Section */
+        #portfolio p {
+            max-width: 50rem;
+            margin: 0 auto 2rem;
+            text-align: center;
+            color: #4A5568;
+        }
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: #FFFFFF;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        .project-card.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 12rem;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .project-card h3 {
+            font-size: 1.5rem;
+            color: #1A202C;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-card p {
+            font-size: 1rem;
+            color: #4A5568;
+            margin-bottom: 1rem;
+        }
+
+        .project-card a {
+            color: #2B6CB0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .project-card a:hover {
+            color: #1A202C;
+            transform: translateX(5px);
+        }
+
+        /* Process Section */
+        .process {
+            background-color: #F7FAFC;
+        }
+
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: 50rem;
+            margin: 0 auto;
+        }
+
+        .process-step {
+            background: #FFFFFF;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, opacity 0.5s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .process-step.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .process-step:hover {
+            transform: translateY(-5px);
+        }
+
+        .process-step h3 {
+            font-size: 1.5rem;
+            color: #1A202C;
+            margin-bottom: 0.75rem;
+        }
+
+        .process-step p {
+            font-size: 1rem;
+            color: #4A5568;
+        }
+
+        /* FAQ Section */
+        .faq {
+            max-width: 50rem;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item:hover {
+            transform: translateX(10px);
+        }
+
+        .faq-item h4 {
+            font-size: 1.25rem;
+            color: #1A202C;
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-item p {
+            font-size: 1rem;
+            color: #4A5568;
+        }
+
+        .faq-item a {
+            color: #2B6CB0;
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .faq-item a:hover {
+            color: #1A202C;
+            transform: translateX(5px);
+        }
+
+        /* Contact Section */
+        form {
+            max-width: 40rem;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        input, textarea {
+            padding: 0.75rem;
+            border: 1px solid #E2E8F0;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #2B6CB0;
+            box-shadow: 0 0 8px rgba(43, 108, 176, 0.2);
+            transform: scale(1.02);
+        }
+
+        button {
+            background-color: #2B6CB0;
+            color: #FFFFFF;
+            padding: 1rem;
+            border: none;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2C5282;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1A202C;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 2rem 1.5rem;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        footer p {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        footer a {
+            color: #FFD700;
+            text-decoration: none;
+            margin: 0 0.75rem;
+            font-weight: 500;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        footer a:hover {
+            color: #ECC94B;
+            transform: scale(1.1);
+        }
+
+        /* New Animations */
+        @keyframes slideInDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 2.75rem;
+            }
+            .hero p {
+                font-size: 1.25rem;
+            }
+            h2 {
+                font-size: 2rem;
+            }
+            section {
+                padding: 3rem 1.5rem;
+            }
+            /* Disable parallax on smaller screens */
+            .hero {
+                background-attachment: scroll;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                top: 0.75rem;
+                right: 1.5rem;
+            }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                background-color: #2B6CB0;
+                padding: 1rem 0;
+            }
+            nav ul.active {
+                display: flex;
+                animation: slideInDown 0.5s ease-in-out;
+            }
+            nav ul li {
+                margin: 0.75rem 0;
+            }
+            .hero {
+                padding: 5rem 1.5rem;
+                min-height: 40vh;
+            }
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+            .hero p {
+                font-size: 1.1rem;
+            }
+            h2 {
+                font-size: 1.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            .hero {
+                padding: 3rem 1rem;
+            }
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .cta-button {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+            }
+            .service-card, .project-card, .process-step {
+                padding: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -48,31 +588,31 @@
         </div>
     </section>
 
-    <section id="services" class="services">
-        <h2>Our Services</h2>
-        <div class="services-grid">
-            <div class="service-card">
-                <h3>Custom Website Design</h3>
-                <p>We create unique, visually stunning websites that reflect your brand identity, starting at affordable prices for startups.</p>
-            </div>
-            <div class="service-card">
-                <h3>SEO Optimization</h3>
-                <p>Improve your search engine rankings with our on-page SEO services to attract more traffic.</p>
-            </div>
-            <div class="service-card">
-                <h3>Google Business</h3>
-                <p>Enable customers to find you more easily on the biggest search engine on the web.</p>
-            </div>
-            <div class="service-card">
-                <h3>Digital Branding</h3>
-                <p>Craft successful brands and experiences with strategic design and marketing.</p>
-            </div>
-            <div class="service-card">
-                <h3>24/7 Support</h3>
-                <p>Receive around-the-clock support for a fraction of the price of competitors.</p>
-            </div>
+<section id="services" class="services">
+    <h2>Our Services</h2>
+    <div class="services-container">
+        <div class="service-card">
+            <h3>Custom Website Design</h3>
+            <p>We create unique, visually stunning websites that reflect your brand identity, starting at affordable prices for startups.</p>
         </div>
-    </section>
+        <div class="service-card">
+            <h3>SEO Optimization</h3>
+            <p>Improve your search engine rankings with our on-page SEO services to attract more traffic.</p>
+        </div>
+        <div class="service-card">
+            <h3>Google Business</h3>
+            <p>Enable customers to find you more easily on the biggest search engine on the web.</p>
+        </div>
+        <div class="service-card">
+            <h3>Digital Branding</h3>
+            <p>Craft successful brands and experiences with strategic design and marketing.</p>
+        </div>
+        <div class="service-card">
+            <h3>24/7 Support</h3>
+            <p>Receive around-the-clock support for a fraction of the price of competitors.</p>
+        </div>
+    </div>
+</section>
 
     <section id="portfolio">
         <h2>Sample Projects</h2>
@@ -117,51 +657,51 @@
         </div>
     </section>
 
-    <section id="process" class="process">
-        <h2>Our Process</h2>
-        <p class="process-description">We follow a structured yet flexible approach to deliver high-quality results efficiently.</p>
-        <div class="process-steps">
-            <div class="process-step">
-                <h3>1. Discovery & Strategy</h3>
-                <p>Understand your needs, goals, and brand vision through consultations.</p>
-            </div>
-            <div class="process-step">
-                <h3>2. Design & Prototyping</h3>
-                <p>Create wireframes and mockups, iterating based on your feedback.</p>
-            </div>
-            <div class="process-step">
-                <h3>3. Development & Testing</h3>
-                <p>Build the site with responsive features, test across devices, and optimize for speed.</p>
-            </div>
-            <div class="process-step">
-                <h3>4. Launch & Support</h3>
-                <p>Deploy your site, provide training, and offer ongoing 24/7 support.</p>
-            </div>
+<section id="process" class="process">
+    <h2>Our Process</h2>
+    <p class="process-description">We follow a structured yet flexible approach to deliver high-quality results efficiently.</p>
+    <div class="process-steps">
+        <div class="process-step">
+            <h3>1. Discovery & Strategy</h3>
+            <p>Understand your needs, goals, and brand vision through consultations.</p>
         </div>
-        <p class="process-timeline">From concept to launch in 4-8 weeks, tailored to your budget and timeline.</p>
-    </section>
+        <div class="process-step">
+            <h3>2. Design & Prototyping</h3>
+            <p>Create wireframes and mockups, iterating based on your feedback.</p>
+        </div>
+        <div class="process-step">
+            <h3>3. Development & Testing</h3>
+            <p>Build the site with responsive features, test across devices, and optimize for speed.</p>
+        </div>
+        <div class="process-step">
+            <h3>4. Launch & Support</h3>
+            <p>Deploy your site, provide training, and offer ongoing 24/7 support.</p>
+        </div>
+    </div>
+    <p class="process-timeline">From concept to launch in 4-8 weeks, tailored to your budget and timeline.</p>
+</section>
 
-    <section id="faq">
-        <h2>Frequently Asked Questions</h2>
-        <div class="faq">
-            <div class="faq-item">
-                <h4>How much does a website cost?</h4>
-                <p>Website prices vary depending on your needs. We offer affordable packages starting from $1,000 for small business websites. <a href="#" class="cta-button pricing-button">View Pricing Details</a></p>
-            </div>
-            <div class="faq-item">
-                <h4>Where are you located?</h4>
-                <p>We are a remote team serving clients worldwide, with a base in New York, NY.</p>
-            </div>
-            <div class="faq-item">
-                <h4>How long does it take to build a website?</h4>
-                <p>Typically 4-8 weeks, depending on complexity and revisions.</p>
-            </div>
-            <div class="faq-item">
-                <h4>Do you offer SEO services?</h4>
-                <p>Yes, we specialize in SEO to help your site rank higher and attract more traffic.</p>
-            </div>
+<section id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq">
+        <div class="faq-item">
+            <h4>How much does a website cost?</h4>
+            <p>Website prices vary depending on your needs. We offer affordable packages starting from $1,000 for small business websites. <a href="#" class="cta-button pricing-button">View Pricing Details</a></p>
         </div>
-    </section>
+        <div class="faq-item">
+            <h4>Where are you located?</h4>
+            <p>We are a remote team serving clients worldwide, with a base in New York, NY.</p>
+        </div>
+        <div class="faq-item">
+            <h4>How long does it take to build a website?</h4>
+            <p>Typically 4-8 weeks, depending on complexity and revisions.</p>
+        </div>
+        <div class="faq-item">
+            <h4>Do you offer SEO services?</h4>
+            <p>Yes, we specialize in SEO to help your site rank higher and attract more traffic.</p>
+        </div>
+    </div>
+</section>
 
     <section id="contact">
         <h2>Let's Elevate Your Brand</h2>
@@ -184,6 +724,33 @@
         <p><a href="#contact" class="cta-button">Ready to Start? Get in Touch</a></p>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Menu toggle
+        function toggleMenu() {
+            const menu = document.getElementById('nav-menu');
+            menu.classList.toggle('active');
+        }
+
+        // Enhanced scroll animations with IntersectionObserver
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('section, .service-card, .project-card, .process-step');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        // New: Unobserve after animation to improve performance
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { 
+                threshold: 0.1,
+                rootMargin: '50px' // Trigger slightly before element is fully in view
+            });
+
+            elements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
 </body>
 </html>
