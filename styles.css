@@ -15,7 +15,7 @@ body {
 }
 
 .logo {
-    height: 150px; /* Increased from 40px */
+    height: 150px; /* Increased from 48px */
     width: auto;  /* Maintains aspect ratio */
     max-width: 100%; /* Prevents overflowing the header on small screens */
     display: block;
@@ -28,7 +28,7 @@ header {
     color: #FFFFFF;
     padding: 0.5rem 1.5rem; /* Reduced vertical padding for a snug fit; keeps horizontal for spacing */
     text-align: center;
-    box-shadow: 0 2px  Veilchen4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Navigation */
@@ -50,7 +50,7 @@ nav ul {
 }
 
 nav ul li a {
-    color: #63B3ED; /* Changed from #FFFFFF to light blue */
+    color: #63B3ED; /* Light blue */
     text-decoration: none;
     font-weight: 500;
     font-size: 1.1rem;
@@ -174,7 +174,6 @@ h2 {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 2rem;
     margin-top: 2rem;
-    border: 1px solid red; /* Remove after testing */
 }
 
 .service-card {
@@ -187,7 +186,6 @@ h2 {
     opacity: 0;
     transform: scale(0.95);
     height: 100%;
-    outline: 1px solid blue; /* Remove after testing */
 }
 
 .service-card.visible {
@@ -211,10 +209,18 @@ h2 {
     color: #4A5568;
 }
 
+/* Why Choose Hevin Design Section */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: 2rem; /* Added spacing between tiles */
+    margin-top: 2rem;
+}
+
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     .logo {
-        height: 36px; /* Increased from 30px */
+        height: 112px; /* Increased from 36px, proportional to 150px */
     }
     header {
         padding: 0.25rem 1rem;
