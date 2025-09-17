@@ -86,7 +86,9 @@ nav ul li a:hover {
 
 .hero .cloud {
     position: absolute;
-    top: 100%;
+    top: 80%; /* Starting position below the section */
+    max-width: 100px; /* Reduced size */
+    height: auto; /* Maintains aspect ratio */
     opacity: 0.8;
     z-index: 1;
 }
@@ -491,7 +493,7 @@ section {
 }
 
 @keyframes floatUp {
-    from { top: 100%; }
+    from { top: 80%; }
     to { top: -20%; }
 }
 
