@@ -75,17 +75,17 @@ nav ul li a:hover {
     color: #FFFFFF;
     text-align: center;
     padding: 8rem 1.5rem;
-    position: relative;
+    position: relative; /* Explicitly set to contain absolute-positioned clouds */
     min-height: 50vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow: hidden; /* Clip clouds outside hero boundaries */
 }
 
 .hero .cloud {
-    position: absolute; /* Changed from fixed to absolute to confine to hero and enable clipping */
+    position: absolute; /* Positioned relative to hero */
     max-width: 100px; /* Reduced size */
     height: auto; /* Maintains aspect ratio */
     opacity: 0.8;
@@ -232,7 +232,7 @@ h2 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
     gap: 2rem; /* Added spacing between tiles */
-    margin-top: 2rm;
+    margin-top: 2rem;
 }
 
 /* Responsive Adjustments */
