@@ -212,12 +212,24 @@
 
             // Cloud scroll and bobbing animation
             const clouds = document.querySelectorAll('.cloud');
+            let initialPositions = new Map();
+
+            // Store initial positions
+            clouds.forEach(cloud => {
+                const style = window.getComputedStyle(cloud);
+                const left = parseFloat(style.left);
+                const top = parseFloat(style.top);
+                initialPositions.set(cloud, { left, top });
+            });
+
             function updateCloudPositions() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                 clouds.forEach(cloud => {
                     const speed = parseFloat(cloud.getAttribute('data-speed'));
-                    const initialTop = parseFloat(cloud.style.top) || 0;
-                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                    cloud.style.top = `${initialTop + (scrollTop * speed * 0.01)}%`; // Move with scroll, scaled by speed
+                    const initialPos = initialPositions.get(cloud);
+                    const newTop = initialPos.top + (scrollTop * speed * 0.005); // Reduced speed multiplier
+                    cloud.style.top = `${newTop}%`;
+                    cloud.style.left = `${initialPos.left}%`;
                 });
             }
 
@@ -229,6 +241,22 @@
 
             window.addEventListener('scroll', updateCloudPositions);
             updateCloudPositions(); // Initial call
+
+            // Reset clouds when scrolling back up
+            const hero = document.querySelector('.hero');
+            const heroObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        clouds.forEach(cloud => {
+                            const initialPos = initialPositions.get(cloud);
+                            cloud.style.top = `${initialPos.top}%`;
+                            cloud.style.left = `${initialPos.left}%`;
+                        });
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            heroObserver.observe(hero);
         });
     </script>
 </body>
