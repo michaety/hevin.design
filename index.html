@@ -210,7 +210,25 @@
                 observer.observe(element);
             });
 
-            // No scroll-triggered cloud animation, just initial setup
+            // Cloud scroll and bobbing animation
+            const clouds = document.querySelectorAll('.cloud');
+            function updateCloudPositions() {
+                clouds.forEach(cloud => {
+                    const speed = parseFloat(cloud.getAttribute('data-speed'));
+                    const initialTop = parseFloat(cloud.style.top) || 0;
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    cloud.style.top = `${initialTop + (scrollTop * speed * 0.01)}%`; // Move with scroll, scaled by speed
+                });
+            }
+
+            // Initial setup and event listener for scroll
+            clouds.forEach(cloud => {
+                cloud.style.animation = `bounceHover ${2 + parseFloat(cloud.getAttribute('data-speed'))}s infinite ease-in-out`; // Individual bobbing with delay
+                cloud.style.animationDelay = `${parseFloat(cloud.getAttribute('data-speed')) * 0.5}s`; // Staggered start
+            });
+
+            window.addEventListener('scroll', updateCloudPositions);
+            updateCloudPositions(); // Initial call
         });
     </script>
 </body>

@@ -85,12 +85,11 @@ nav ul li a:hover {
 }
 
 .hero .cloud {
-    position: absolute;
+    position: fixed; /* Fixed position to move with scroll */
     max-width: 100px; /* Reduced size */
     height: auto; /* Maintains aspect ratio */
     opacity: 0.8;
     z-index: 1;
-    animation: bounceHover 2s infinite ease-in-out; /* Continuous bobbing */
 }
 
 .hero h1 {
@@ -233,7 +232,7 @@ h2 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
     gap: 2rem; /* Added spacing between tiles */
-    margin-top: 2rem;
+    margin-top: 2rm;
 }
 
 /* Responsive Adjustments */
@@ -356,7 +355,7 @@ h2 {
 }
 
 .process-step h3 {
-    font-size: 1.5rm;
+    font-size: 1.5rem;
     color: #1A202C;
     margin-bottom: 0.75rem;
 }
@@ -509,7 +508,7 @@ section {
         font-size: 1.25rem;
     }
     h2 {
-        font-size: 2rm;
+        font-size: 2rem;
     }
     section {
         padding: 3rem 1.5rem;
