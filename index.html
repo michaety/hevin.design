@@ -184,52 +184,69 @@
         <p><a href="#contact" class="cta-button">Ready to Start? Get in Touch</a></p>
     </footer>
 
-    <script>
-        // Menu toggle
-        function toggleMenu() {
-            const menu = document.getElementById('nav-menu');
-            menu.classList.toggle('active');
+<script>
+    // Menu toggle
+    function toggleMenu() {
+        const menu = document.getElementById('nav-menu');
+        menu.classList.toggle('active');
+    }
+
+    // Enhanced scroll animations with IntersectionObserver
+    document.addEventListener('DOMContentLoaded', () => {
+        const elements = document.querySelectorAll('section, .service-card, .project-card, .process-step');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { 
+            threshold: 0.1,
+            rootMargin: '50px'
+        });
+
+        elements.forEach(element => {
+            observer.observe(element);
+        });
+
+        // Cloud scroll and bobbing animation
+        const clouds = document.querySelectorAll('.cloud');
+        const hero = document.querySelector('.hero');
+
+        function updateInitialPositions() {
+            clouds.forEach(cloud => {
+                const topPercent = parseFloat(cloud.style.top) || 0;
+                cloud.dataset.initialTop = (topPercent / 100 * hero.clientHeight).toString();
+            });
         }
 
-        // Enhanced scroll animations with IntersectionObserver
-        document.addEventListener('DOMContentLoaded', () => {
-            const elements = document.querySelectorAll('section, .service-card, .project-card, .process-step');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { 
-                threshold: 0.1,
-                rootMargin: '50px'
-            });
-
-            elements.forEach(element => {
-                observer.observe(element);
-            });
-
-            // Cloud scroll and bobbing animation
-            const clouds = document.querySelectorAll('.cloud');
-            function updateCloudPositions() {
-                clouds.forEach(cloud => {
-                    const speed = parseFloat(cloud.getAttribute('data-speed'));
-                    const initialTop = parseFloat(cloud.style.top) || 0;
-                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                    cloud.style.top = `${initialTop + (scrollTop * speed * 0.01)}%`; // Move with scroll, scaled by speed
-                });
-            }
-
-            // Initial setup and event listener for scroll
+        function updateCloudPositions() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             clouds.forEach(cloud => {
-                cloud.style.animation = `bounceHover ${2 + parseFloat(cloud.getAttribute('data-speed'))}s infinite ease-in-out`; // Individual bobbing with delay
-                cloud.style.animationDelay = `${parseFloat(cloud.getAttribute('data-speed')) * 0.5}s`; // Staggered start
+                const speed = parseFloat(cloud.getAttribute('data-speed'));
+                const initialTop = parseFloat(cloud.dataset.initialTop) || 0;
+                const offset = scrollTop * (1 - speed);
+                cloud.style.top = `${initialTop + offset}px`;
             });
+        }
 
-            window.addEventListener('scroll', updateCloudPositions);
-            updateCloudPositions(); // Initial call
+        // Initial setup for clouds
+        updateInitialPositions();
+        clouds.forEach(cloud => {
+            const speed = parseFloat(cloud.getAttribute('data-speed'));
+            cloud.style.animation = `bounceHover ${2 + speed}s infinite ease-in-out`;
+            cloud.style.animationDelay = `${speed * 0.5}s`; // Staggered start for independent timings
         });
-    </script>
+
+        // Event listeners
+        window.addEventListener('resize', () => {
+            updateInitialPositions();
+            updateCloudPositions();
+        });
+        window.addEventListener('scroll', updateCloudPositions);
+        updateCloudPositions(); // Initial call
+    });
+</script>
 </body>
 </html>

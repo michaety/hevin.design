@@ -85,7 +85,7 @@ nav ul li a:hover {
 }
 
 .hero .cloud {
-    position: fixed; /* Fixed position to move with scroll */
+    position: absolute; /* Changed from fixed to absolute to confine to hero and enable clipping */
     max-width: 100px; /* Reduced size */
     height: auto; /* Maintains aspect ratio */
     opacity: 0.8;
