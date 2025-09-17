@@ -76,21 +76,21 @@ nav ul li a:hover {
     text-align: center;
     padding: 8rem 1.5rem;
     position: relative;
-    min-height: 50vh;
+    min-height: 100vh; /* Increased for more parallax space */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    position: relative; /* Ensure clouds are positioned relative to hero */
 }
 
 .hero .cloud {
-    position: fixed; /* Fixed to move with scroll within hero context */
+    position: absolute;
     max-width: 100px; /* Reduced size */
     height: auto; /* Maintains aspect ratio */
     opacity: 0.8;
     z-index: 1;
+    animation: bounceHover 3s infinite ease-in-out; /* Bobbing animation */
 }
 
 .hero h1 {
