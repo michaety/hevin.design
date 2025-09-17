@@ -492,9 +492,14 @@ section {
     animation: fadeIn 1s ease-in-out;
 }
 
+@keyframes bounceHover {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-10px) scale(1.05); }
+}
+
 @keyframes floatUp {
     from { top: 80%; }
-    to { top: -20%; }
+    to { top: -100%; } /* Exit above the viewport */
 }
 
 /* Responsive Design */
