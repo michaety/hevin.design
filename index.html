@@ -207,33 +207,7 @@
                 observer.observe(element);
             });
 
-            // Cloud animation
-            const hero = document.querySelector('.hero');
-            const clouds = document.querySelectorAll('.cloud');
-            const heroObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        clouds.forEach(cloud => {
-                            const speed = parseFloat(cloud.getAttribute('data-speed'));
-                            cloud.style.transition = `top ${speed}s linear`;
-                            cloud.style.top = '0%'; // Move to top of viewport
-                        });
-                    } else {
-                        // Reset clouds to initial state when out of view
-                        clouds.forEach(cloud => {
-                            cloud.style.transition = 'none';
-                            cloud.style.top = '80%';
-                        });
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            heroObserver.observe(hero);
-
-            // Initial bounce and hover animation
-            clouds.forEach(cloud => {
-                cloud.style.animation = 'bounceHover 2s infinite ease-in-out';
-            });
+            // No scroll-triggered cloud animation, just initial setup
         });
     </script>
 </body>

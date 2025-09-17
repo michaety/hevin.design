@@ -86,11 +86,11 @@ nav ul li a:hover {
 
 .hero .cloud {
     position: absolute;
-    top: 80%; /* Starting position below the section */
     max-width: 100px; /* Reduced size */
     height: auto; /* Maintains aspect ratio */
     opacity: 0.8;
     z-index: 1;
+    animation: bounceHover 2s infinite ease-in-out; /* Continuous bobbing */
 }
 
 .hero h1 {
@@ -493,13 +493,8 @@ section {
 }
 
 @keyframes bounceHover {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-10px) scale(1.05); }
-}
-
-@keyframes floatUp {
-    from { top: 80%; }
-    to { top: -100%; } /* Exit above the viewport */
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); } /* Slight upward bob */
 }
 
 /* Responsive Design */
