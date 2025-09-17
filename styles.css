@@ -86,7 +86,7 @@ nav ul li a:hover {
 }
 
 .hero .cloud {
-    position: absolute; /* Changed back from fixed to stay within hero */
+    position: fixed; /* Fixed to move with scroll within hero context */
     max-width: 100px; /* Reduced size */
     height: auto; /* Maintains aspect ratio */
     opacity: 0.8;
@@ -94,7 +94,7 @@ nav ul li a:hover {
 }
 
 .hero h1 {
-    font-size: 3.5rm;
+    font-size: 3.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
     letter-spacing: -0.025em;

@@ -216,6 +216,7 @@
             let initialPositions = new Map();
             const heroRect = hero.getBoundingClientRect();
             const heroHeight = heroRect.height;
+            const heroTop = hero.offsetTop;
 
             // Store initial positions relative to hero
             clouds.forEach(cloud => {
@@ -227,18 +228,16 @@
 
             function updateCloudPositions() {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                const heroTop = hero.getBoundingClientRect().top + scrollTop;
-                const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+                const relativeScroll = Math.min((scrollTop - heroTop) / heroHeight, 1); // Normalize scroll within hero
 
                 clouds.forEach(cloud => {
                     const speed = parseFloat(cloud.getAttribute('data-speed'));
                     const initialPos = initialPositions.get(cloud);
-                    const relativeScroll = Math.min(scrollTop / maxScroll, 1); // Normalize scroll
                     const newTop = initialPos.top + (relativeScroll * heroHeight * speed * 0.005); // Slower movement
-                    if (newTop >= initialPos.top && newTop <= initialPos.top + heroHeight) {
+                    if (scrollTop >= heroTop && scrollTop <= heroTop + heroHeight) {
                         cloud.style.top = `${newTop}%`;
                     } else {
-                        cloud.style.top = `${initialPos.top}%`; // Reset if out of hero bounds
+                        cloud.style.top = `${initialPos.top}%`; // Reset outside hero
                     }
                     cloud.style.left = `${initialPos.left}%`;
                 });
