@@ -212,9 +212,12 @@
 
             // Cloud scroll and bobbing animation
             const clouds = document.querySelectorAll('.cloud');
+            const hero = document.querySelector('.hero');
             let initialPositions = new Map();
+            const heroRect = hero.getBoundingClientRect();
+            const heroHeight = heroRect.height;
 
-            // Store initial positions
+            // Store initial positions relative to hero
             clouds.forEach(cloud => {
                 const style = window.getComputedStyle(cloud);
                 const left = parseFloat(style.left);
@@ -224,11 +227,19 @@
 
             function updateCloudPositions() {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const heroTop = hero.getBoundingClientRect().top + scrollTop;
+                const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+
                 clouds.forEach(cloud => {
                     const speed = parseFloat(cloud.getAttribute('data-speed'));
                     const initialPos = initialPositions.get(cloud);
-                    const newTop = initialPos.top + (scrollTop * speed * 0.005); // Reduced speed multiplier
-                    cloud.style.top = `${newTop}%`;
+                    const relativeScroll = Math.min(scrollTop / maxScroll, 1); // Normalize scroll
+                    const newTop = initialPos.top + (relativeScroll * heroHeight * speed * 0.005); // Slower movement
+                    if (newTop >= initialPos.top && newTop <= initialPos.top + heroHeight) {
+                        cloud.style.top = `${newTop}%`;
+                    } else {
+                        cloud.style.top = `${initialPos.top}%`; // Reset if out of hero bounds
+                    }
                     cloud.style.left = `${initialPos.left}%`;
                 });
             }
@@ -242,8 +253,7 @@
             window.addEventListener('scroll', updateCloudPositions);
             updateCloudPositions(); // Initial call
 
-            // Reset clouds when scrolling back up
-            const hero = document.querySelector('.hero');
+            // Reset clouds when hero is in view
             const heroObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
