@@ -76,7 +76,7 @@ nav ul li a:hover {
     text-align: center;
     padding: 8rem 1.5rem;
     position: relative;
-    min-height: 100vh; /* Increased for more parallax space */
+    min-height: 50vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -85,12 +85,11 @@ nav ul li a:hover {
 }
 
 .hero .cloud {
-    position: absolute;
+    position: fixed; /* Fixed position to move with scroll */
     max-width: 100px; /* Reduced size */
     height: auto; /* Maintains aspect ratio */
     opacity: 0.8;
     z-index: 1;
-    animation: bounceHover 3s infinite ease-in-out; /* Bobbing animation */
 }
 
 .hero h1 {
@@ -233,7 +232,7 @@ h2 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
     gap: 2rem; /* Added spacing between tiles */
-    margin-top: 2rem;
+    margin-top: 2rm;
 }
 
 /* Responsive Adjustments */
