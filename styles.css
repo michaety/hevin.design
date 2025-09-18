@@ -71,11 +71,13 @@ nav ul li a:hover {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://via.placeholder.com/1920x600?text=Professional+Hero+Image') no-repeat center/cover;
+    background: linear-gradient(45deg, rgba(99, 179, 237, 0.6), rgba(136, 82, 189, 0.6), rgba(99, 179, 237, 0.6)), url('https://via.placeholder.com/1920x600?text=Professional+Hero+Image') no-repeat center/cover;
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
     color: #FFFFFF;
     text-align: center;
     padding: 8rem 1.5rem;
-    position: relative; /* Explicitly set to contain absolute-positioned clouds */
+    position: relative; /* Contain absolute-positioned clouds */
     min-height: 50vh;
     display: flex;
     flex-direction: column;
@@ -84,12 +86,19 @@ nav ul li a:hover {
     overflow: hidden; /* Clip clouds outside hero boundaries */
 }
 
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 .hero .cloud {
     position: absolute; /* Positioned relative to hero */
     max-width: 100px; /* Reduced size */
     height: auto; /* Maintains aspect ratio */
     opacity: 0.8;
     z-index: 1;
+    transition: opacity 0.5s ease; /* Smooth fade for clouds */
 }
 
 .hero h1 {
