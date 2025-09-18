@@ -71,7 +71,7 @@ nav ul li a:hover {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(45deg, rgba(99, 179, 237, 0.6), rgba(136, 82, 189, 0.6), rgba(99, 179, 237, 0.6));
+    background: linear-gradient(45deg, rgba(99, 179, 237, 0.6), rgba(136, 82, 189, 0.6), rgba(99, 179, 237, 0.6)), url('https://via.placeholder.com/1920x600?text=Professional+Hero+Image') no-repeat center/cover;
     background-size: 200% 200%;
     animation: gradientShift 15s ease infinite;
     color: #FFFFFF;
@@ -132,7 +132,6 @@ nav ul li a:hover {
     transition: background-color 0.3s ease, transform 0.2s ease;
     position: relative;
     z-index: 2;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Shadow for readability */
 }
 
 .cta-button:hover {
