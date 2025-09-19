@@ -15,9 +15,9 @@ body {
 }
 
 .logo {
-    height: 150px; /* Increased from 48px */
+    height: 120px; /* Reduced for mobile-friendliness */
     width: auto;  /* Maintains aspect ratio */
-    max-width: 100%; /* Prevents overflowing the header on small screens */
+    max-width: 100%; /* Prevents overflowing the header */
     display: block;
     margin: 0 auto;
 }
@@ -26,7 +26,7 @@ body {
 header {
     background-color: #1A202C;
     color: #FFFFFF;
-    padding: 0.5rem 1.5rem; /* Reduced vertical padding for a snug fit; keeps horizontal for spacing */
+    padding: 0.5rem 1rem; /* Adjusted for mobile */
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -34,7 +34,7 @@ header {
 /* Navigation */
 nav {
     background-color: #1A202C;
-    padding: 0.75rem;
+    padding: 0.5rem; /* Reduced padding for mobile */
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -46,14 +46,14 @@ nav ul {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 1.5rem;
+    gap: 1rem; /* Reduced gap for mobile */
 }
 
 nav ul li a {
     color: #63B3ED; /* Light blue */
     text-decoration: none;
     font-weight: 500;
-    font-size: 1.1rem;
+    font-size: 1rem; /* Slightly smaller for mobile */
     transition: color 0.3s ease;
 }
 
@@ -64,7 +64,7 @@ nav ul li a:hover {
 .menu-toggle {
     display: none;
     cursor: pointer;
-    font-size: 1.75rem;
+    font-size: 1.5rem; /* Smaller for mobile */
     color: #63B3ED; /* Match nav links color */
     padding: 0.5rem;
 }
@@ -76,9 +76,9 @@ nav ul li a:hover {
     animation: gradientShift 15s ease infinite;
     color: #FFFFFF;
     text-align: center;
-    padding: 8rem 1.5rem;
+    padding: 6rem 1rem; /* Reduced padding for mobile */
     position: relative; /* Contain absolute-positioned clouds */
-    min-height: 50vh;
+    min-height: 40vh; /* Reduced for mobile */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -94,7 +94,7 @@ nav ul li a:hover {
 
 .hero .cloud {
     position: absolute; /* Positioned relative to hero */
-    max-width: 100px; /* Reduced size */
+    max-width: 80px; /* Smaller clouds for better layout */
     height: auto; /* Maintains aspect ratio */
     opacity: 0.8;
     z-index: 1;
@@ -102,9 +102,9 @@ nav ul li a:hover {
 }
 
 .hero h1 {
-    font-size: 3.5rem;
+    font-size: 2.5rem; /* Reduced for mobile */
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     letter-spacing: -0.025em;
     animation: fadeIn 1s ease-in-out;
     position: relative;
@@ -113,9 +113,9 @@ nav ul li a:hover {
 }
 
 .hero p {
-    font-size: 1.5rem;
-    max-width: 36rem;
-    margin-bottom: 2rem;
+    font-size: 1.2rem; /* Reduced for mobile */
+    max-width: 32rem;
+    margin-bottom: 1.5rem;
     position: relative;
     z-index: 2;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Shadow for readability */
@@ -124,14 +124,18 @@ nav ul li a:hover {
 .cta-button {
     background-color: #FFD700; /* Gold accent */
     color: #1A202C;
-    padding: 1rem 2rem;
+    padding: 0.75rem 1.5rem; /* Adjusted for touch targets */
     text-decoration: none;
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 1rem; /* Smaller for mobile */
     border-radius: 0.375rem;
     transition: background-color 0.3s ease, transform 0.2s ease;
     position: relative;
     z-index: 2;
+    min-height: 44px; /* Accessible touch target */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .cta-button:hover {
@@ -141,7 +145,7 @@ nav ul li a:hover {
 
 /* General Section Styling */
 section {
-    padding: 5rem 1.5rem;
+    padding: 3rem 1rem; /* Reduced padding for mobile */
     max-width: 80rem;
     margin: 0 auto;
 }
@@ -149,29 +153,29 @@ section {
 h2 {
     text-align: center;
     color: #1A202C;
-    font-size: 2.5rem;
+    font-size: 2rem; /* Reduced for mobile */
     font-weight: 700;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     letter-spacing: -0.025em;
 }
 
 /* About Section */
 #about p {
-    max-width: 50rem;
-    margin: 0 auto 1.5rem;
-    font-size: 1.1rem;
+    max-width: 90%; /* Wider for mobile readability */
+    margin: 0 auto 1rem;
+    font-size: 1rem;
     color: #4A5568; /* Softer gray for body text */
 }
 
 .team {
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     text-align: center;
 }
 
 .team h3 {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     color: #2B6CB0;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 }
 
 .team a {
@@ -186,10 +190,10 @@ h2 {
 
 /* Services Section */
 .services {
-    padding: 2rem;
+    padding: 1.5rem;
     background-color: #EDF2F7;
     border-radius: 0.5rem;
-    max-width: 80rem;
+    max-width: 90%; /* Adjusted for mobile */
     margin: 0 auto;
     text-align: center;
     overflow: hidden; /* Prevent overflow issues */
@@ -197,14 +201,14 @@ h2 {
 
 .services-container {
     display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 2rem;
-    margin-top: 2rem;
+    grid-template-columns: 1fr !important; /* Single column for mobile */
+    gap: 1.5rem;
+    margin-top: 1.5rem;
 }
 
 .service-card {
     background: #FFFFFF;
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: 0.5rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -225,60 +229,42 @@ h2 {
 }
 
 .service-card h3 {
-    font-size: 1.5rem;
+    font-size: 1.25rem; /* Smaller for mobile */
     color: #1A202C;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 }
 
 .service-card p {
-    font-size: 1rem;
+    font-size: 0.9rem; /* Smaller for mobile */
     color: #4A5568;
 }
 
 /* Why Choose Hevin Design Section */
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-    gap: 2rem; /* Added spacing between tiles */
-    margin-top: 2rem;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .logo {
-        height: 112px; /* Increased from 36px, proportional to 150px */
-    }
-    header {
-        padding: 0.25rem 1rem;
-    }
-    .services-container {
-        grid-template-columns: 1fr !important;
-    }
-    .services {
-        padding: 1rem;
-    }
-    .service-card {
-        padding: 1rem;
-    }
+    grid-template-columns: 1fr; /* Single column for mobile */
+    gap: 1.5rem;
+    margin-top: 1.5rem;
 }
 
 /* Portfolio Section */
 #portfolio p {
-    max-width: 50rem;
-    margin: 0 auto 2rem;
+    max-width: 90%;
+    margin: 0 auto 1.5rem;
     text-align: center;
     color: #4A5568;
+    font-size: 0.9rem;
 }
 
 .projects {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-    gap: 2rem;
+    grid-template-columns: 1fr; /* Single column for mobile */
+    gap: 1.5rem;
 }
 
 .project-card {
     background: #FFFFFF;
-    padding: 1.5rem;
+    padding: 1rem;
     border-radius: 0.5rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -291,22 +277,22 @@ h2 {
 
 .project-card img {
     width: 100%;
-    height: 12rem;
+    height: 10rem; /* Reduced for mobile */
     object-fit: cover;
     border-radius: 0.5rem;
-    margin-bottom: 1rem;
-}
-
-.project-card h3 {
-    font-size: 1.5rem;
-    color: #1A202C;
     margin-bottom: 0.75rem;
 }
 
+.project-card h3 {
+    font-size: 1.25rem;
+    color: #1A202C;
+    margin-bottom: 0.5rem;
+}
+
 .project-card p {
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #4A5568;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 }
 
 .project-card a {
@@ -326,9 +312,9 @@ h2 {
 }
 
 .process-description {
-    max-width: 50rem;
-    margin: 0 auto 2rem;
-    font-size: 1.1rem;
+    max-width: 90%;
+    margin: 0 auto 1.5rem;
+    font-size: 1rem;
     color: #4A5568;
     text-align: center;
 }
@@ -336,15 +322,15 @@ h2 {
 .process-steps {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    max-width: 50rem;
+    gap: 1.5rem;
+    max-width: 90%;
     margin: 0 auto;
     text-align: center;
 }
 
 .process-step {
     background: #FFFFFF;
-    padding: 1.5rem;
+    padding: 1rem;
     border-radius: 0.5rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, opacity 0.5s ease;
@@ -363,32 +349,32 @@ h2 {
 }
 
 .process-step h3 {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     color: #1A202C;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
 }
 
 .process-step p {
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #4A5568;
 }
 
 .process-timeline {
-    max-width: 50rem;
-    margin: 2rem auto 0;
-    font-size: 1.1rem;
+    max-width: 90%;
+    margin: 1.5rem auto 0;
+    font-size: 1rem;
     color: #4A5568;
 }
 
 /* FAQ Section */
 .faq {
-    max-width: 50rem;
+    max-width: 90%;
     margin: 0 auto;
     text-align: center;
 }
 
 .faq-item {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     text-align: left;
     display: flex;
     flex-direction: column;
@@ -396,15 +382,15 @@ h2 {
 }
 
 .faq-item h4 {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     color: #1A202C;
     margin-bottom: 0.5rem;
 }
 
 .faq-item p {
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #4A5568;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     display: inline;
 }
 
@@ -412,26 +398,12 @@ h2 {
     display: inline-block;
     margin-top: 0.5rem;
     vertical-align: middle;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .process-steps, .faq {
-        padding: 0 1rem;
-    }
-    .faq-item p {
-        text-align: center;
-    }
-    .pricing-button {
-        margin-top: 1rem;
-        display: block;
-        width: auto;
-    }
+    min-height: 44px; /* Accessible touch target */
 }
 
 /* Contact Section */
 form {
-    max-width: 40rem;
+    max-width: 90%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -454,13 +426,14 @@ input:focus, textarea:focus {
 button {
     background-color: #2B6CB0;
     color: #FFFFFF;
-    padding: 1rem;
+    padding: 0.75rem;
     border: none;
     border-radius: 0.375rem;
     cursor: pointer;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    min-height: 44px; /* Accessible touch target */
 }
 
 button:hover {
@@ -473,18 +446,18 @@ footer {
     background-color: #1A202C;
     color: #FFFFFF;
     text-align: center;
-    padding: 2rem 1.5rem;
+    padding: 1.5rem 1rem;
 }
 
 footer p {
-    font-size: 1rem;
+    font-size: 0.9rem;
     margin-bottom: 0.5rem;
 }
 
 footer a {
     color: #FFD700;
     text-decoration: none;
-    margin: 0 0.75rem;
+    margin: 0 0.5rem;
     font-weight: 500;
 }
 
@@ -504,22 +477,22 @@ section {
 
 @keyframes bounceHover {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); } /* Slight upward bob */
+    50% { transform: translateY(-10px); } /* Reduced for mobile */
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
     .hero h1 {
-        font-size: 2.75rem;
-    }
-    .hero p {
-        font-size: 1.25rem;
-    }
-    h2 {
         font-size: 2rem;
     }
+    .hero p {
+        font-size: 1rem;
+    }
+    h2 {
+        font-size: 1.75rem;
+    }
     section {
-        padding: 3rem 1.5rem;
+        padding: 2.5rem 1rem;
     }
 }
 
@@ -527,52 +500,69 @@ section {
     .menu-toggle {
         display: block;
         position: absolute;
-        top: 0.75rem;
-        right: 1.5rem;
+        top: 0.5rem;
+        right: 1rem;
     }
     nav ul {
         display: none;
         flex-direction: column;
         align-items: center;
-        background-color: #2B6CB0;
+        background-color: #1A202C; /* Match nav background */
         padding: 1rem 0;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
     nav ul.active {
         display: flex;
     }
     nav ul li {
-        margin: 0.75rem 0;
+        margin: 0.5rem 0;
     }
     .hero {
-        padding: 5rem 1.5rem;
-        min-height: 40vh;
+        padding: 4rem 1rem;
+        min-height: 35vh;
+    }
+    .hero .cloud {
+        max-width: 60px; /* Smaller clouds for mobile */
     }
     .hero h1 {
-        font-size: 2.25rem;
+        font-size: 1.75rem;
     }
     .hero p {
-        font-size: 1.1rem;
+        font-size: 0.9rem;
     }
     h2 {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
     }
 }
 
 @media (max-width: 480px) {
+    .logo {
+        height: 80px; /* Further reduced for small screens */
+    }
     .hero {
-        padding: 3rem 1rem;
+        padding: 3rem 0.75rem;
+        min-height: 30vh;
+    }
+    .hero .cloud {
+        max-width: 50px; /* Even smaller for very small screens */
     }
     .hero h1 {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
     }
     .hero p {
-        font-size: 1rem;
+        font-size: 0.8rem;
+        max-width: 90%;
     }
     .cta-button {
-        padding: 0.75rem 1.5rem;
-        font-size: 1rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        min-height: 44px;
     }
     .service-card, .project-card, .process-step {
-        padding: 1rem;
+        padding: 0.75rem;
     }
 }
