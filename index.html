@@ -33,11 +33,15 @@
     </nav>
 
     <section id="home" class="hero">
-        <img src="https://i.ibb.co/rRwThybN/vecteezy-white-cloud-with-shadow-design-element-23817138.png" alt="Cloud 1" class="cloud" data-speed="0.5" style="left: 10%; top: 15%;">
-        <img src="https://i.ibb.co/rRwThybN/vecteezy-white-cloud-with-shadow-design-element-23817138.png" alt="Cloud 2" class="cloud" data-speed="0.6" style="left: 30%; top: 30%;">
-        <img src="https://i.ibb.co/rRwThybN/vecteezy-white-cloud-with-shadow-design-element-23817138.png" alt="Cloud 3" class="cloud" data-speed="0.7" style="left: 50%; top: 20%;">
-        <img src="https://i.ibb.co/rRwThybN/vecteezy-white-cloud-with-shadow-design-element-23817138.png" alt="Cloud 4" class="cloud" data-speed="0.8" style="left: 70%; top: 35%;">
-        <img src="https://i.ibb.co/rRwThybN/vecteezy-white-cloud-with-shadow-design-element-23817138.png" alt="Cloud 5" class="cloud" data-speed="0.9" style="left: 20%; top: 50%;">
+        <img src="https://i.ibb.co/rRwThybN/vecteezy-white-cloud-with-shadow-design-element-23817138.png" alt="Cloud 1" class="cloud" data-speed="0.5" style="left: 5%; top: 10%;">
+        <img src="https://i.ibb.co/rRwThybN/vecteezy-white-cloud-with-shadow-design-element-23817138.png" alt="Cloud 2" class="cloud" data-speed="0.7" style="left: 20%; top: 30%;">
+        <img src="https://i.ibb.co/rRwThybN/vecteezy-white-cloud-with-shadow-design-element-23817138.png" alt="Cloud 3" class="cloud" data-speed="0.9" style="left: 40%; top: 20%;">
+        <img src="https://i.ibb.co/rRwThybN/vecteezy-white-cloud-with-shadow-design-element-23817138.png" alt="Cloud 4" class="cloud" data-speed="0.6" style="left: 60%; top: 40%;">
+        <img src="https://i.ibb.co/rRwThybN/vecteezy-white-cloud-with-shadow-design-element-23817138.png" alt="Cloud 5" class="cloud" data-speed="0.8" style="left: 75%; top: 15%;">
+        <img src="https://i.ibb.co/rRwThybN/vecteezy-white-cloud-with-shadow-design-element-23817138.png" alt="Cloud 6" class="cloud" data-speed="1.0" style="left: 90%; top: 35%;">
+        <img src="https://i.ibb.co/rRwThybN/vecteezy-white-cloud-with-shadow-design-element-23817138.png" alt="Cloud 7" class="cloud" data-speed="0.6" style="left: 10%; top: 60%;">
+        <img src="https://i.ibb.co/rRwThybN/vecteezy-white-cloud-with-shadow-design-element-23817138.png" alt="Cloud 8" class="cloud" data-speed="0.8" style="left: 35%; top: 70%;">
+        <img src="https://i.ibb.co/rRwThybN/vecteezy-white-cloud-with-shadow-design-element-23817138.png" alt="Cloud 9" class="cloud" data-speed="1.0" style="left: 70%; top: 80%;">
         <h1>Elevate Your Brand</h1>
         <p>Creative consultancy crafting successful brands and experiences. Tailored for startups, creatives, and businesses on a budget.</p>
         <a href="#contact" class="cta-button">Get Started Today</a>
@@ -209,11 +213,18 @@
             // Cloud scroll and bobbing animation
             const clouds = document.querySelectorAll('.cloud');
             const hero = document.querySelector('.hero');
+            const isMobile = window.innerWidth <= 768;
+            const mobileCloudIndices = [0, 1, 2, 3, 4]; // Clouds 1-5 for mobile
 
             function updateInitialPositions() {
-                clouds.forEach(cloud => {
+                clouds.forEach((cloud, index) => {
                     const topPercent = parseFloat(cloud.style.top) || 0;
-                    cloud.dataset.initialTop = (topPercent / 100 * hero.clientHeight).toString();
+                    if (isMobile && !mobileCloudIndices.includes(index)) {
+                        cloud.style.display = 'none'; // Hide clouds 6-9 on mobile
+                    } else {
+                        cloud.style.display = 'block';
+                        cloud.dataset.initialTop = (topPercent / 100 * hero.clientHeight).toString();
+                    }
                 });
             }
 
@@ -225,7 +236,12 @@
                 const isMobile = window.innerWidth <= 768;
                 const fadeMargin = isMobile ? 20 : 50; // Smaller fade margin for mobile
 
-                clouds.forEach(cloud => {
+                clouds.forEach((cloud, index) => {
+                    if (isMobile && !mobileCloudIndices.includes(index)) {
+                        cloud.style.display = 'none'; // Ensure hidden on mobile
+                        return;
+                    }
+
                     const speed = parseFloat(cloud.getAttribute('data-speed'));
                     const initialTop = parseFloat(cloud.dataset.initialTop) || 0;
                     const offset = scrollTop * (1 - speed); // Parallax effect
@@ -254,10 +270,14 @@
 
             // Initial setup for clouds
             updateInitialPositions();
-            clouds.forEach(cloud => {
-                const speed = parseFloat(cloud.getAttribute('data-speed'));
-                cloud.style.animation = `bounceHover ${2 + speed}s infinite ease-in-out`;
-                cloud.style.animationDelay = `${speed * 0.5}s`; // Staggered start for independent timings
+            clouds.forEach((cloud, index) => {
+                if (isMobile && !mobileCloudIndices.includes(index)) {
+                    cloud.style.display = 'none'; // Initial hide for mobile
+                } else {
+                    const speed = parseFloat(cloud.getAttribute('data-speed'));
+                    cloud.style.animation = `bounceHover ${2 + speed}s infinite ease-in-out`;
+                    cloud.style.animationDelay = `${speed * 0.5}s`; // Staggered start
+                }
             });
 
             // Event listeners

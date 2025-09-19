@@ -94,11 +94,41 @@ nav ul li a:hover {
 
 .hero .cloud {
     position: absolute; /* Positioned relative to hero */
-    max-width: 80px; /* Smaller clouds for better layout */
+    max-width: 80px; /* Default size for desktop */
     height: auto; /* Maintains aspect ratio */
     opacity: 0.8;
     z-index: 1;
     transition: opacity 0.5s ease; /* Smooth fade for clouds */
+}
+
+/* Adjust cloud positions for mobile */
+@media (max-width: 768px) {
+    .hero .cloud:nth-child(1) { /* Cloud 1 */
+        left: 10%;
+        top: 15%;
+    }
+    .hero .cloud:nth-child(2) { /* Cloud 2 */
+        left: 30%;
+        top: 30%;
+    }
+    .hero .cloud:nth-child(3) { /* Cloud 3 */
+        left: 50%;
+        top: 20%;
+    }
+    .hero .cloud:nth-child(4) { /* Cloud 4 */
+        left: 70%;
+        top: 35%;
+    }
+    .hero .cloud:nth-child(5) { /* Cloud 5 */
+        left: 20%;
+        top: 50%;
+    }
+    .hero .cloud:nth-child(6),
+    .hero .cloud:nth-child(7),
+    .hero .cloud:nth-child(8),
+    .hero .cloud:nth-child(9) { /* Hide Clouds 6-9 */
+        display: none;
+    }
 }
 
 .hero h1 {
