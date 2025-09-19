@@ -526,7 +526,7 @@ section {
         min-height: 35vh;
     }
     .hero .cloud {
-        max-width: 60px; /* Smaller clouds for mobile */
+        max-width: 50px; /* Smaller clouds for mobile */
     }
     .hero h1 {
         font-size: 1.75rem;
@@ -548,7 +548,7 @@ section {
         min-height: 30vh;
     }
     .hero .cloud {
-        max-width: 50px; /* Even smaller for very small screens */
+        max-width: 40px; /* Even smaller for very small screens */
     }
     .hero h1 {
         font-size: 1.5rem;
