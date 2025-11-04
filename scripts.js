@@ -37,6 +37,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
                 observer.unobserve(entry.target); // Stop observing once visible
+                
+                // Remove will-change after animation completes to free GPU resources
+                setTimeout(() => {
+                    entry.target.style.willChange = 'auto';
+                }, 1000);
             }
         });
     }, { 

@@ -99,6 +99,8 @@ nav ul li a:hover {
     opacity: 0.8;
     z-index: 1;
     transition: opacity 0.5s ease; /* Smooth fade for clouds */
+    will-change: transform, opacity; /* Hint browser for GPU acceleration */
+    backface-visibility: hidden; /* Prevent flickering */
 }
 
 /* Adjust cloud positions for mobile */
@@ -178,6 +180,7 @@ section {
     padding: 3rem 1rem; /* Reduced padding for mobile */
     max-width: 80rem;
     margin: 0 auto;
+    animation: fadeIn 1s ease-in-out;
 }
 
 h2 {
@@ -246,6 +249,7 @@ h2 {
     opacity: 0;
     transform: scale(0.95);
     height: 100%;
+    will-change: transform, opacity; /* Performance hint for animations */
 }
 
 .service-card.visible {
@@ -298,6 +302,7 @@ h2 {
     border-radius: 0.5rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform; /* Performance hint for hover animations */
 }
 
 .project-card:hover {
@@ -367,6 +372,7 @@ h2 {
     opacity: 0;
     transform: translateY(30px);
     text-align: center;
+    will-change: transform, opacity; /* Performance hint for scroll animations */
 }
 
 .process-step.visible {
@@ -499,10 +505,6 @@ footer a:hover {
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
-}
-
-section {
-    animation: fadeIn 1s ease-in-out;
 }
 
 @keyframes bounceHover {
