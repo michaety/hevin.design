@@ -1,3 +1,6 @@
+// Constants
+const MOBILE_BREAKPOINT = 768;
+
 // Menu toggle
 function toggleMenu() {
     const menu = document.getElementById('nav-menu');
@@ -26,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cloud scroll and bobbing animation
     const clouds = document.querySelectorAll('.cloud');
     const hero = document.querySelector('.hero');
-    const isMobile = window.innerWidth <= 768;
+    const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
     const mobileCloudIndices = [0, 1, 2, 3, 4]; // Clouds 1-5 for mobile
 
     function updateInitialPositions() {
@@ -46,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         const heroTop = heroRect.top + scrollTop;
         const heroBottom = heroTop + heroRect.height;
-        const isMobile = window.innerWidth <= 768;
+        const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
         const fadeMargin = isMobile ? 20 : 50; // Smaller fade margin for mobile
 
         clouds.forEach((cloud, index) => {
