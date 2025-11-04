@@ -29,13 +29,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cloud scroll and bobbing animation
     const clouds = document.querySelectorAll('.cloud');
     const hero = document.querySelector('.hero');
-    const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
     const mobileCloudIndices = [0, 1, 2, 3, 4]; // Clouds 1-5 for mobile
 
+    function isMobileView() {
+        return window.innerWidth <= MOBILE_BREAKPOINT;
+    }
+
     function updateInitialPositions() {
+        const mobile = isMobileView();
         clouds.forEach((cloud, index) => {
             const topPercent = parseFloat(cloud.style.top) || 0;
-            if (isMobile && !mobileCloudIndices.includes(index)) {
+            if (mobile && !mobileCloudIndices.includes(index)) {
                 cloud.style.display = 'none'; // Hide clouds 6-9 on mobile
             } else {
                 cloud.style.display = 'block';
@@ -49,11 +53,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         const heroTop = heroRect.top + scrollTop;
         const heroBottom = heroTop + heroRect.height;
-        const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
-        const fadeMargin = isMobile ? 20 : 50; // Smaller fade margin for mobile
+        const mobile = isMobileView();
+        const fadeMargin = mobile ? 20 : 50; // Smaller fade margin for mobile
 
         clouds.forEach((cloud, index) => {
-            if (isMobile && !mobileCloudIndices.includes(index)) {
+            if (mobile && !mobileCloudIndices.includes(index)) {
                 cloud.style.display = 'none'; // Ensure hidden on mobile
                 return;
             }
@@ -86,14 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial setup for clouds
     updateInitialPositions();
-    clouds.forEach((cloud, index) => {
-        if (isMobile && !mobileCloudIndices.includes(index)) {
-            cloud.style.display = 'none'; // Initial hide for mobile
-        } else {
-            const speed = parseFloat(cloud.getAttribute('data-speed'));
-            cloud.style.animation = `bounceHover ${2 + speed}s infinite ease-in-out`;
-            cloud.style.animationDelay = `${speed * 0.5}s`; // Staggered start
-        }
+    clouds.forEach((cloud) => {
+        const speed = parseFloat(cloud.getAttribute('data-speed'));
+        cloud.style.animation = `bounceHover ${2 + speed}s infinite ease-in-out`;
+        cloud.style.animationDelay = `${speed * 0.5}s`; // Staggered start
     });
 
     // Event listeners
