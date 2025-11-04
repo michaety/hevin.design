@@ -56,28 +56,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cloud scroll and bobbing animation
     const clouds = document.querySelectorAll('.cloud');
     const hero = document.querySelector('.hero');
-    
-    if (!clouds.length || !hero) return; // Early return if elements don't exist
-    
-    const isMobile = window.innerWidth <= 768;
     const mobileCloudIndices = [0, 1, 2, 3, 4]; // Clouds 1-5 for mobile
+    
+    // Only set up cloud animations if clouds exist
+    if (clouds.length && hero) {
 
-    function updateInitialPositions() {
-        const currentMobile = window.innerWidth <= 768;
-        clouds.forEach((cloud, index) => {
-            const topPercent = parseFloat(cloud.style.top) || 0;
-            if (currentMobile && !mobileCloudIndices.includes(index)) {
-                cloud.style.display = 'none'; // Hide clouds 6-9 on mobile
-            } else {
-                cloud.style.display = 'block';
-                cloud.dataset.initialTop = (topPercent / 100 * hero.clientHeight).toString();
-            }
-        });
-    }
+        function updateInitialPositions() {
+            const currentMobile = window.innerWidth <= 768;
+            clouds.forEach((cloud, index) => {
+                const topPercent = parseFloat(cloud.style.top) || 0;
+                if (currentMobile && !mobileCloudIndices.includes(index)) {
+                    cloud.style.display = 'none'; // Hide clouds 6-9 on mobile
+                } else {
+                    cloud.style.display = 'block';
+                    cloud.dataset.initialTop = (topPercent / 100 * hero.clientHeight).toString();
+                }
+            });
+        }
 
-    // Optimized with requestAnimationFrame for smooth performance
-    let ticking = false;
-    function updateCloudPositions() {
+        // Optimized with requestAnimationFrame for smooth performance
+        let ticking = false;
+        function updateCloudPositions() {
         if (!ticking) {
             window.requestAnimationFrame(() => {
                 const heroRect = hero.getBoundingClientRect();
@@ -121,28 +120,29 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             ticking = true;
         }
-    }
-
-    // Initial setup for clouds
-    updateInitialPositions();
-    clouds.forEach((cloud, index) => {
-        const currentMobile = window.innerWidth <= 768;
-        if (currentMobile && !mobileCloudIndices.includes(index)) {
-            cloud.style.display = 'none'; // Initial hide for mobile
-        } else {
-            const speed = parseFloat(cloud.getAttribute('data-speed'));
-            cloud.style.animation = `bounceHover ${2 + speed}s infinite ease-in-out`;
-            cloud.style.animationDelay = `${speed * 0.5}s`; // Staggered start
         }
-    });
 
-    // Event listeners with performance optimizations
-    window.addEventListener('resize', debounce(() => {
+        // Initial setup for clouds
         updateInitialPositions();
-        updateCloudPositions();
-    }, 150), { passive: true });
-    
-    window.addEventListener('scroll', updateCloudPositions, { passive: true });
-    
-    updateCloudPositions(); // Initial call
+        clouds.forEach((cloud, index) => {
+            const currentMobile = window.innerWidth <= 768;
+            if (currentMobile && !mobileCloudIndices.includes(index)) {
+                cloud.style.display = 'none'; // Initial hide for mobile
+            } else {
+                const speed = parseFloat(cloud.getAttribute('data-speed'));
+                cloud.style.animation = `bounceHover ${2 + speed}s infinite ease-in-out`;
+                cloud.style.animationDelay = `${speed * 0.5}s`; // Staggered start
+            }
+        });
+
+        // Event listeners with performance optimizations
+        window.addEventListener('resize', debounce(() => {
+            updateInitialPositions();
+            updateCloudPositions();
+        }, 150), { passive: true });
+        
+        window.addEventListener('scroll', updateCloudPositions, { passive: true });
+        
+        updateCloudPositions(); // Initial call
+    }
 });
