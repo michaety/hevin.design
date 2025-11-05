@@ -12,15 +12,23 @@ body {
     line-height: 1.8;
     font-size: 1rem;
     overflow-x: hidden;
-    text-align: center; /* Center all text globally */
 }
 
-/* Override text alignment for specific elements where left alignment is needed */
-p, li {
+/* Center headings and paragraph text for better visual hierarchy */
+h1, h2, h3, h4, h5, h6 {
     text-align: center;
 }
 
-h1, h2, h3, h4, h5, h6 {
+p {
+    text-align: center;
+}
+
+/* Form elements maintain their default alignment for usability */
+input, textarea, button {
+    text-align: left;
+}
+
+li {
     text-align: center;
 }
 
