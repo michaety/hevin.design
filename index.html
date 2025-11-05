@@ -3,13 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Hevin Design: Creative consultancy crafting brands and digital experiences for startups and businesses. Affordable custom website design, SEO, and more.">
-    <meta name="keywords" content="web design, SEO, digital branding, startup websites, creative consultancy">
-    <meta property="og:title" content="Hevin Design - Elevate Your Brand">
-    <meta property="og:description" content="Affordable, professional web design and digital branding for startups and businesses.">
+    <meta name="description" content="Hevin Design: Professional web design, branding, and digital marketing services. Transform your business with custom websites, SEO optimization, and creative solutions. Starting at $1,000.">
+    <meta name="keywords" content="web design, SEO, digital branding, startup websites, creative consultancy, custom website design, professional web development, brand identity, responsive design, e-commerce, Sydney web design">
+    <meta property="og:title" content="Hevin Design - Professional Web Design & Branding Services">
+    <meta property="og:description" content="Transform your business with professional web design, branding, and SEO services. Affordable packages starting at $1,000 for startups and businesses.">
     <meta property="og:image" content="https://via.placeholder.com/1200x630?text=Hevin+Design">
     <meta property="og:url" content="https://hevin.design">
-    <title>Hevin Design - Elevate Your Brand</title>
+    <meta name="author" content="Hevin Design">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://hevin.design">
+    <title>Hevin Design - Professional Web Design & Branding Services | Sydney</title>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://i.ibb.co">
@@ -45,9 +57,12 @@
         <img src="https://i.ibb.co/rRwThybN/vecteezy-white-cloud-with-shadow-design-element-23817138.png" alt="Decorative cloud graphic for creative theme" class="cloud" data-speed="0.6" style="left: 10%; top: 60%;" loading="lazy">
         <img src="https://i.ibb.co/rRwThybN/vecteezy-white-cloud-with-shadow-design-element-23817138.png" alt="Decorative cloud graphic for creative theme" class="cloud" data-speed="0.8" style="left: 35%; top: 70%;" loading="lazy">
         <img src="https://i.ibb.co/rRwThybN/vecteezy-white-cloud-with-shadow-design-element-23817138.png" alt="Decorative cloud graphic for creative theme" class="cloud" data-speed="1.0" style="left: 70%; top: 80%;" loading="lazy">
-        <h1>Elevate Your Brand</h1>
-        <p>Creative consultancy crafting successful brands and experiences. Tailored for startups, creatives, and businesses on a budget.</p>
-        <a href="#contact" class="cta-button">Get Started Today</a>
+        <div class="hero-content">
+            <h1 class="hero-title">Elevate Your Brand</h1>
+            <p class="hero-subtitle">Transform Your Vision Into Reality</p>
+            <p>Creative consultancy crafting successful brands and experiences. Tailored for startups, creatives, and businesses on a budget.</p>
+            <a href="#contact" class="cta-button">Get Started Today</a>
+        </div>
     </section>
 
     <section id="about">
@@ -57,6 +72,10 @@
         <div class="team">
             <h3>About the Founder</h3>
             <p>Driven by a passion for design, our founder brings fresh ideas and dedication to every project. Connect with us on <a href="https://www.linkedin.com/in/michaety" target="_blank" rel="noopener noreferrer">LinkedIn</a> or <a href="https://github.com/michaety" target="_blank" rel="noopener noreferrer">GitHub</a> for more.</p>
+            <div class="portfolio-links">
+                <a href="https://www.behance.net/michaety" target="_blank" rel="noopener noreferrer" class="cta-button">View Portfolio on Behance</a>
+                <a href="/resume.pdf" download class="cta-button">Download Resume (PDF)</a>
+            </div>
         </div>
     </section>
 
@@ -82,6 +101,40 @@
         </div>
     </section>
 
+    <section id="skills">
+        <h2>Skills & Tech Stack</h2>
+        <p>We leverage modern technologies to deliver cutting-edge solutions</p>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3>Frontend</h3>
+                <ul>
+                    <li>HTML5 / CSS3 / JavaScript</li>
+                    <li>React / Vue.js</li>
+                    <li>Tailwind CSS / Bootstrap</li>
+                    <li>Responsive Design</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>Backend & DevOps</h3>
+                <ul>
+                    <li>Node.js / Python</li>
+                    <li>Cloudflare Workers</li>
+                    <li>Git / GitHub</li>
+                    <li>CI/CD Pipelines</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>Design & Marketing</h3>
+                <ul>
+                    <li>Figma / Adobe Creative Suite</li>
+                    <li>SEO Optimization</li>
+                    <li>Google Analytics</li>
+                    <li>Brand Strategy</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
     <section id="portfolio">
         <h2>Sample Projects</h2>
         <p>Explore our recent work showcasing custom web design, branding, and e-commerce solutions tailored to our clients' needs.</p>
@@ -103,6 +156,24 @@
                 <h3>Artist Portfolio & E-commerce</h3>
                 <p>An immersive portfolio and shop for an artist, with e-commerce functionality for digital downloads.</p>
                 <a href="https://prodbypiras.h3vin.workers.dev" target="_blank" rel="noopener noreferrer" class="cta-button">View Live Site</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials">
+        <h2>What Our Clients Say</h2>
+        <div class="testimonials-container">
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Hevin Design transformed our vision into a stunning website that perfectly represents our brand. The team was professional, responsive, and delivered beyond our expectations."</p>
+                <p class="testimonial-author">— Jamie M., Wedding Client</p>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Working with Hevin Design was a game-changer for our business. They created a beautiful, functional site that has significantly improved our online presence and customer engagement."</p>
+                <p class="testimonial-author">— Sarah L., Business Owner</p>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"The attention to detail and creative approach made all the difference. Hevin Design delivered a portfolio site that truly showcases my work and has helped me connect with new clients."</p>
+                <p class="testimonial-author">— Alex P., Artist</p>
             </div>
         </div>
     </section>
@@ -149,6 +220,31 @@
         <p class="process-timeline">From concept to launch in 4-8 weeks, tailored to your budget and timeline.</p>
     </section>
 
+    <section id="blog">
+        <h2>Insights & Articles</h2>
+        <p>Stay updated with the latest trends in web design, branding, and digital marketing</p>
+        <div class="blog-container">
+            <div class="blog-card">
+                <h3>5 Web Design Trends to Watch in 2025</h3>
+                <p class="blog-date">January 15, 2025</p>
+                <p>Discover the emerging design trends that will shape the digital landscape this year, from AI-powered interfaces to immersive 3D experiences.</p>
+                <a href="#contact" class="blog-link">Read More →</a>
+            </div>
+            <div class="blog-card">
+                <h3>Why Every Startup Needs a Strong Brand Identity</h3>
+                <p class="blog-date">January 8, 2025</p>
+                <p>Learn how a cohesive brand identity can help your startup stand out in a crowded market and build lasting customer relationships.</p>
+                <a href="#contact" class="blog-link">Read More →</a>
+            </div>
+            <div class="blog-card">
+                <h3>SEO Basics: Getting Your Website Found</h3>
+                <p class="blog-date">January 2, 2025</p>
+                <p>A beginner's guide to search engine optimization and how to improve your website's visibility in search results.</p>
+                <a href="#contact" class="blog-link">Read More →</a>
+            </div>
+        </div>
+    </section>
+
     <section id="faq">
         <h2>Frequently Asked Questions</h2>
         <div class="faq">
@@ -158,7 +254,7 @@
                     <span class="faq-icon">+</span>
                 </button>
                 <div class="faq-answer">
-                    <p>Website prices vary depending on your needs. We offer affordable packages starting from $1,000 for small business websites. <a href="#contact" class="cta-button pricing-button">Contact us for pricing details</a></p>
+                    <p>Website prices vary depending on your needs. We offer affordable packages starting from $1,000 for small business websites.</p>
                 </div>
             </div>
             <div class="faq-item">
@@ -204,7 +300,7 @@
     <footer>
         <p>&copy; 2025 Hevin Design. All rights reserved.</p>
         <p>Contact: Sydney, NSW | Phone: (61+) 421 193 544 | Email: info@hevin.design</p>
-        <p><a href="#contact" class="cta-button">Ready to Start? Get in Touch</a></p>
+        <p><a href="privacy.html">Privacy Policy</a> | <img src="https://www.cloudflare.com/img/logo-cloudflare-dark.svg" alt="Secured by Cloudflare" style="height: 20px; vertical-align: middle; margin-left: 10px;" loading="lazy"></p>
     </footer>
 </body>
 </html>

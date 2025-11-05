@@ -12,6 +12,16 @@ body {
     line-height: 1.8;
     font-size: 1rem;
     overflow-x: hidden;
+    text-align: center; /* Center all text globally */
+}
+
+/* Override text alignment for specific elements where left alignment is needed */
+p, li {
+    text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-align: center;
 }
 
 .logo {
@@ -131,6 +141,42 @@ nav ul li a:hover {
     }
 }
 
+.hero-content {
+    position: relative;
+    z-index: 2;
+    animation: heroFadeIn 1.5s ease-in-out;
+}
+
+@keyframes heroFadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0);
+    }
+}
+
+.hero-title {
+    font-size: 2.5rem; /* Reduced for mobile */
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.025em;
+    position: relative;
+    z-index: 2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Shadow for readability */
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: #FFD700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-style: italic;
+}
+
 .hero h1 {
     font-size: 2.5rem; /* Reduced for mobile */
     font-weight: 700;
@@ -231,10 +277,19 @@ h2 {
 }
 
 .services-container {
-    display: grid !important;
-    grid-template-columns: 1fr !important; /* Single column for mobile */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 1.5rem;
     margin-top: 1.5rem;
+    justify-content: center;
+}
+
+/* Mobile: stack vertically */
+@media (max-width: 768px) {
+    .services-container {
+        flex-direction: column;
+    }
 }
 
 .service-card {
@@ -246,7 +301,24 @@ h2 {
     transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
     opacity: 0;
     transform: scale(0.95);
-    height: 100%;
+    flex: 1 1 calc(25% - 1.5rem); /* 4 cards per row on desktop */
+    min-width: 200px;
+    max-width: 300px;
+}
+
+/* Tablet: 2 cards per row */
+@media (max-width: 1024px) {
+    .service-card {
+        flex: 1 1 calc(50% - 1.5rem);
+    }
+}
+
+/* Mobile: 1 card per row */
+@media (max-width: 768px) {
+    .service-card {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
 }
 
 .service-card.visible {
@@ -272,10 +344,35 @@ h2 {
 
 /* Why Choose Hevin Design Section */
 .services-grid {
-    display: grid;
-    grid-template-columns: 1fr; /* Single column for mobile */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 1.5rem;
     margin-top: 1.5rem;
+    justify-content: center;
+}
+
+.services-grid .service-card {
+    flex: 1 1 calc(33.333% - 1.5rem); /* 3 cards per row on desktop */
+    min-width: 250px;
+}
+
+/* Tablet: 2 cards per row */
+@media (max-width: 1024px) {
+    .services-grid .service-card {
+        flex: 1 1 calc(50% - 1.5rem);
+    }
+}
+
+/* Mobile: 1 card per row */
+@media (max-width: 768px) {
+    .services-grid {
+        flex-direction: column;
+    }
+    .services-grid .service-card {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
 }
 
 /* Portfolio Section */
@@ -288,9 +385,18 @@ h2 {
 }
 
 .projects {
-    display: grid;
-    grid-template-columns: 1fr; /* Single column for mobile */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 1.5rem;
+    justify-content: center;
+}
+
+/* Mobile: stack vertically */
+@media (max-width: 768px) {
+    .projects {
+        flex-direction: column;
+    }
 }
 
 .project-card {
@@ -301,6 +407,24 @@ h2 {
     transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
     opacity: 0;
     transform: scale(0.95);
+    flex: 1 1 calc(33.333% - 1.5rem); /* 3 cards per row on desktop */
+    min-width: 280px;
+    max-width: 400px;
+}
+
+/* Tablet: 2 cards per row */
+@media (max-width: 1024px) {
+    .project-card {
+        flex: 1 1 calc(50% - 1.5rem);
+    }
+}
+
+/* Mobile: 1 card per row */
+@media (max-width: 768px) {
+    .project-card {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
 }
 
 .project-card.visible {
@@ -537,6 +661,201 @@ footer a {
 
 footer a:hover {
     text-decoration: underline;
+}
+
+/* Portfolio Links */
+.portfolio-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+/* Skills Section */
+#skills {
+    background-color: #EDF2F7;
+    padding: 3rem 1rem;
+}
+
+.skills-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.skill-category {
+    background: #FFFFFF;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33.333% - 2rem);
+    min-width: 250px;
+    max-width: 350px;
+    text-align: center;
+}
+
+.skill-category h3 {
+    font-size: 1.5rem;
+    color: #2B6CB0;
+    margin-bottom: 1rem;
+}
+
+.skill-category ul {
+    list-style: none;
+    padding: 0;
+}
+
+.skill-category li {
+    padding: 0.5rem 0;
+    font-size: 1rem;
+    color: #4A5568;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+.skill-category li:last-child {
+    border-bottom: none;
+}
+
+@media (max-width: 768px) {
+    .skills-grid {
+        flex-direction: column;
+    }
+    .skill-category {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
+
+/* Testimonials Section */
+#testimonials {
+    background-color: #F7FAFC;
+    padding: 3rem 1rem;
+}
+
+.testimonials-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.testimonial-card {
+    background: #FFFFFF;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33.333% - 2rem);
+    min-width: 280px;
+    max-width: 400px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.testimonial-text {
+    font-size: 1rem;
+    color: #4A5568;
+    font-style: italic;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.testimonial-author {
+    font-size: 0.9rem;
+    color: #2B6CB0;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .testimonials-container {
+        flex-direction: column;
+    }
+    .testimonial-card {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
+
+/* Blog Section */
+#blog {
+    background-color: #EDF2F7;
+    padding: 3rem 1rem;
+}
+
+.blog-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.blog-card {
+    background: #FFFFFF;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33.333% - 2rem);
+    min-width: 280px;
+    max-width: 400px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.blog-card h3 {
+    font-size: 1.25rem;
+    color: #1A202C;
+    margin-bottom: 0.5rem;
+}
+
+.blog-date {
+    font-size: 0.85rem;
+    color: #718096;
+    margin-bottom: 1rem;
+}
+
+.blog-card p {
+    font-size: 0.95rem;
+    color: #4A5568;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.blog-link {
+    color: #2B6CB0;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.blog-link:hover {
+    color: #1A365D;
+}
+
+@media (max-width: 768px) {
+    .blog-container {
+        flex-direction: column;
+    }
+    .blog-card {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
 }
 
 /* Animations */
