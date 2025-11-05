@@ -6,6 +6,10 @@ function toggleMenu() {
 
 // Enhanced scroll animations with IntersectionObserver
 document.addEventListener('DOMContentLoaded', () => {
+    // Constants
+    const MOBILE_BREAKPOINT = 768;
+    const mobileCloudIndices = [0, 1, 2, 3, 4]; // Clouds 1-5 for mobile
+    
     const elements = document.querySelectorAll('section, .service-card, .project-card, .process-step');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -26,10 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cloud scroll and bobbing animation
     const clouds = document.querySelectorAll('.cloud');
     const hero = document.querySelector('.hero');
-    const isMobile = window.innerWidth <= 768;
-    const mobileCloudIndices = [0, 1, 2, 3, 4]; // Clouds 1-5 for mobile
 
     function updateInitialPositions() {
+        const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
         clouds.forEach((cloud, index) => {
             const topPercent = parseFloat(cloud.style.top) || 0;
             if (isMobile && !mobileCloudIndices.includes(index)) {
@@ -46,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         const heroTop = heroRect.top + scrollTop;
         const heroBottom = heroTop + heroRect.height;
-        const isMobile = window.innerWidth <= 768;
+        const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
         const fadeMargin = isMobile ? 20 : 50; // Smaller fade margin for mobile
 
         clouds.forEach((cloud, index) => {
@@ -84,6 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial setup for clouds
     updateInitialPositions();
     clouds.forEach((cloud, index) => {
+        const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
         if (isMobile && !mobileCloudIndices.includes(index)) {
             cloud.style.display = 'none'; // Initial hide for mobile
         } else {
@@ -112,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Toggle current FAQ
             question.setAttribute('aria-expanded', !isExpanded);
             answer.style.display = isExpanded ? 'none' : 'block';
-            icon.textContent = isExpanded ? '+' : '−';
+            icon.textContent = isExpanded ? '+' : '-';
         });
     });
 });
