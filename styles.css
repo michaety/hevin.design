@@ -5,6 +5,11 @@
     box-sizing: border-box;
 }
 
+/* Design System - Color Palette */
+:root {
+    --color-amber-hover: #B45309;
+}
+
 body {
     font-family: 'Inter', 'Roboto', sans-serif;
     color: #475569; /* Slate text color */
@@ -271,7 +276,7 @@ nav ul li a:hover::after {
     box-shadow: 0 0 20px rgba(180, 83, 9, 0.7);
     color: #FFFFFF !important;
     font-weight: bold;
-    background-color: #B45309;
+    background-color: var(--color-amber-hover);
     transition: all 0.3s ease-out;
 }
 

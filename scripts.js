@@ -7,6 +7,7 @@ function toggleMenu() {
 // Enhanced multi-layered cursor trail effect (comet-like)
 const trails = [];
 const TRAIL_COUNT = 3;
+const STAGGER_DELAY_MS = 50; // Delay between each trail layer update
 
 function initCursorTrails() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -31,7 +32,7 @@ function updateCursorTrails(x, y) {
             trail.style.left = `${x}px`;
             trail.style.top = `${y}px`;
             trail.style.opacity = 1 - (idx * 0.3); // Gradually fade each layer
-        }, idx * 50); // Stagger the movement
+        }, idx * STAGGER_DELAY_MS); // Stagger the movement
     });
 }
 
