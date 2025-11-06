@@ -4,36 +4,37 @@ function toggleMenu() {
     menu.classList.toggle('active');
 }
 
-// Enhanced multi-layered cursor trail effect (comet-like)
-const trails = [];
-const TRAIL_COUNT = 3;
-const STAGGER_DELAY_MS = 50; // Delay between each trail layer update
+// Constants
+const HERO_EXPAND_SCROLL_THRESHOLD = 100;
+const FORM_MESSAGES = {
+    success: 'Message sent successfully! We\'ll get back to you soon.',
+    error: 'Error sending message. Please try again or email us directly at info@hevin.design',
+    networkError: 'Network error. Please check your connection or email us at info@hevin.design'
+};
+
+// Single extended flowy cursor trail
+let trail = null;
 
 function initCursorTrails() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (window.innerWidth < 768) return; // Disable on mobile
     
-    // Create 3 layered trail elements
-    for (let i = 0; i < TRAIL_COUNT; i++) {
-        const trail = document.createElement('div');
-        trail.className = 'cursor-trail';
-        trail.style.transitionDelay = `${i * 0.05}s`;
-        trail.style.zIndex = 9999 - i; // Layer them properly
-        document.body.appendChild(trail);
-        trails.push(trail);
-    }
+    trail = document.createElement('div');
+    trail.className = 'cursor-trail';
+    document.body.appendChild(trail);
 }
 
 function updateCursorTrails(x, y) {
-    if (trails.length === 0) return;
+    if (!trail) return;
     
-    trails.forEach((trail, idx) => {
-        setTimeout(() => {
-            trail.style.left = `${x}px`;
-            trail.style.top = `${y}px`;
-            trail.style.opacity = 1 - (idx * 0.3); // Gradually fade each layer
-        }, idx * STAGGER_DELAY_MS); // Stagger the movement
-    });
+    trail.style.left = `${x}px`;
+    trail.style.top = `${y}px`;
+    trail.style.opacity = 1;
+    
+    // Fade effect for smoother flow
+    setTimeout(() => {
+        if (trail) trail.style.opacity = 0.7;
+    }, 200);
 }
 
 // Hero portal mouse effect
@@ -143,6 +144,81 @@ document.addEventListener('DOMContentLoaded', () => {
     sections.forEach(section => {
         sectionObserver.observe(section);
     });
+    
+    // Hero scroll-expand animation
+    window.addEventListener('scroll', () => {
+        const hero = document.querySelector('.hero');
+        if (hero) {
+            if (window.scrollY > HERO_EXPAND_SCROLL_THRESHOLD) {
+                hero.classList.add('expanded');
+            } else {
+                hero.classList.remove('expanded');
+            }
+        }
+    }, { passive: true });
+    
+    // Form submission handler
+    const form = document.getElementById('contact-form');
+    if (form) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalText = submitButton.textContent;
+            
+            // Create or get message container
+            let messageEl = document.getElementById('form-message');
+            if (!messageEl) {
+                messageEl = document.createElement('div');
+                messageEl.id = 'form-message';
+                messageEl.style.cssText = 'margin-top: 1rem; padding: 1rem; border-radius: 0.375rem; text-align: center; font-weight: 500;';
+                form.appendChild(messageEl);
+            }
+            
+            submitButton.textContent = 'Sending...';
+            submitButton.disabled = true;
+            messageEl.textContent = '';
+            messageEl.style.display = 'none';
+            
+            const data = new FormData(form);
+            
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: data,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    messageEl.textContent = FORM_MESSAGES.success;
+                    messageEl.style.backgroundColor = '#D1FAE5';
+                    messageEl.style.color = '#065F46';
+                    messageEl.style.display = 'block';
+                    messageEl.setAttribute('role', 'status');
+                    messageEl.setAttribute('aria-live', 'polite');
+                    form.reset();
+                } else {
+                    messageEl.textContent = FORM_MESSAGES.error;
+                    messageEl.style.backgroundColor = '#FEE2E2';
+                    messageEl.style.color = '#991B1B';
+                    messageEl.style.display = 'block';
+                    messageEl.setAttribute('role', 'alert');
+                    messageEl.setAttribute('aria-live', 'assertive');
+                }
+            } catch (error) {
+                messageEl.textContent = FORM_MESSAGES.networkError;
+                messageEl.style.backgroundColor = '#FEE2E2';
+                messageEl.style.color = '#991B1B';
+                messageEl.style.display = 'block';
+                messageEl.setAttribute('role', 'alert');
+                messageEl.setAttribute('aria-live', 'assertive');
+            } finally {
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+            }
+        });
+    }
     
     // Add card tilt effect on mouse move
     const cards = document.querySelectorAll('.service-card, .project-card');
