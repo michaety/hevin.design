@@ -11,6 +11,8 @@ const FORM_MESSAGES = {
     networkError: 'Network error. Please email us directly at info@hevin.design'
 };
 
+const SHIMMER_DURATION = 1500; // Match CSS animation duration (1.5s)
+
 // Hero portal mouse effect
 function updateHeroPortal(e) {
     const hero = document.querySelector('.hero');
@@ -140,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Remove shimmer class after animation completes
                 setTimeout(() => {
                     entry.target.classList.remove('shimmer');
-                }, 1500);
+                }, SHIMMER_DURATION);
             }
         });
     }, {
@@ -154,17 +156,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // Hero subtitle blur scroll effect - blur reduces from 5px to 0px over first 200px of scroll
     const subtitle = document.querySelector('.hero-subtitle');
     if (subtitle) {
+        let ticking = false;
+        
         window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            const maxScroll = 200; // 200px scroll distance
-            
-            if (scrollY >= maxScroll) {
-                subtitle.classList.add('unblurred');
-            } else {
-                subtitle.classList.remove('unblurred');
-                // Calculate blur value: 5px at top, 0px at 200px
-                const blurAmount = 5 - (scrollY / maxScroll) * 5;
-                subtitle.style.filter = `blur(${blurAmount}px)`;
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrollY = window.scrollY;
+                    const maxScroll = 200; // 200px scroll distance
+                    
+                    if (scrollY >= maxScroll) {
+                        subtitle.classList.add('unblurred');
+                    } else {
+                        subtitle.classList.remove('unblurred');
+                        // Calculate blur value: 5px at top, 0px at 200px
+                        const blurAmount = 5 - (scrollY / maxScroll) * 5;
+                        subtitle.style.filter = `blur(${blurAmount}px)`;
+                    }
+                    
+                    ticking = false;
+                });
+                
+                ticking = true;
             }
         }, { passive: true });
     }

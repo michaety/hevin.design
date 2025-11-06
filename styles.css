@@ -1394,4 +1394,9 @@ section {
     button::after {
         display: none !important;
     }
+    
+    /* Disable blur effect for accessibility */
+    .hero-subtitle {
+        filter: none !important;
+    }
 }
