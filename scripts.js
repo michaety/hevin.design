@@ -266,8 +266,6 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.animationPlayState = 'running';
-            } else {
-                entry.target.style.animationPlayState = 'paused';
             }
         });
     }, { threshold: 0.6 });
@@ -276,9 +274,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.shimmer').forEach(title => {
         shimmerObserver.observe(title);
         title.style.animationPlayState = 'paused';
-        // Play once - pause after animation ends
+        // Play once - stop observing after animation ends
         title.addEventListener('animationend', () => {
             title.style.animationPlayState = 'paused';
+            shimmerObserver.unobserve(title);
         });
     });
 });
