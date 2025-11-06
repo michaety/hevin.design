@@ -134,8 +134,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Subtitle scroll focus animation
     const subtitle = document.querySelector('.hero-subtitle');
     if (subtitle) {
+        const scrollThreshold = window.innerHeight * 0.3; // 30% of viewport height
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 200) {
+            if (window.scrollY > scrollThreshold) {
                 subtitle.classList.add('focus');
             } else {
                 subtitle.classList.remove('focus');
