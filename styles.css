@@ -19,7 +19,7 @@ body {
     background: linear-gradient(-45deg, #4B0082, #6A5ACD, #ADD8E6, #00c3ff);
     background-size: 400% 400%;
     background-attachment: fixed; /* Keep gradient stable on scroll */
-    animation: gradientMove 8.8s ease-in-out infinite;
+    animation: gradientMove 11.44s ease-in-out infinite;
     line-height: 1.8;
     font-size: 1rem;
     overflow-x: hidden;
@@ -50,7 +50,7 @@ h1, h2, h3, h4, h5, h6 {
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.3); /* Subtle glow for readability */
 }
 
-/* Shimmer effect for titles - continuous infinite animation */
+/* Shimmer effect for titles - controlled by JavaScript and Intersection Observer */
 h1, h2, h3 {
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
@@ -58,12 +58,6 @@ h1, h2, h3 {
     font-style: normal;
     text-transform: uppercase;
     color: #ffffff; /* Fallback color for accessibility */
-    background: linear-gradient(135deg, #ffffff, #5E5E5E, #ffffff);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 200% 100%;
-    animation: shimmer 5s linear infinite;
 }
 
 /* Fallback for browsers that don't support background-clip: text */
@@ -72,6 +66,17 @@ h1, h2, h3 {
         color: #ffffff;
         background: none;
     }
+}
+
+/* Shimmer class for specific titles - triggered on scroll */
+.shimmer {
+    background: linear-gradient(135deg, #ffffff, #5E5E5E, #ffffff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 100%;
+    animation: shimmer 6.5s linear forwards;
+    animation-play-state: paused;
 }
 
 @keyframes shimmer {
@@ -245,7 +250,9 @@ nav ul li a:hover::after {
     letter-spacing: -0.025em;
     position: relative;
     z-index: 2;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Shadow for readability */
+    color: #5E5E5E;
+    text-shadow: 0 0 5px rgba(255,255,255,0.3);
+    animation: gradientMove 11.44s ease-in-out infinite;
 }
 
 .hero-subtitle {

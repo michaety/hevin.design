@@ -238,4 +238,47 @@ document.addEventListener('DOMContentLoaded', () => {
             card.style.transform = '';
         });
     });
+    
+    // Shimmer effect for specific titles - triggered on scroll
+    const shimmerTitles = [
+        "Your Creative Growth Partner",
+        "Our Services",
+        "Skills & Tech Stack",
+        "Sample Projects",
+        "What Our Clients Say",
+        "Why Choose Hevin Design",
+        "Our Process",
+        "Frequently Asked Questions",
+        "Let's Elevate Your Brand"
+    ];
+
+    // Add shimmer class only to specific titles
+    document.querySelectorAll('h1, h2, h3').forEach(el => {
+        if (shimmerTitles.includes(el.textContent.trim())) {
+            el.classList.add('shimmer');
+        } else {
+            el.classList.remove('shimmer');
+        }
+    });
+
+    // Intersection Observer for shimmer animation on scroll
+    const shimmerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animationPlayState = 'running';
+            } else {
+                entry.target.style.animationPlayState = 'paused';
+            }
+        });
+    }, { threshold: 0.6 });
+
+    // Observe shimmer titles and set initial paused state
+    document.querySelectorAll('.shimmer').forEach(title => {
+        shimmerObserver.observe(title);
+        title.style.animationPlayState = 'paused';
+        // Play once - pause after animation ends
+        title.addEventListener('animationend', () => {
+            title.style.animationPlayState = 'paused';
+        });
+    });
 });
