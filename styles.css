@@ -8,10 +8,20 @@
 body {
     font-family: 'Inter', 'Roboto', sans-serif;
     color: #2D3748; /* Dark gray for text */
-    background-color: #F7FAFC; /* Light gray background */
+    background: linear-gradient(135deg, #f7fafc, #edf2f7, #e2e8f0, #edf2f7, #f7fafc);
+    background-size: 400% 400%;
+    animation: gradientShift 30s ease infinite;
     line-height: 1.8;
     font-size: 1rem;
     overflow-x: hidden;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    body {
+        animation: none;
+        background: #F7FAFC; /* Fallback to static background */
+    }
 }
 
 /* Center headings and paragraph text for better visual hierarchy */
@@ -117,6 +127,16 @@ nav ul li a:hover {
     opacity: 0.8;
     z-index: 1;
     transition: opacity 0.5s ease; /* Smooth fade for clouds */
+    will-change: transform, opacity; /* Optimize for animations */
+}
+
+/* Cloud size variations */
+.hero .cloud.cloud-small {
+    max-width: 60px;
+}
+
+.hero .cloud.cloud-large {
+    max-width: 100px;
 }
 
 /* Adjust cloud positions for mobile */
@@ -141,10 +161,8 @@ nav ul li a:hover {
         left: 20%;
         top: 50%;
     }
-    .hero .cloud:nth-child(6),
-    .hero .cloud:nth-child(7),
-    .hero .cloud:nth-child(8),
-    .hero .cloud:nth-child(9) { /* Hide Clouds 6-9 */
+    /* Hide additional clouds on mobile (clouds 6-16) */
+    .hero .cloud:nth-child(n+6):nth-child(-n+16) {
         display: none;
     }
 }
@@ -965,5 +983,20 @@ section {
     }
     .service-card, .project-card, .process-step {
         padding: 0.75rem;
+    }
+}
+
+/* Additional prefers-reduced-motion support for animations */
+@media (prefers-reduced-motion: reduce) {
+    .hero,
+    .hero .cloud,
+    .service-card,
+    .project-card,
+    .process-step,
+    .testimonial-card,
+    .blog-card,
+    section {
+        animation: none !important;
+        transition: none !important;
     }
 }

@@ -6,6 +6,28 @@ function toggleMenu() {
 
 // Enhanced scroll animations with IntersectionObserver
 document.addEventListener('DOMContentLoaded', () => {
+    // Enhanced hamburger menu behavior for mobile
+    const menu = document.querySelector('#nav-menu');
+    const hamburger = document.querySelector('.menu-toggle');
+    const links = menu ? menu.querySelectorAll('a') : [];
+
+    // Close menu on outside click
+    if (menu && hamburger) {
+        document.addEventListener('click', (e) => {
+            if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
+                menu.classList.remove('active');
+            }
+        });
+
+        // Close menu after selecting a link
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.remove('active');
+            });
+        });
+    }
+
+
     // Constants
     const MOBILE_BREAKPOINT = 768;
     const mobileCloudIndices = [0, 1, 2, 3, 4]; // Clouds 1-5 for mobile
