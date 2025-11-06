@@ -52,8 +52,8 @@ h1.shimmer, h2.shimmer, h3.shimmer {
     background-size: 200% auto;
     background-clip: text;
     -webkit-background-clip: text;
+    color: transparent; /* Fallback for browsers that don't support -webkit-text-fill-color */
     -webkit-text-fill-color: transparent;
-    color: transparent;
     animation: shimmerText 1.5s linear forwards;
 }
 
@@ -471,12 +471,12 @@ h2 {
 
 .service-card:hover {
     transform: translateY(-10px) scale(1.05) rotateY(5deg);
-    box-shadow: 0 12px 30px rgba(109, 40, 217, 0.3);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
 }
 
 .service-card h3 {
     font-size: 1.25rem; /* Smaller for mobile */
-    color: #334155; /* Slate color */
+    color: #000000 !important; /* Black text */
     margin-bottom: 0.75rem;
     position: relative;
     z-index: 1;
@@ -484,7 +484,7 @@ h2 {
 
 .service-card p {
     font-size: 0.9rem; /* Smaller for mobile */
-    color: #64748b; /* Keep slate for service card descriptions for contrast on white background */
+    color: #333333 !important; /* Dark grey text */
     position: relative;
     z-index: 1;
 }
