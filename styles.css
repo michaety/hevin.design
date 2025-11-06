@@ -60,8 +60,8 @@ h1.shimmer, h2.shimmer, h3.shimmer {
 }
 
 @keyframes shimmer {
-    0% { background-position: 0% 0; }
-    100% { background-position: 100% 0; }
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 0%; }
 }
 
 /* Remove any pseudo-elements on h3 that could create bars */
@@ -197,9 +197,9 @@ nav ul li a:hover::after {
 }
 
 @keyframes gradientMove {
-    0% { background-position: 0 50%; }
+    0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
-    100% { background-position: 0 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .hero-content {
