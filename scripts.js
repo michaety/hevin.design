@@ -11,36 +11,6 @@ const FORM_MESSAGES = {
     networkError: 'Network error. Please email us directly at info@hevin.design'
 };
 
-// Cursor trail - Smooth comet-like trail
-const trail = document.createElement('div');
-trail.className = 'cursor-trail';
-document.body.appendChild(trail);
-let timeout;
-let cursorTrailEnabled = false;
-
-function initCursorTrails() {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        trail.style.display = 'none';
-        return;
-    }
-    if (window.innerWidth < 768) {
-        trail.style.display = 'none';
-        return;
-    }
-    cursorTrailEnabled = true;
-    document.body.style.cursor = 'none';
-}
-
-function updateCursorTrails(x, y) {
-    if (!cursorTrailEnabled) return;
-    trail.style.transform = `translate(${x - 60}px, ${y - 10}px)`;
-    trail.style.opacity = 0.7;
-    clearTimeout(timeout);
-    timeout = setTimeout(() => { 
-        trail.style.opacity = 0; 
-    }, 300);
-}
-
 // Hero portal mouse effect
 function updateHeroPortal(e) {
     const hero = document.querySelector('.hero');
@@ -117,17 +87,13 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Toggle current FAQ
             question.setAttribute('aria-expanded', !isExpanded);
-            answer.style.display = isExpanded ? 'none' : 'block';
+            answer.classList.toggle('open');
             icon.textContent = isExpanded ? '+' : '-';
         });
     });
     
-    // Initialize cursor trails
-    initCursorTrails();
-    
-    // Cursor trail and hero portal effects (passive for performance)
+    // Hero portal effect (passive for performance)
     document.addEventListener('mousemove', (e) => {
-        updateCursorTrails(e.pageX, e.pageY);
         updateHeroPortal(e);
     }, { passive: true });
     
@@ -148,6 +114,34 @@ document.addEventListener('DOMContentLoaded', () => {
     sections.forEach(section => {
         sectionObserver.observe(section);
     });
+    
+    // Section title shine animation on scroll
+    const sectionTitles = document.querySelectorAll('section h2');
+    const shineObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.classList.contains('shine')) {
+                entry.target.classList.add('shine');
+            }
+        });
+    }, {
+        threshold: 0.5
+    });
+    
+    sectionTitles.forEach(title => {
+        shineObserver.observe(title);
+    });
+    
+    // Subtitle scroll focus animation
+    const subtitle = document.querySelector('.hero-subtitle');
+    if (subtitle) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 200) {
+                subtitle.classList.add('focus');
+            } else {
+                subtitle.classList.remove('focus');
+            }
+        }, { passive: true });
+    }
     
     // Form submission handler
     const form = document.getElementById('contact-form');
