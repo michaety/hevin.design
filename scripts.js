@@ -4,43 +4,36 @@ function toggleMenu() {
     menu.classList.toggle('active');
 }
 
-// Cursor trail effect
-let cursorTrails = [];
-const MAX_TRAILS = 15;
+// Enhanced multi-layered cursor trail effect (comet-like)
+const trails = [];
+const TRAIL_COUNT = 3;
+const STAGGER_DELAY_MS = 50; // Delay between each trail layer update
 
-function createCursorTrail(x, y) {
+function initCursorTrails() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (window.innerWidth <= 768) return; // Disable on mobile
+    if (window.innerWidth < 768) return; // Disable on mobile
     
-    const trail = document.createElement('div');
-    trail.className = 'cursor-trail';
-    trail.style.left = x + 'px';
-    trail.style.top = y + 'px';
-    trail.style.opacity = '1';
-    document.body.appendChild(trail);
-    
-    cursorTrails.push(trail);
-    
-    setTimeout(() => {
-        trail.style.opacity = '0.5';
-    }, 100);
-    
-    setTimeout(() => {
-        trail.style.opacity = '0';
-        setTimeout(() => {
-            if (trail.parentNode) {
-                trail.remove();
-            }
-            cursorTrails = cursorTrails.filter(t => t !== trail);
-        }, 300);
-    }, 200);
-    
-    if (cursorTrails.length > MAX_TRAILS) {
-        const oldTrail = cursorTrails.shift();
-        if (oldTrail && oldTrail.parentNode) {
-            oldTrail.remove();
-        }
+    // Create 3 layered trail elements
+    for (let i = 0; i < TRAIL_COUNT; i++) {
+        const trail = document.createElement('div');
+        trail.className = 'cursor-trail';
+        trail.style.transitionDelay = `${i * 0.05}s`;
+        trail.style.zIndex = 9999 - i; // Layer them properly
+        document.body.appendChild(trail);
+        trails.push(trail);
     }
+}
+
+function updateCursorTrails(x, y) {
+    if (trails.length === 0) return;
+    
+    trails.forEach((trail, idx) => {
+        setTimeout(() => {
+            trail.style.left = `${x}px`;
+            trail.style.top = `${y}px`;
+            trail.style.opacity = 1 - (idx * 0.3); // Gradually fade each layer
+        }, idx * STAGGER_DELAY_MS); // Stagger the movement
+    });
 }
 
 // Hero portal mouse effect
@@ -124,19 +117,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // Cursor trail and hero portal effects
-    let lastTrailTime = 0;
-    const trailThrottle = 50; // milliseconds
+    // Initialize cursor trails
+    initCursorTrails();
     
+    // Cursor trail and hero portal effects (passive for performance)
     document.addEventListener('mousemove', (e) => {
-        const now = Date.now();
-        if (now - lastTrailTime > trailThrottle) {
-            createCursorTrail(e.clientX, e.clientY);
-            lastTrailTime = now;
-        }
-        
+        updateCursorTrails(e.pageX, e.pageY);
         updateHeroPortal(e);
-    });
+    }, { passive: true });
     
     // Section color shift on scroll
     const sections = document.querySelectorAll('section');

@@ -5,6 +5,11 @@
     box-sizing: border-box;
 }
 
+/* Design System - Color Palette */
+:root {
+    --color-amber-hover: #B45309;
+}
+
 body {
     font-family: 'Inter', 'Roboto', sans-serif;
     color: #475569; /* Slate text color */
@@ -48,6 +53,7 @@ li {
     max-width: 100%; /* Prevents overflowing the header */
     display: block;
     margin: 0 auto;
+    aspect-ratio: 1 / 1;
 }
 
 /* Header */
@@ -122,9 +128,9 @@ nav ul li a:hover::after {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(45deg, #8B5CF6, #6366F1);
-    background-size: 200% 200%;
-    animation: gradientFlow 20s ease-in-out infinite alternate;
+    background: linear-gradient(45deg, #8B5CF6, #6366F1, #3B82F6, #14B8A6, #8B5CF6);
+    background-size: 500% 500%;
+    animation: gradientFlow 30s ease-in-out infinite;
     color: #FFFFFF;
     text-align: center;
     padding: 6rem 1rem; /* Reduced padding for mobile */
@@ -158,7 +164,8 @@ nav ul li a:hover::after {
 
 @keyframes gradientFlow {
     0% { background-position: 0% 50%; }
-    100% { background-position: 100% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .hero-content {
@@ -265,10 +272,12 @@ nav ul li a:hover::after {
 }
 
 .cta-button:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-    color: #FFFFFF;
-    background-color: #D97706;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(180, 83, 9, 0.7);
+    color: #FFFFFF !important;
+    font-weight: bold;
+    background-color: var(--color-amber-hover);
+    transition: all 0.3s ease-out;
 }
 
 /* General Section Styling */
@@ -561,6 +570,7 @@ h2::after {
     object-fit: cover;
     border-radius: 0.5rem;
     margin-bottom: 0.75rem;
+    aspect-ratio: 3 / 2;
 }
 
 .project-card h3 {
@@ -1214,18 +1224,19 @@ section {
     }
 }
 
-/* Cursor trail effect */
+/* Cursor trail effect - Enhanced multi-layered comet-like streak */
 .cursor-trail {
     position: fixed;
-    width: 30px;
-    height: 10px;
-    filter: blur(5px);
-    background: linear-gradient(to right, rgba(99, 179, 237, 0), rgba(99, 179, 237, 0.8));
+    width: 40px;
+    height: 15px;
+    filter: blur(8px);
+    background: linear-gradient(to right, rgba(99, 179, 237, 0.2), rgba(99, 179, 237, 0.8), rgba(99, 179, 237, 0.2));
     pointer-events: none;
     z-index: 9999;
     transform: translate(-50%, -50%);
     opacity: 0;
-    transition: left 0.05s ease-out, top 0.05s ease-out, opacity 0.3s ease;
+    transition: left 0.03s ease-out, top 0.03s ease-out, opacity 0.5s ease;
+    border-radius: 50%;
 }
 
 /* Shape-shifting blob background */
