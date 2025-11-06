@@ -7,8 +7,9 @@ yarn-error.log*
 # Build outputs
 dist/
 build/
-*.min.js
-*.min.css
+# Note: *.min.js and *.min.css are production files and should be committed
+# *.min.js
+# *.min.css
 
 # OS files
 .DS_Store
