@@ -103,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('in-view');
+                entry.target.style.opacity = '1';
             } else {
                 entry.target.classList.remove('in-view');
             }
