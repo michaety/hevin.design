@@ -46,24 +46,23 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
 }
 
-/* Shimmer effect for titles */
-h1.shimmer::after, h2.shimmer::after, h3.shimmer::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.8) 50%, transparent 100%);
-    animation: shimmerSlide 1.5s ease-out;
+/* Shimmer effect for titles - isolated to text only */
+h1.shimmer, h2.shimmer, h3.shimmer {
+    background: linear-gradient(90deg, #fff 0%, #e0e0e0 50%, #fff 100%);
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent; /* Fallback for browsers that don't support -webkit-text-fill-color */
+    -webkit-text-fill-color: transparent;
+    animation: shimmerText 1.5s linear forwards;
 }
 
-@keyframes shimmerSlide {
+@keyframes shimmerText {
     0% {
-        left: -100%;
+        background-position: -200% 0;
     }
     100% {
-        left: 100%;
+        background-position: 200% 0;
     }
 }
 
@@ -472,12 +471,12 @@ h2 {
 
 .service-card:hover {
     transform: translateY(-10px) scale(1.05) rotateY(5deg);
-    box-shadow: 0 12px 30px rgba(109, 40, 217, 0.3);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
 }
 
 .service-card h3 {
     font-size: 1.25rem; /* Smaller for mobile */
-    color: #334155; /* Slate color */
+    color: #000000 !important; /* Black text */
     margin-bottom: 0.75rem;
     position: relative;
     z-index: 1;
@@ -485,7 +484,7 @@ h2 {
 
 .service-card p {
     font-size: 0.9rem; /* Smaller for mobile */
-    color: #64748b; /* Keep slate for service card descriptions for contrast on white background */
+    color: #333333 !important; /* Dark grey text */
     position: relative;
     z-index: 1;
 }
@@ -548,10 +547,10 @@ h2 {
 }
 
 .project-card {
-    background: rgba(255, 255, 255, 0.1); /* Subtle transparent overlay for readability */
+    background: #FFFFFF !important; /* Solid white background */
     padding: 1rem;
     border-radius: 0.5rem;
-    box-shadow: 0 4px 12px rgba(109, 40, 217, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
     transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     opacity: 0;
     transform: scale(0.95) rotateY(-10deg);
@@ -571,7 +570,7 @@ h2 {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(167, 139, 250, 0.1), rgba(192, 132, 252, 0.1));
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.05));
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
@@ -603,7 +602,7 @@ h2 {
 
 .project-card:hover {
     transform: translateY(-12px) scale(1.05) rotateY(5deg) rotateX(-5deg);
-    box-shadow: 0 15px 40px rgba(109, 40, 217, 0.3);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
 .project-card img {
@@ -617,24 +616,24 @@ h2 {
 
 .project-card h3 {
     font-size: 1.25rem;
-    color: #334155; /* Slate color */
+    color: #000000 !important; /* Black text */
     margin-bottom: 0.5rem;
 }
 
 .project-card p {
     font-size: 0.9rem;
-    color: #64748b; /* Slate color */
+    color: #333333 !important; /* Dark grey text */
     margin-bottom: 0.75rem;
 }
 
 .project-card a {
-    color: #333333; /* Dark grey for high contrast (WCAG AA compliant) */
+    color: #333333 !important; /* Dark grey for high contrast (WCAG AA compliant) */
     text-decoration: none;
     font-weight: 500;
 }
 
 .project-card a:hover {
-    color: #000000;
+    color: #000000 !important;
     text-decoration: underline;
 }
 
@@ -665,10 +664,10 @@ h2 {
 }
 
 .process-step {
-    background: rgba(255, 255, 255, 0.1); /* Subtle transparent overlay for readability */
+    background: #FFFFFF !important; /* Solid white background */
     padding: 1rem;
     border-radius: 0.75rem;
-    box-shadow: 0 4px 12px rgba(109, 40, 217, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
     transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     opacity: 0;
     transform: translateX(-50px) skew(-5deg);
@@ -686,7 +685,7 @@ h2 {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.05), transparent);
     transition: left 0.5s ease;
 }
 
@@ -705,19 +704,19 @@ h2 {
 
 .process-step:hover {
     transform: translateY(-8px) scale(1.03);
-    box-shadow: 0 8px 25px rgba(109, 40, 217, 0.25);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
 }
 
 .process-step h3 {
     font-size: 1.25rem;
-    color: #334155; /* Slate color */
+    color: #000000 !important; /* Black text */
     margin-bottom: 0.5rem;
     transform: skew(5deg);
 }
 
 .process-step p {
     font-size: 0.9rem;
-    color: #64748b; /* Slate color */
+    color: #333333 !important; /* Dark grey text */
     transform: skew(5deg);
 }
 
@@ -938,10 +937,10 @@ footer a:hover {
 }
 
 .skill-category {
-    background: rgba(255, 255, 255, 0.1); /* Subtle transparent overlay for readability */
+    background: #FFFFFF !important; /* Solid white background */
     padding: 1.5rem;
     border-radius: 0.5rem;
-    box-shadow: 0 4px 12px rgba(109, 40, 217, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
     flex: 1 1 calc(33.333% - 2rem);
     min-width: 250px;
     max-width: 350px;
@@ -951,12 +950,12 @@ footer a:hover {
 
 .skill-category:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(109, 40, 217, 0.2);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .skill-category h3 {
     font-size: 1.5rem;
-    color: #5b21b6; /* Purple color */
+    color: #000000 !important; /* Black text */
     margin-bottom: 1rem;
 }
 
@@ -968,8 +967,8 @@ footer a:hover {
 .skill-category li {
     padding: 0.5rem 0;
     font-size: 1rem;
-    color: #64748b; /* Slate color */
-    border-bottom: 1px solid #e0e7ff;
+    color: #333333 !important; /* Dark grey text */
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .skill-category li:last-child {
@@ -1005,10 +1004,10 @@ footer a:hover {
 }
 
 .testimonial-card {
-    background: rgba(255, 255, 255, 0.1); /* Subtle transparent overlay for readability */
+    background: #FFFFFF !important; /* Solid white background */
     padding: 2rem;
     border-radius: 0.5rem;
-    box-shadow: 0 4px 12px rgba(109, 40, 217, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
     flex: 1 1 calc(33.333% - 2rem);
     min-width: 280px;
     max-width: 400px;
@@ -1024,19 +1023,19 @@ footer a:hover {
     top: 10px;
     left: 20px;
     font-size: 4rem;
-    color: rgba(167, 139, 250, 0.2);
+    color: rgba(0, 0, 0, 0.1);
     font-family: Georgia, serif;
     line-height: 1;
 }
 
 .testimonial-card:hover {
     transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 10px 30px rgba(109, 40, 217, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
 }
 
 .testimonial-text {
     font-size: 1rem;
-    color: #64748b; /* Slate color */
+    color: #333333 !important; /* Dark grey text */
     font-style: italic;
     margin-bottom: 1rem;
     line-height: 1.6;
@@ -1046,7 +1045,7 @@ footer a:hover {
 
 .testimonial-author {
     font-size: 0.9rem;
-    color: #7c3aed; /* Purple color */
+    color: #000000 !important; /* Black text */
     font-weight: 600;
 }
 
@@ -1079,10 +1078,10 @@ footer a:hover {
 }
 
 .blog-card {
-    background: rgba(255, 255, 255, 0.1); /* Subtle transparent overlay for readability */
+    background: #FFFFFF !important; /* Solid white background */
     padding: 1.5rem;
     border-radius: 0.5rem;
-    box-shadow: 0 4px 12px rgba(109, 40, 217, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
     flex: 1 1 calc(33.333% - 2rem);
     min-width: 280px;
     max-width: 400px;
@@ -1092,24 +1091,24 @@ footer a:hover {
 
 .blog-card:hover {
     transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 10px 30px rgba(109, 40, 217, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
 }
 
 .blog-card h3 {
     font-size: 1.25rem;
-    color: #334155; /* Slate color */
+    color: #000000 !important; /* Black text */
     margin-bottom: 0.5rem;
 }
 
 .blog-date {
     font-size: 0.85rem;
-    color: #94a3b8; /* Light slate */
+    color: #666666 !important; /* Medium grey */
     margin-bottom: 1rem;
 }
 
 .blog-card p {
     font-size: 0.95rem;
-    color: #64748b; /* Slate color */
+    color: #333333 !important; /* Dark grey text */
     margin-bottom: 1rem;
     line-height: 1.6;
 }
