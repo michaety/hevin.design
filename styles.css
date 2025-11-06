@@ -1331,6 +1331,26 @@ section {
 
 
 
+/* Cursor-following gradient overlay */
+.cursor-gradient-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+    background: radial-gradient(
+        circle 600px at var(--cursor-x, 50%) var(--cursor-y, 50%),
+        rgba(126, 89, 206, 0.3) 0%,
+        rgba(35, 103, 242, 0.2) 25%,
+        rgba(0, 191, 255, 0.1) 50%,
+        transparent 100%
+    );
+    transition: opacity 0.3s ease;
+}
+
 /* Shape-shifting blob background */
 .blob-container {
     position: fixed;
@@ -1413,12 +1433,20 @@ section {
     .project-card::after,
     .process-step::before,
     .cta-button::before,
-    button::after {
+    button::after,
+    .cursor-gradient-overlay {
         display: none !important;
     }
     
     /* Disable blur effect for accessibility */
     .hero-subtitle {
         filter: none !important;
+    }
+}
+
+/* Hide cursor gradient overlay on touch devices */
+@media (pointer: coarse) {
+    .cursor-gradient-overlay {
+        display: none;
     }
 }
