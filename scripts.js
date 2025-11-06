@@ -4,6 +4,54 @@ function toggleMenu() {
     menu.classList.toggle('active');
 }
 
+// Cursor trail effect
+let cursorTrails = [];
+const MAX_TRAILS = 15;
+
+function createCursorTrail(x, y) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.innerWidth <= 768) return; // Disable on mobile
+    
+    const trail = document.createElement('div');
+    trail.className = 'cursor-trail';
+    trail.style.left = x + 'px';
+    trail.style.top = y + 'px';
+    trail.style.opacity = '1';
+    document.body.appendChild(trail);
+    
+    cursorTrails.push(trail);
+    
+    setTimeout(() => {
+        trail.style.opacity = '0';
+        setTimeout(() => {
+            if (trail.parentNode) {
+                trail.remove();
+            }
+            cursorTrails = cursorTrails.filter(t => t !== trail);
+        }, 300);
+    }, 200);
+    
+    if (cursorTrails.length > MAX_TRAILS) {
+        const oldTrail = cursorTrails.shift();
+        if (oldTrail && oldTrail.parentNode) {
+            oldTrail.remove();
+        }
+    }
+}
+
+// Hero portal mouse effect
+function updateHeroPortal(e) {
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+    
+    const rect = hero.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    
+    hero.style.setProperty('--mouse-x', x + '%');
+    hero.style.setProperty('--mouse-y', y + '%');
+}
+
 // Enhanced scroll animations with IntersectionObserver
 document.addEventListener('DOMContentLoaded', () => {
     // Enhanced hamburger menu behavior for mobile
@@ -139,6 +187,63 @@ document.addEventListener('DOMContentLoaded', () => {
             question.setAttribute('aria-expanded', !isExpanded);
             answer.style.display = isExpanded ? 'none' : 'block';
             icon.textContent = isExpanded ? '+' : '-';
+        });
+    });
+    
+    // Cursor trail and hero portal effects
+    let lastTrailTime = 0;
+    const trailThrottle = 50; // milliseconds
+    
+    document.addEventListener('mousemove', (e) => {
+        const now = Date.now();
+        if (now - lastTrailTime > trailThrottle) {
+            createCursorTrail(e.clientX, e.clientY);
+            lastTrailTime = now;
+        }
+        
+        updateHeroPortal(e);
+    });
+    
+    // Section color shift on scroll
+    const sections = document.querySelectorAll('section');
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+            } else {
+                entry.target.classList.remove('in-view');
+            }
+        });
+    }, {
+        threshold: 0.3
+    });
+    
+    sections.forEach(section => {
+        sectionObserver.observe(section);
+    });
+    
+    // Add card tilt effect on mouse move
+    const cards = document.querySelectorAll('.service-card, .project-card');
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            if (window.innerWidth <= 768) return; // Disable on mobile
+            
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = ((y - centerY) / centerY) * -10;
+            const rotateY = ((x - centerX) / centerX) * 10;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
         });
     });
 });
