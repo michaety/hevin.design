@@ -19,7 +19,6 @@ body {
     line-height: 1.8;
     font-size: 1rem;
     overflow-x: hidden;
-    cursor: none;
 }
 
 /* Respect user's motion preferences */
@@ -27,6 +26,9 @@ body {
     body {
         animation: none;
         background: #F7FAFC; /* Fallback to static background */
+    }
+    .hero {
+        background: linear-gradient(135deg, #7C3AED, #A855F7); /* Fallback gradient for hero */
     }
 }
 
@@ -140,7 +142,7 @@ nav ul li a:hover::after {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    height: 60vh !important;
+    height: 60vh;
 }
 
 /* Particle container for hero portal effect */
@@ -275,7 +277,7 @@ nav ul li a:hover::after {
     transform: scale(1.05);
     box-shadow: 0 0 15px rgba(180, 83, 9, 0.6);
     background-color: var(--color-amber-hover);
-    color: #FFFFFF !important;
+    color: #FFFFFF;
     text-shadow: 0 0 5px rgba(255,255,255,0.8);
     transition: color 0.3s ease, text-shadow 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
 }

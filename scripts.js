@@ -16,21 +16,23 @@ const trail = document.createElement('div');
 trail.className = 'cursor-trail';
 document.body.appendChild(trail);
 let timeout;
+let cursorTrailEnabled = false;
 
 function initCursorTrails() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         trail.style.display = 'none';
-        document.body.style.cursor = 'auto';
         return;
     }
     if (window.innerWidth < 768) {
         trail.style.display = 'none';
-        document.body.style.cursor = 'auto';
         return;
     }
+    cursorTrailEnabled = true;
+    document.body.style.cursor = 'none';
 }
 
 function updateCursorTrails(x, y) {
+    if (!cursorTrailEnabled) return;
     trail.style.transform = `translate(${x - 60}px, ${y - 10}px)`;
     trail.style.opacity = 0.7;
     clearTimeout(timeout);
