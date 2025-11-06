@@ -1,3 +1,6 @@
+/* Import Montserrat font for shimmer effect */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap");
+
 /* Reset default styles */
 * {
     margin: 0;
@@ -16,7 +19,7 @@ body {
     background: linear-gradient(-45deg, #4B0082, #6A5ACD, #ADD8E6, #00c3ff);
     background-size: 400% 400%;
     background-attachment: fixed; /* Keep gradient stable on scroll */
-    animation: gradientMove 8s ease-in-out infinite;
+    animation: gradientMove 8.8s ease-in-out infinite;
     line-height: 1.8;
     font-size: 1rem;
     overflow-x: hidden;
@@ -44,24 +47,40 @@ h1, h2, h3, h4, h5, h6 {
     text-decoration: none; /* No underlines */
     position: relative;
     overflow: hidden;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3); /* Subtle glow for readability */
 }
 
-/* Shimmer effect for titles - isolated to text only */
-h1.shimmer, h2.shimmer, h3.shimmer {
-    font-family: "Lato", sans-serif;
-    font-weight: 300;
-    background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, #fff 50%, rgba(255,255,255,0.1) 100%);
-    background-size: 200% 100%;
+/* Shimmer effect for titles - continuous infinite animation */
+h1, h2, h3 {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    text-transform: uppercase;
+    color: #ffffff; /* Fallback color for accessibility */
+    background: linear-gradient(135deg, #ffffff, #5E5E5E, #ffffff);
     background-clip: text;
     -webkit-background-clip: text;
-    color: transparent; /* Fallback for browsers that don't support -webkit-text-fill-color */
     -webkit-text-fill-color: transparent;
-    animation: shimmer 2s linear;
+    background-size: 200% 100%;
+    animation: shimmer 5s linear infinite;
+}
+
+/* Fallback for browsers that don't support background-clip: text */
+@supports not (background-clip: text) or not (-webkit-background-clip: text) {
+    h1, h2, h3 {
+        color: #ffffff;
+        background: none;
+    }
 }
 
 @keyframes shimmer {
-    0% { background-position: 0% 0%; }
-    100% { background-position: 100% 0%; }
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
 }
 
 /* Remove any pseudo-elements on h3 that could create bars */

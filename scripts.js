@@ -11,8 +11,6 @@ const FORM_MESSAGES = {
     networkError: 'Network error. Please email us directly at info@hevin.design'
 };
 
-const SHIMMER_DURATION = 2000; // Match CSS animation duration (2s)
-
 // Hero portal mouse effect
 function updateHeroPortal(e) {
     const hero = document.querySelector('.hero');
@@ -133,27 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     sections.forEach(section => {
         sectionObserver.observe(section);
-    });
-    
-    // Title shimmer animation on viewport entry
-    const titles = document.querySelectorAll('h1, h2, h3');
-    const shimmerObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !entry.target.classList.contains('shimmer-done')) {
-                entry.target.classList.add('shimmer');
-                entry.target.classList.add('shimmer-done');
-                // Remove shimmer class after animation completes
-                setTimeout(() => {
-                    entry.target.classList.remove('shimmer');
-                }, SHIMMER_DURATION);
-            }
-        });
-    }, {
-        threshold: 0.3
-    });
-    
-    titles.forEach(title => {
-        shimmerObserver.observe(title);
     });
     
     // About section background fade on scroll
