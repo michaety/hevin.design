@@ -330,10 +330,6 @@ h2 {
     text-decoration: none; /* No underlines */
 }
 
-/* Remove h2::after pseudo-element that creates bars under titles */
-
-/* Remove h2::before pseudo-element that creates shine effect */
-
 /* About Section */
 #about p {
     max-width: 90%; /* Wider for mobile readability */
@@ -1261,7 +1257,6 @@ section {
     .service-card, .project-card, .process-step {
         padding: 0.75rem;
     }
-    /* Removed h2::after to eliminate bars under titles */
 }
 
 /* Extra small devices */
@@ -1343,13 +1338,6 @@ section {
         transform: translate(40px, 40px) scale(1.05);
     }
 }
-
-/* Scroll-triggered section color shifts - removed to maintain gradient flow */
-section {
-    transition: background-color 1s ease;
-}
-
-/* Removed section.in-view background-color to maintain gradient flow */
 
 /* Additional prefers-reduced-motion support for animations */
 @media (prefers-reduced-motion: reduce) {
