@@ -4,36 +4,29 @@ function toggleMenu() {
     menu.classList.toggle('active');
 }
 
-// Enhanced multi-layered cursor trail effect (comet-like)
-const trails = [];
-const TRAIL_COUNT = 3;
-const STAGGER_DELAY_MS = 50; // Delay between each trail layer update
+// Single extended flowy cursor trail
+let trail = null;
 
 function initCursorTrails() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (window.innerWidth < 768) return; // Disable on mobile
     
-    // Create 3 layered trail elements
-    for (let i = 0; i < TRAIL_COUNT; i++) {
-        const trail = document.createElement('div');
-        trail.className = 'cursor-trail';
-        trail.style.transitionDelay = `${i * 0.05}s`;
-        trail.style.zIndex = 9999 - i; // Layer them properly
-        document.body.appendChild(trail);
-        trails.push(trail);
-    }
+    trail = document.createElement('div');
+    trail.className = 'cursor-trail';
+    document.body.appendChild(trail);
 }
 
 function updateCursorTrails(x, y) {
-    if (trails.length === 0) return;
+    if (!trail) return;
     
-    trails.forEach((trail, idx) => {
-        setTimeout(() => {
-            trail.style.left = `${x}px`;
-            trail.style.top = `${y}px`;
-            trail.style.opacity = 1 - (idx * 0.3); // Gradually fade each layer
-        }, idx * STAGGER_DELAY_MS); // Stagger the movement
-    });
+    trail.style.left = `${x}px`;
+    trail.style.top = `${y}px`;
+    trail.style.opacity = 1;
+    
+    // Fade effect for smoother flow
+    setTimeout(() => {
+        if (trail) trail.style.opacity = 0.7;
+    }, 200);
 }
 
 // Hero portal mouse effect
@@ -143,6 +136,55 @@ document.addEventListener('DOMContentLoaded', () => {
     sections.forEach(section => {
         sectionObserver.observe(section);
     });
+    
+    // Hero scroll-expand animation
+    window.addEventListener('scroll', () => {
+        const hero = document.querySelector('.hero');
+        if (hero) {
+            if (window.scrollY > 100) {
+                hero.classList.add('expanded');
+            } else {
+                hero.classList.remove('expanded');
+            }
+        }
+    }, { passive: true });
+    
+    // Form submission handler
+    const form = document.getElementById('contact-form');
+    if (form) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalText = submitButton.textContent;
+            
+            submitButton.textContent = 'Sending...';
+            submitButton.disabled = true;
+            
+            const data = new FormData(form);
+            
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: data,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    alert('Message sent successfully! We\'ll get back to you soon.');
+                    form.reset();
+                } else {
+                    alert('Error sending message. Please try again or email us directly at info@hevin.design');
+                }
+            } catch (error) {
+                alert('Network error. Please check your connection or email us at info@hevin.design');
+            } finally {
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+            }
+        });
+    }
     
     // Add card tilt effect on mouse move
     const cards = document.querySelectorAll('.service-card, .project-card');
