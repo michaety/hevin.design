@@ -157,8 +157,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const submitButton = form.querySelector('button[type="submit"]');
             const originalText = submitButton.textContent;
             
+            // Create or get message container
+            let messageEl = document.getElementById('form-message');
+            if (!messageEl) {
+                messageEl = document.createElement('div');
+                messageEl.id = 'form-message';
+                messageEl.style.cssText = 'margin-top: 1rem; padding: 1rem; border-radius: 0.375rem; text-align: center; font-weight: 500;';
+                form.appendChild(messageEl);
+            }
+            
             submitButton.textContent = 'Sending...';
             submitButton.disabled = true;
+            messageEl.textContent = '';
+            messageEl.style.display = 'none';
             
             const data = new FormData(form);
             
@@ -172,13 +183,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 
                 if (response.ok) {
-                    alert('Message sent successfully! We\'ll get back to you soon.');
+                    messageEl.textContent = 'Message sent successfully! We\'ll get back to you soon.';
+                    messageEl.style.backgroundColor = '#D1FAE5';
+                    messageEl.style.color = '#065F46';
+                    messageEl.style.display = 'block';
+                    messageEl.setAttribute('role', 'status');
+                    messageEl.setAttribute('aria-live', 'polite');
                     form.reset();
                 } else {
-                    alert('Error sending message. Please try again or email us directly at info@hevin.design');
+                    messageEl.textContent = 'Error sending message. Please try again or email us directly at info@hevin.design';
+                    messageEl.style.backgroundColor = '#FEE2E2';
+                    messageEl.style.color = '#991B1B';
+                    messageEl.style.display = 'block';
+                    messageEl.setAttribute('role', 'alert');
+                    messageEl.setAttribute('aria-live', 'assertive');
                 }
             } catch (error) {
-                alert('Network error. Please check your connection or email us at info@hevin.design');
+                messageEl.textContent = 'Network error. Please check your connection or email us at info@hevin.design';
+                messageEl.style.backgroundColor = '#FEE2E2';
+                messageEl.style.color = '#991B1B';
+                messageEl.style.display = 'block';
+                messageEl.setAttribute('role', 'alert');
+                messageEl.setAttribute('aria-live', 'assertive');
             } finally {
                 submitButton.textContent = originalText;
                 submitButton.disabled = false;

@@ -281,7 +281,7 @@ nav ul li a:hover::after {
 .cta-button:hover {
     transform: scale(1.05);
     box-shadow: 0 0 15px rgba(180, 83, 9, 0.6);
-    background-color: #B45309;
+    background-color: var(--color-amber-hover);
     color: #FFFFFF;
     transition: background-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
 }
