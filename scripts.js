@@ -25,7 +25,7 @@ function createCursorTrail(x, y) {
         trail.style.opacity = '0';
         setTimeout(() => {
             if (trail.parentNode) {
-                trail.parentNode.removeChild(trail);
+                trail.remove();
             }
             cursorTrails = cursorTrails.filter(t => t !== trail);
         }, 300);
@@ -34,7 +34,7 @@ function createCursorTrail(x, y) {
     if (cursorTrails.length > MAX_TRAILS) {
         const oldTrail = cursorTrails.shift();
         if (oldTrail && oldTrail.parentNode) {
-            oldTrail.parentNode.removeChild(oldTrail);
+            oldTrail.remove();
         }
     }
 }

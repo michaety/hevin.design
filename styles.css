@@ -246,8 +246,8 @@ nav ul li a:hover::after {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     animation: gradientText 3s ease infinite;
-    text-shadow: 0 0 20px rgba(192, 132, 252, 0.5);
     font-style: italic;
+    filter: drop-shadow(0 0 10px rgba(192, 132, 252, 0.5));
 }
 
 @keyframes gradientText {
@@ -1109,11 +1109,15 @@ section {
     .hero h1 {
         font-size: 2.25rem;
     }
+    /* Simplify 3D effects on smaller desktop screens */
     .service-card, .project-card {
-        transform: none;
+        transform: scale(0.95) !important;
+    }
+    .service-card.visible, .project-card.visible {
+        transform: scale(1) !important;
     }
     .service-card:hover, .project-card:hover {
-        transform: translateY(-5px) scale(1.02);
+        transform: translateY(-5px) scale(1.02) !important;
     }
 }
 
