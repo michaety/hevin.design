@@ -209,6 +209,12 @@ nav ul li a:hover::after {
     animation: gradientText 3s ease infinite;
     font-style: italic;
     filter: drop-shadow(0 0 10px rgba(192, 132, 252, 0.5));
+    transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.hero-subtitle.focus {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
 }
 
 @keyframes gradientText {
@@ -287,6 +293,8 @@ section {
     padding: 3rem 1rem; /* Reduced padding for mobile */
     max-width: 80rem;
     margin: 0 auto;
+    background: rgba(255, 255, 255, 0.7);
+    mix-blend-mode: overlay;
 }
 
 h2 {
@@ -300,6 +308,7 @@ h2 {
     position: relative;
     display: inline-block;
     width: 100%;
+    overflow: hidden;
 }
 
 h2::after {
@@ -312,6 +321,23 @@ h2::after {
     height: 4px;
     background: linear-gradient(90deg, #a78bfa, #c084fc);
     border-radius: 2px;
+}
+
+h2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(to left, transparent, rgba(255, 255, 255, 0.5), transparent);
+    transition: right 1s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+h2.shine::before {
+    right: -100%;
 }
 
 /* About Section */
@@ -738,9 +764,15 @@ h2::after {
 }
 
 .faq-answer {
-    display: none;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 1.25rem;
+    transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+}
+
+.faq-answer.open {
+    max-height: 1000px; /* Increased to accommodate longer answers */
     padding: 1.5rem 1.25rem 1.25rem;
-    animation: fadeIn 0.3s ease-in-out;
 }
 
 .faq-answer p {
@@ -1117,12 +1149,6 @@ section {
 }
 
 @media (max-width: 768px) {
-    body {
-        cursor: auto !important;
-    }
-    .cursor-trail {
-        display: none !important;
-    }
     .menu-toggle {
         display: block;
         position: absolute;
@@ -1244,18 +1270,7 @@ section {
     }
 }
 
-/* Cursor trail effect - Smooth comet-like trail */
-.cursor-trail {
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    width: 120px;
-    height: 20px;
-    background: linear-gradient(to left, rgba(99,179,237,0.8), rgba(99,179,237,0));
-    filter: blur(12px);
-    opacity: 0.7;
-    transition: transform 0.1s ease-out, opacity 0.2s ease-out;
-}
+
 
 /* Shape-shifting blob background */
 .blob-container {
@@ -1330,12 +1345,6 @@ section.in-view {
 
 /* Additional prefers-reduced-motion support for animations */
 @media (prefers-reduced-motion: reduce) {
-    body {
-        cursor: auto !important;
-    }
-    .cursor-trail {
-        display: none !important;
-    }
     .hero,
     .hero .cloud,
     .service-card,
@@ -1344,7 +1353,6 @@ section.in-view {
     .testimonial-card,
     .blog-card,
     .blob,
-    .cursor-trail,
     section {
         animation: none !important;
         transition: none !important;
