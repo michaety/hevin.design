@@ -269,7 +269,6 @@ nav ul li a:hover::after {
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
     color: #FFFFFF;
     background-color: #D97706;
-    transition: all 0.3s ease-out;
 }
 
 /* General Section Styling */
