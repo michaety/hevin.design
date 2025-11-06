@@ -5,36 +5,38 @@ function toggleMenu() {
 }
 
 // Constants
-const HERO_EXPAND_SCROLL_THRESHOLD = 100;
 const FORM_MESSAGES = {
     success: 'Message sent successfully! We\'ll get back to you soon.',
-    error: 'Error sending message. Please try again or email us directly at info@hevin.design',
-    networkError: 'Network error. Please check your connection or email us at info@hevin.design'
+    error: 'Error sending message. Please email us directly at info@hevin.design',
+    networkError: 'Network error. Please email us directly at info@hevin.design'
 };
 
-// Single extended flowy cursor trail
-let trail = null;
+// Cursor trail - Smooth comet-like trail
+const trail = document.createElement('div');
+trail.className = 'cursor-trail';
+document.body.appendChild(trail);
+let timeout;
 
 function initCursorTrails() {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (window.innerWidth < 768) return; // Disable on mobile
-    
-    trail = document.createElement('div');
-    trail.className = 'cursor-trail';
-    document.body.appendChild(trail);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        trail.style.display = 'none';
+        document.body.style.cursor = 'auto';
+        return;
+    }
+    if (window.innerWidth < 768) {
+        trail.style.display = 'none';
+        document.body.style.cursor = 'auto';
+        return;
+    }
 }
 
 function updateCursorTrails(x, y) {
-    if (!trail) return;
-    
-    trail.style.left = `${x}px`;
-    trail.style.top = `${y}px`;
-    trail.style.opacity = 1;
-    
-    // Fade effect for smoother flow
-    setTimeout(() => {
-        if (trail) trail.style.opacity = 0.7;
-    }, 200);
+    trail.style.transform = `translate(${x - 60}px, ${y - 10}px)`;
+    trail.style.opacity = 0.7;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => { 
+        trail.style.opacity = 0; 
+    }, 300);
 }
 
 // Hero portal mouse effect
@@ -144,18 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
     sections.forEach(section => {
         sectionObserver.observe(section);
     });
-    
-    // Hero scroll-expand animation
-    window.addEventListener('scroll', () => {
-        const hero = document.querySelector('.hero');
-        if (hero) {
-            if (window.scrollY > HERO_EXPAND_SCROLL_THRESHOLD) {
-                hero.classList.add('expanded');
-            } else {
-                hero.classList.remove('expanded');
-            }
-        }
-    }, { passive: true });
     
     // Form submission handler
     const form = document.getElementById('contact-form');

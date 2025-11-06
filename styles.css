@@ -13,12 +13,13 @@
 body {
     font-family: 'Inter', 'Roboto', sans-serif;
     color: #475569; /* Slate text color */
-    background: linear-gradient(135deg, #f8fafc, #e0e7ff, #ddd6fe, #e0e7ff, #f8fafc);
-    background-size: 400% 400%;
-    animation: gradientShift 30s ease infinite;
+    background: linear-gradient(135deg, #F3E5F5 0%, #A855F7 30%, #6366F1 60%, #00BCD4 100%);
+    background-size: 200% 200%;
+    animation: gradientFlow 40s ease infinite;
     line-height: 1.8;
     font-size: 1rem;
     overflow-x: hidden;
+    cursor: none;
 }
 
 /* Respect user's motion preferences */
@@ -128,26 +129,18 @@ nav ul li a:hover::after {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(45deg, #7C3AED, #A855F7, #C084FC, #7C3AED);
-    background-size: 600% 600%;
-    animation: gradientFlow 25s ease-in-out infinite;
+    background: transparent;
     color: #FFFFFF;
     text-align: center;
     padding: 6rem 1rem; /* Reduced padding for mobile */
     position: relative; /* Contain absolute-positioned elements */
-    min-height: 30vh;
+    min-height: 60vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    height: 30vh;
-    transition: height 1s ease, background-size 1s ease;
-}
-
-.hero.expanded {
-    height: 60vh;
-    background-size: 800% 800%;
+    height: 60vh !important;
 }
 
 /* Particle container for hero portal effect */
@@ -170,9 +163,9 @@ nav ul li a:hover::after {
 }
 
 @keyframes gradientFlow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
 }
 
 .hero-content {
@@ -282,8 +275,9 @@ nav ul li a:hover::after {
     transform: scale(1.05);
     box-shadow: 0 0 15px rgba(180, 83, 9, 0.6);
     background-color: var(--color-amber-hover);
-    color: #FFFFFF;
-    transition: background-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+    color: #FFFFFF !important;
+    text-shadow: 0 0 5px rgba(255,255,255,0.8);
+    transition: color 0.3s ease, text-shadow 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
 }
 
 /* General Section Styling */
@@ -1121,6 +1115,12 @@ section {
 }
 
 @media (max-width: 768px) {
+    body {
+        cursor: auto !important;
+    }
+    .cursor-trail {
+        display: none !important;
+    }
     .menu-toggle {
         display: block;
         position: absolute;
@@ -1150,7 +1150,7 @@ section {
     }
     .hero {
         padding: 4rem 1rem;
-        min-height: 35vh;
+        min-height: 60vh;
     }
     .hero::before {
         display: none; /* Disable portal effect on mobile */
@@ -1197,7 +1197,7 @@ section {
     }
     .hero {
         padding: 3rem 0.75rem;
-        min-height: 30vh;
+        min-height: 60vh;
     }
 
     .hero h1 {
@@ -1242,19 +1242,17 @@ section {
     }
 }
 
-/* Cursor trail effect - Single extended flowy trail */
+/* Cursor trail effect - Smooth comet-like trail */
 .cursor-trail {
     position: fixed;
-    width: 60px;
-    height: 20px;
-    filter: blur(10px);
-    background: linear-gradient(to right, rgba(99, 179, 237, 0.1), rgba(99, 179, 237, 0.9), rgba(99, 179, 237, 0.1));
     pointer-events: none;
     z-index: 9999;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: left 0.02s ease-out, top 0.02s ease-out, opacity 0.6s ease;
-    border-radius: 50%;
+    width: 120px;
+    height: 20px;
+    background: linear-gradient(to left, rgba(99,179,237,0.8), rgba(99,179,237,0));
+    filter: blur(12px);
+    opacity: 0.7;
+    transition: transform 0.1s ease-out, opacity 0.2s ease-out;
 }
 
 /* Shape-shifting blob background */
@@ -1330,6 +1328,12 @@ section.in-view {
 
 /* Additional prefers-reduced-motion support for animations */
 @media (prefers-reduced-motion: reduce) {
+    body {
+        cursor: auto !important;
+    }
+    .cursor-trail {
+        display: none !important;
+    }
     .hero,
     .hero .cloud,
     .service-card,
