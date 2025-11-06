@@ -4,6 +4,14 @@ function toggleMenu() {
     menu.classList.toggle('active');
 }
 
+// Constants
+const HERO_EXPAND_SCROLL_THRESHOLD = 100;
+const FORM_MESSAGES = {
+    success: 'Message sent successfully! We\'ll get back to you soon.',
+    error: 'Error sending message. Please try again or email us directly at info@hevin.design',
+    networkError: 'Network error. Please check your connection or email us at info@hevin.design'
+};
+
 // Single extended flowy cursor trail
 let trail = null;
 
@@ -141,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', () => {
         const hero = document.querySelector('.hero');
         if (hero) {
-            if (window.scrollY > 100) {
+            if (window.scrollY > HERO_EXPAND_SCROLL_THRESHOLD) {
                 hero.classList.add('expanded');
             } else {
                 hero.classList.remove('expanded');
@@ -183,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 
                 if (response.ok) {
-                    messageEl.textContent = 'Message sent successfully! We\'ll get back to you soon.';
+                    messageEl.textContent = FORM_MESSAGES.success;
                     messageEl.style.backgroundColor = '#D1FAE5';
                     messageEl.style.color = '#065F46';
                     messageEl.style.display = 'block';
@@ -191,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     messageEl.setAttribute('aria-live', 'polite');
                     form.reset();
                 } else {
-                    messageEl.textContent = 'Error sending message. Please try again or email us directly at info@hevin.design';
+                    messageEl.textContent = FORM_MESSAGES.error;
                     messageEl.style.backgroundColor = '#FEE2E2';
                     messageEl.style.color = '#991B1B';
                     messageEl.style.display = 'block';
@@ -199,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     messageEl.setAttribute('aria-live', 'assertive');
                 }
             } catch (error) {
-                messageEl.textContent = 'Network error. Please check your connection or email us at info@hevin.design';
+                messageEl.textContent = FORM_MESSAGES.networkError;
                 messageEl.style.backgroundColor = '#FEE2E2';
                 messageEl.style.color = '#991B1B';
                 messageEl.style.display = 'block';
