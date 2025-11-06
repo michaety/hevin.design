@@ -261,23 +261,102 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Intersection Observer for shimmer animation on scroll
-    const shimmerObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.animationPlayState = 'running';
+    // Function to get average luminance of background color at element position
+    function getBackgroundLuminance(element) {
+        const rect = element.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+        
+        // Try to get computed background color from element or ancestors
+        let currentEl = element;
+        let bgColor = null;
+        
+        while (currentEl && currentEl !== document.body) {
+            const style = window.getComputedStyle(currentEl);
+            const bg = style.backgroundColor;
+            
+            if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
+                bgColor = bg;
+                break;
             }
-        });
-    }, { threshold: 0.6 });
+            currentEl = currentEl.parentElement;
+        }
+        
+        // Default to body background if no specific background found
+        if (!bgColor) {
+            bgColor = window.getComputedStyle(document.body).backgroundColor;
+        }
+        
+        // Parse RGB values
+        const rgbMatch = bgColor.match(/\d+/g);
+        if (!rgbMatch || rgbMatch.length < 3) {
+            return 0.5; // Default to medium luminance
+        }
+        
+        const r = parseInt(rgbMatch[0]);
+        const g = parseInt(rgbMatch[1]);
+        const b = parseInt(rgbMatch[2]);
+        
+        // Calculate relative luminance using WCAG formula
+        const rsRGB = r / 255;
+        const gsRGB = g / 255;
+        const bsRGB = b / 255;
+        
+        const rLinear = rsRGB <= 0.03928 ? rsRGB / 12.92 : Math.pow((rsRGB + 0.055) / 1.055, 2.4);
+        const gLinear = gsRGB <= 0.03928 ? gsRGB / 12.92 : Math.pow((gsRGB + 0.055) / 1.055, 2.4);
+        const bLinear = bsRGB <= 0.03928 ? bsRGB / 12.92 : Math.pow((bsRGB + 0.055) / 1.055, 2.4);
+        
+        return 0.2126 * rLinear + 0.7152 * gLinear + 0.0722 * bLinear;
+    }
 
-    // Observe shimmer titles and set initial paused state
-    document.querySelectorAll('.shimmer').forEach(title => {
-        shimmerObserver.observe(title);
-        title.style.animationPlayState = 'paused';
-        // Play once - stop observing after animation ends
-        title.addEventListener('animationend', () => {
-            title.style.animationPlayState = 'paused';
-            shimmerObserver.unobserve(title);
+    // Function to update shimmer gradient based on background
+    function updateShimmerColors(element) {
+        const luminance = getBackgroundLuminance(element);
+        
+        // If background is light (luminance > 0.5), use dark shimmer
+        // If background is dark (luminance <= 0.5), use light shimmer
+        if (luminance > 0.5) {
+            // Dark shimmer for light backgrounds
+            element.style.background = 'linear-gradient(90deg, #333, #666, #333)';
+        } else {
+            // Light shimmer for dark backgrounds
+            element.style.background = 'linear-gradient(90deg, #fff, #ddd, #fff)';
+        }
+        
+        // Maintain shimmer properties
+        element.style.backgroundSize = '200% auto';
+        element.style.backgroundClip = 'text';
+        element.style.webkitBackgroundClip = 'text';
+        element.style.webkitTextFillColor = 'transparent';
+    }
+
+    // Sync all shimmer texts with their backgrounds
+    function syncShimmerTexts() {
+        document.querySelectorAll('.shimmer').forEach(element => {
+            updateShimmerColors(element);
         });
-    });
+    }
+
+    // Initial sync
+    syncShimmerTexts();
+
+    // Update shimmer colors on scroll (passive for performance)
+    document.addEventListener('scroll', syncShimmerTexts, { passive: true });
+
+    // Update shimmer colors on resize
+    window.addEventListener('resize', syncShimmerTexts);
+
+    // Update shimmer colors on animation frame for smooth transitions with the background
+    let lastUpdateTime = 0;
+    const updateInterval = 500; // Update every 500ms to avoid performance issues
+
+    function updateShimmerOnFrame(timestamp) {
+        if (timestamp - lastUpdateTime >= updateInterval) {
+            syncShimmerTexts();
+            lastUpdateTime = timestamp;
+        }
+        requestAnimationFrame(updateShimmerOnFrame);
+    }
+
+    requestAnimationFrame(updateShimmerOnFrame);
 });
