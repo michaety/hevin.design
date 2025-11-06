@@ -77,8 +77,22 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(element);
     });
 
-    // FAQ Accordion functionality
+    // FAQ Accordion functionality with cursor-follow effect
+    const faqItems = document.querySelectorAll('.faq-item');
     const faqQuestions = document.querySelectorAll('.faq-question');
+    
+    // Track mouse position for radial gradient effect
+    faqItems.forEach(item => {
+        item.addEventListener('mousemove', (e) => {
+            const rect = item.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            
+            item.style.setProperty('--mouse-x', x + '%');
+            item.style.setProperty('--mouse-y', y + '%');
+        });
+    });
+    
     faqQuestions.forEach(question => {
         question.addEventListener('click', () => {
             const isExpanded = question.getAttribute('aria-expanded') === 'true';
@@ -116,33 +130,61 @@ document.addEventListener('DOMContentLoaded', () => {
         sectionObserver.observe(section);
     });
     
-    // Section title shine animation on scroll
-    const sectionTitles = document.querySelectorAll('section h2');
-    const shineObserver = new IntersectionObserver((entries) => {
+    // Title shimmer animation on viewport entry
+    const titles = document.querySelectorAll('h1, h2, h3');
+    const shimmerObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting && !entry.target.classList.contains('shine')) {
-                entry.target.classList.add('shine');
+            if (entry.isIntersecting && !entry.target.classList.contains('shimmer-done')) {
+                entry.target.classList.add('shimmer');
+                entry.target.classList.add('shimmer-done');
+                // Remove shimmer class after animation completes
+                setTimeout(() => {
+                    entry.target.classList.remove('shimmer');
+                }, 1500);
             }
         });
     }, {
-        threshold: 0.5
+        threshold: 0.3
     });
     
-    sectionTitles.forEach(title => {
-        shineObserver.observe(title);
+    titles.forEach(title => {
+        shimmerObserver.observe(title);
     });
     
-    // Subtitle scroll focus animation
+    // Hero subtitle blur scroll effect - blur reduces from 5px to 0px over first 200px of scroll
     const subtitle = document.querySelector('.hero-subtitle');
     if (subtitle) {
-        const scrollThreshold = window.innerHeight * 0.3; // 30% of viewport height
         window.addEventListener('scroll', () => {
-            if (window.scrollY > scrollThreshold) {
-                subtitle.classList.add('focus');
+            const scrollY = window.scrollY;
+            const maxScroll = 200; // 200px scroll distance
+            
+            if (scrollY >= maxScroll) {
+                subtitle.classList.add('unblurred');
             } else {
-                subtitle.classList.remove('focus');
+                subtitle.classList.remove('unblurred');
+                // Calculate blur value: 5px at top, 0px at 200px
+                const blurAmount = 5 - (scrollY / maxScroll) * 5;
+                subtitle.style.filter = `blur(${blurAmount}px)`;
             }
         }, { passive: true });
+    }
+    
+    // About section background fade on scroll
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+        const aboutObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    aboutSection.classList.add('fade-to-white');
+                } else {
+                    aboutSection.classList.remove('fade-to-white');
+                }
+            });
+        }, {
+            threshold: 0.2
+        });
+        
+        aboutObserver.observe(aboutSection);
     }
     
     // Form submission handler
