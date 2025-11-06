@@ -13,10 +13,10 @@
 body {
     font-family: 'Inter', 'Roboto', sans-serif;
     color: #FFFFFF; /* White text color for readability */
-    background: linear-gradient(135deg, #4B0082 0%, #6B46C1 15%, #8B5CF6 30%, #A855F7 45%, #6366F1 60%, #3B82F6 75%, #ADD8E6 90%, #00BCD4 100%);
+    background: linear-gradient(-45deg, #4B0082, #6A5ACD, #ADD8E6, #00c3ff);
     background-size: 400% 400%;
     background-attachment: fixed; /* Keep gradient stable on scroll */
-    animation: gradientFlow 60s ease infinite;
+    animation: gradientMove 8s ease-in-out infinite;
     line-height: 1.8;
     font-size: 1rem;
     overflow-x: hidden;
@@ -48,22 +48,20 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Shimmer effect for titles - isolated to text only */
 h1.shimmer, h2.shimmer, h3.shimmer {
-    background: linear-gradient(90deg, #fff 0%, #e0e0e0 50%, #fff 100%);
-    background-size: 200% auto;
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+    background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, #fff 50%, rgba(255,255,255,0.1) 100%);
+    background-size: 200% 100%;
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent; /* Fallback for browsers that don't support -webkit-text-fill-color */
     -webkit-text-fill-color: transparent;
-    animation: shimmerText 1.5s linear forwards;
+    animation: shimmer 2s linear;
 }
 
-@keyframes shimmerText {
-    0% {
-        background-position: -200% 0;
-    }
-    100% {
-        background-position: 200% 0;
-    }
+@keyframes shimmer {
+    0% { background-position: 0% 0; }
+    100% { background-position: 100% 0; }
 }
 
 /* Remove any pseudo-elements on h3 that could create bars */
@@ -198,12 +196,10 @@ nav ul li a:hover::after {
     opacity: 1;
 }
 
-@keyframes gradientFlow {
-    0% { background-position: 0% 50%; }
-    25% { background-position: 50% 100%; }
+@keyframes gradientMove {
+    0% { background-position: 0 50%; }
     50% { background-position: 100% 50%; }
-    75% { background-position: 50% 0%; }
-    100% { background-position: 0% 50%; }
+    100% { background-position: 0 50%; }
 }
 
 .hero-content {
@@ -240,10 +236,10 @@ nav ul li a:hover::after {
     color: #FFFFFF; /* White color */
     font-style: italic;
     filter: blur(5px);
-    transition: filter 0.3s ease;
+    transition: filter 1.5s ease;
 }
 
-.hero-subtitle.unblurred {
+.loaded .hero-subtitle {
     filter: blur(0px);
 }
 
