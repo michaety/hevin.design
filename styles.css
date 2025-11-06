@@ -1,5 +1,5 @@
-/* Import Montserrat font for shimmer effect */
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap");
+/* Import Montserrat font for shimmer effect and hero title */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap");
 
 /* Reset default styles */
 * {
@@ -70,21 +70,21 @@ h1, h2, h3 {
 
 /* Shimmer class for specific titles - triggered on scroll */
 .shimmer {
-    background: linear-gradient(135deg, #ffffff, #5E5E5E, #ffffff);
+    background: linear-gradient(90deg, #333, #bbb, #333);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-size: 200% 100%;
-    animation: shimmer 6.5s linear forwards;
-    animation-play-state: paused;
+    background-size: 200% auto;
+    animation: shimmer 2s linear infinite;
+    transition: background 0.5s ease;
 }
 
 @keyframes shimmer {
     0% {
-        background-position: 200% 0;
+        background-position: -200% 0;
     }
     100% {
-        background-position: -200% 0;
+        background-position: 200% 0;
     }
 }
 
@@ -244,15 +244,16 @@ nav ul li a:hover::after {
 }
 
 .hero-title {
+    font-family: 'Montserrat', Arial, sans-serif;
     font-size: 2.5rem; /* Reduced for mobile */
     font-weight: 700;
     margin-bottom: 0.5rem;
     letter-spacing: -0.025em;
     position: relative;
     z-index: 2;
-    color: #5E5E5E;
-    text-shadow: 0 0 5px rgba(255,255,255,0.3);
-    animation: gradientMove 11.44s ease-in-out infinite;
+    color: #FFFFFF;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
 }
 
 .hero-subtitle {
