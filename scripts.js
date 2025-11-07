@@ -328,9 +328,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (entry.isIntersecting) {
                 setTimeout(() => {
                     entry.target.classList.add('visible');
-                    setTimeout(() => entry.target.classList.remove('visible'), 2000);
+                    // Removed timeout that previously hid h2 elements after 2 seconds
+                    // to keep them permanently visible. Only the shimmer animation runs,
+                    // opacity stays at 1 (defined in CSS)
                 }, delay);
                 delay += 400;
+                // Stop observing after first intersection to prevent re-animation
+                shimmerObserver.unobserve(entry.target);
             }
         });
     }, { threshold: 0.2 });
