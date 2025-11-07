@@ -318,35 +318,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Holographic shimmer effect for h2 titles - triggered once on scroll into view
-    // Only enable if user hasn't set prefers-reduced-motion
-    const prefersReducedMotionForShimmer = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
-    if (!prefersReducedMotionForShimmer) {
-        const shimmerObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !entry.target.classList.contains('shimmer-played')) {
-                    // Add shimmer-active class to trigger animation once
-                    entry.target.classList.add('shimmer-active');
-                    entry.target.classList.add('shimmer-played');
-                    
-                    // Remove shimmer-active class after animation completes (5s)
-                    setTimeout(() => {
-                        entry.target.classList.remove('shimmer-active');
-                    }, 5000);
-                }
-            });
-        }, {
-            threshold: 0.5,
-            rootMargin: '0px'
-        });
+    // New Holographic Shimmer Effect for specific h2 elements
+    const shimmerElements = document.querySelectorAll('.shimmer');
 
-        // Observe all h2 elements for shimmer effect
-        document.querySelectorAll('h2').forEach(h2 => {
-            h2.classList.add('shimmer');
-            shimmerObserver.observe(h2);
+    const shimmerObserver = new IntersectionObserver(entries => {
+        let delay = 0;
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+                    setTimeout(() => entry.target.classList.remove('visible'), 2000);
+                }, delay);
+                delay += 400;
+            }
         });
-    }
+    }, { threshold: 0.2 });
 
+    shimmerElements.forEach(el => shimmerObserver.observe(el));
 
 });
