@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
                 // Apply in-view class for sections
-                if (entry.target.tagName === 'SECTION') {
+                if (entry.target.nodeName.toLowerCase() === 'section') {
                     entry.target.classList.add('in-view');
                     entry.target.style.opacity = '1';
                 }
@@ -311,7 +311,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const rotateY = ((x - centerX) / centerX) * 10;
                 
                 // Batch DOM writes
-                card.style.cssText += `--mouse-x: ${xPercent}%; --mouse-y: ${yPercent}%; transform: perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05);`;
+                card.style.setProperty('--mouse-x', `${xPercent}%`);
+                card.style.setProperty('--mouse-y', `${yPercent}%`);
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
                 
                 rafId = null;
             };
