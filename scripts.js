@@ -71,13 +71,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Hero subtitle unblur on page load
     document.body.classList.add('loaded');
     
+    // Cache DOM queries
+    const nav = document.querySelector('nav');
+    const navLinks = nav.querySelectorAll('a');
+    const navHeight = nav.offsetHeight;
+    
     // Smooth scroll with nav offset
-    document.querySelectorAll('nav a').forEach(link => {
+    navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const target = document.querySelector(link.getAttribute('href'));
             if (target) {
-                const navHeight = document.querySelector('nav').offsetHeight;
                 window.scrollTo({ top: target.offsetTop - navHeight - 20, behavior: 'smooth' });
             }
         });
@@ -105,12 +109,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    const elements = document.querySelectorAll('section, .service-card, .project-card, .process-step');
-    const observer = new IntersectionObserver((entries) => {
+    // Consolidated IntersectionObserver for all animated elements
+    const animatedElements = document.querySelectorAll('section, .service-card, .project-card, .process-step');
+    const mainObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
+                // Apply in-view class for sections
+                if (entry.target.tagName === 'SECTION') {
+                    entry.target.classList.add('in-view');
+                    entry.target.style.opacity = '1';
+                }
+                mainObserver.unobserve(entry.target);
             }
         });
     }, { 
@@ -118,23 +128,29 @@ document.addEventListener('DOMContentLoaded', () => {
         rootMargin: '50px'
     });
 
-    elements.forEach(element => {
-        observer.observe(element);
+    animatedElements.forEach(element => {
+        mainObserver.observe(element);
     });
 
     // FAQ Accordion functionality with cursor-follow effect
     const faqItems = document.querySelectorAll('.faq-item');
     const faqQuestions = document.querySelectorAll('.faq-question');
     
-    // Track mouse position for radial gradient effect
+    // Track mouse position for radial gradient effect with RAF throttling
     faqItems.forEach(item => {
+        let rafId = null;
         item.addEventListener('mousemove', (e) => {
-            const rect = item.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
-            
-            item.style.setProperty('--mouse-x', x + '%');
-            item.style.setProperty('--mouse-y', y + '%');
+            if (!rafId) {
+                rafId = requestAnimationFrame(() => {
+                    const rect = item.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / rect.width) * 100;
+                    const y = ((e.clientY - rect.top) / rect.height) * 100;
+                    
+                    item.style.setProperty('--mouse-x', x + '%');
+                    item.style.setProperty('--mouse-y', y + '%');
+                    rafId = null;
+                });
+            }
         });
     });
     
@@ -157,25 +173,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateHeroPortal(e);
     }, { passive: true });
     */
-    
-    // Section color shift on scroll
-    const sections = document.querySelectorAll('section');
-    const sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('in-view');
-                entry.target.style.opacity = '1';
-            } else {
-                entry.target.classList.remove('in-view');
-            }
-        });
-    }, {
-        threshold: 0.3
-    });
-    
-    sections.forEach(section => {
-        sectionObserver.observe(section);
-    });
     
     // About section background fade on scroll
     const aboutSection = document.getElementById('about');
@@ -271,29 +268,36 @@ document.addEventListener('DOMContentLoaded', () => {
             let rafId = null;
             let lastMouseEvent = null;
             
+            // Cache card dimensions to avoid repeated getBoundingClientRect calls
+            let cardRect = card.getBoundingClientRect();
+            let resizeTimer;
+            
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    cardRect = card.getBoundingClientRect();
+                }, 150);
+            });
+            
             const updateCardEffect = () => {
                 if (!lastMouseEvent) return;
                 
                 const e = lastMouseEvent;
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
+                const x = e.clientX - cardRect.left;
+                const y = e.clientY - cardRect.top;
                 
-                // Update CSS custom properties for holographic effect
-                const xPercent = (x / rect.width) * 100;
-                const yPercent = (y / rect.height) * 100;
+                // Batch DOM reads first
+                const centerX = cardRect.width / 2;
+                const centerY = cardRect.height / 2;
                 
-                card.style.setProperty('--mouse-x', `${xPercent}%`);
-                card.style.setProperty('--mouse-y', `${yPercent}%`);
-                
-                // Also apply tilt effect
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
+                // Calculate all values
+                const xPercent = (x / cardRect.width) * 100;
+                const yPercent = (y / cardRect.height) * 100;
                 const rotateX = ((y - centerY) / centerY) * -10;
                 const rotateY = ((x - centerX) / centerX) * 10;
                 
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+                // Batch DOM writes
+                card.style.cssText += `--mouse-x: ${xPercent}%; --mouse-y: ${yPercent}%; transform: perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05);`;
                 
                 rafId = null;
             };
@@ -322,23 +326,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // New Holographic Shimmer Effect for specific h2 elements
     const shimmerElements = document.querySelectorAll('.shimmer');
 
-    const shimmerObserver = new IntersectionObserver(entries => {
-        let delay = 0;
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.classList.add('visible');
-                    // Removed timeout that previously hid h2 elements after 2 seconds
-                    // to keep them permanently visible. Only the shimmer animation runs,
-                    // opacity stays at 1 (defined in CSS)
-                }, delay);
-                delay += 400;
-                // Stop observing after first intersection to prevent re-animation
-                shimmerObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.2 });
-
-    shimmerElements.forEach(el => shimmerObserver.observe(el));
+    // Reuse mainObserver with shimmer-specific handling
+    shimmerElements.forEach((el, index) => {
+        const shimmerCallback = (entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 400);
+                    shimmerObserver.unobserve(entry.target);
+                }
+            });
+        };
+        const shimmerObserver = new IntersectionObserver(shimmerCallback, { threshold: 0.2 });
+        shimmerObserver.observe(el);
+    });
 
 });
