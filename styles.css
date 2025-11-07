@@ -863,7 +863,7 @@ h2 {
     background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(167, 139, 250, 0.2) 0%, rgba(192, 132, 252, 0.1) 30%, #FFFFFF 60%);
 }
 
-.faq-question h4 {
+.faq-question h3 {
     font-size: 1.1rem;
     color: #334155; /* Slate color */
     margin: 0;

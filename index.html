@@ -14,6 +14,12 @@
     <link rel="canonical" href="https://hevin.design">
     <title>Hevin Design - Professional Web Design & Branding Services | Sydney</title>
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" sizes="192x192" href="favicon-192.png">
+    <link rel="manifest" href="site.webmanifest">
+    
     <!-- Google Analytics - Replace 'G-XXXXXXXXXX' with your actual Google Analytics Measurement ID -->
     <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
@@ -22,11 +28,16 @@
         gtag('js', new Date());
         gtag('config', 'G-XXXXXXXXXX');
     </script> -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://i.ibb.co">
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://i.ibb.co">
     <link rel="preconnect" href="https://images.unsplash.com">
     <link rel="preload" href="styles.min.css" as="style">
+    <link rel="preload" href="scripts.min.js" as="script">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&display=swap"></noscript>
     <link rel="stylesheet" href="styles.min.css">
@@ -44,7 +55,7 @@
     </div>
     
     <header>
-        <img src="https://i.ibb.co/ch4dpS2C/Chat-GPT-Image-Sep-16-2025-02-26-29-PM-1.webp" class="logo" alt="Hevin Design Logo" width="120" height="120">
+        <img src="https://i.ibb.co/ch4dpS2C/Chat-GPT-Image-Sep-16-2025-02-26-29-PM-1.webp" class="logo" alt="Hevin Design Logo" width="120" height="120" fetchpriority="high">
     </header>
     <nav>
         <div class="menu-toggle" onclick="toggleMenu()">☰</div>
@@ -222,7 +233,7 @@
         <div class="faq">
             <div class="faq-item">
                 <button class="faq-question" aria-expanded="false">
-                    <h4>How much does a website cost?</h4>
+                    <h3>How much does a website cost?</h3>
                     <span class="faq-icon">+</span>
                 </button>
                 <div class="faq-answer">
@@ -231,7 +242,7 @@
             </div>
             <div class="faq-item">
                 <button class="faq-question" aria-expanded="false">
-                    <h4>Where are you located?</h4>
+                    <h3>Where are you located?</h3>
                     <span class="faq-icon">+</span>
                 </button>
                 <div class="faq-answer">
@@ -240,7 +251,7 @@
             </div>
             <div class="faq-item">
                 <button class="faq-question" aria-expanded="false">
-                    <h4>How long does it take to build a website?</h4>
+                    <h3>How long does it take to build a website?</h3>
                     <span class="faq-icon">+</span>
                 </button>
                 <div class="faq-answer">
@@ -249,7 +260,7 @@
             </div>
             <div class="faq-item">
                 <button class="faq-question" aria-expanded="false">
-                    <h4>Do you offer SEO services?</h4>
+                    <h3>Do you offer SEO services?</h3>
                     <span class="faq-icon">+</span>
                 </button>
                 <div class="faq-answer">

@@ -87,15 +87,37 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cache DOM queries
     const nav = document.querySelector('nav');
     const navLinks = nav.querySelectorAll('a');
-    const navHeight = nav.offsetHeight;
     
-    // Smooth scroll with nav offset
+    // Smooth scroll with nav offset - cache layout values with resize handling
+    let navHeight = null;
+    const getNavHeight = () => {
+        if (navHeight === null) {
+            navHeight = nav.offsetHeight;
+        }
+        return navHeight;
+    };
+    
+    // Reset cached nav height on window resize (debounced)
+    let resizeTimeout = null;
+    window.addEventListener('resize', () => {
+        if (resizeTimeout) clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            navHeight = null; // Reset cache on resize
+        }, 150);
+    }, { passive: true });
+    
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const target = document.querySelector(link.getAttribute('href'));
             if (target) {
-                window.scrollTo({ top: target.offsetTop - navHeight - 20, behavior: 'smooth' });
+                // Use getBoundingClientRect for better performance
+                const targetRect = target.getBoundingClientRect();
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                window.scrollTo({ 
+                    top: scrollTop + targetRect.top - getNavHeight() - 20, 
+                    behavior: 'smooth' 
+                });
             }
         });
     });
