@@ -253,168 +253,79 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Add card tilt effect on mouse move
+    // Add holographic shimmer effect on card mouse move
     const cards = document.querySelectorAll('.service-card, .project-card');
+    
+    // Check if device is touch-enabled
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    
     cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-            if (window.innerWidth <= 768) return; // Disable on mobile
+        if (!isTouchDevice && window.innerWidth > 768) {
+            // Throttled mousemove handler for holographic effect
+            let mouseMoveTimeout = null;
             
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+            card.addEventListener('mousemove', (e) => {
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+                
+                if (!mouseMoveTimeout) {
+                    mouseMoveTimeout = setTimeout(() => {
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        
+                        // Update CSS custom properties for holographic effect
+                        const xPercent = (x / rect.width) * 100;
+                        const yPercent = (y / rect.height) * 100;
+                        
+                        card.style.setProperty('--mouse-x', `${xPercent}%`);
+                        card.style.setProperty('--mouse-y', `${yPercent}%`);
+                        
+                        // Also apply tilt effect
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+                        
+                        const rotateX = ((y - centerY) / centerY) * -10;
+                        const rotateY = ((x - centerX) / centerX) * 10;
+                        
+                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+                        
+                        mouseMoveTimeout = null;
+                    }, 16); // ~60fps throttling
+                }
+            });
             
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            
-            const rotateX = ((y - centerY) / centerY) * -10;
-            const rotateY = ((x - centerX) / centerX) * 10;
-            
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
-        });
-        
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = '';
-        });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+                card.style.setProperty('--mouse-x', '50%');
+                card.style.setProperty('--mouse-y', '50%');
+            });
+        }
     });
     
-    // Shimmer effect for specific titles - triggered on scroll
-    const shimmerTitles = [
-        "Your Creative Growth Partner",
-        "Our Services",
-        "Skills & Tech Stack",
-        "Sample Projects",
-        "What Our Clients Say",
-        "Why Choose Hevin Design",
-        "Our Process",
-        "Frequently Asked Questions",
-        "Let's Elevate Your Brand"
-    ];
-
-    // Add shimmer class only to specific titles
-    document.querySelectorAll('h1, h2, h3').forEach(el => {
-        if (shimmerTitles.includes(el.textContent.trim())) {
-            el.classList.add('shimmer');
-        } else {
-            el.classList.remove('shimmer');
-        }
-    });
-
-    // Function to get average luminance of background color at element position
-    function getBackgroundLuminance(element) {
-        // Try to get computed background color from element or ancestors
-        let currentEl = element;
-        let bgColor = null;
-        
-        while (currentEl && currentEl !== document.body) {
-            const style = window.getComputedStyle(currentEl);
-            const bg = style.backgroundColor;
-            
-            if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
-                bgColor = bg;
-                break;
+    // Holographic shimmer effect for h2 titles - triggered once on scroll into view
+    const shimmerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.classList.contains('shimmer-played')) {
+                // Add shimmer-active class to trigger animation once
+                entry.target.classList.add('shimmer-active');
+                entry.target.classList.add('shimmer-played');
+                
+                // Remove shimmer-active class after animation completes (5s)
+                setTimeout(() => {
+                    entry.target.classList.remove('shimmer-active');
+                }, 5000);
             }
-            currentEl = currentEl.parentElement;
-        }
-        
-        // Default to body background if no specific background found
-        if (!bgColor) {
-            bgColor = window.getComputedStyle(document.body).backgroundColor;
-        }
-        
-        // Parse RGB values with proper regex for rgba/rgb
-        const rgbMatch = bgColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)/);
-        if (!rgbMatch || rgbMatch.length < 4) {
-            return 0.5; // Default to medium luminance
-        }
-        
-        const r = parseInt(rgbMatch[1]);
-        const g = parseInt(rgbMatch[2]);
-        const b = parseInt(rgbMatch[3]);
-        
-        // Calculate relative luminance using WCAG formula
-        const rsRGB = r / 255;
-        const gsRGB = g / 255;
-        const bsRGB = b / 255;
-        
-        const rLinear = rsRGB <= 0.03928 ? rsRGB / 12.92 : Math.pow((rsRGB + 0.055) / 1.055, 2.4);
-        const gLinear = gsRGB <= 0.03928 ? gsRGB / 12.92 : Math.pow((gsRGB + 0.055) / 1.055, 2.4);
-        const bLinear = bsRGB <= 0.03928 ? bsRGB / 12.92 : Math.pow((bsRGB + 0.055) / 1.055, 2.4);
-        
-        return 0.2126 * rLinear + 0.7152 * gLinear + 0.0722 * bLinear;
-    }
-
-    // Function to update shimmer gradient based on background
-    function updateShimmerColors(element) {
-        const luminance = getBackgroundLuminance(element);
-        
-        // If background is light (luminance > 0.5), use dark shimmer
-        // If background is dark (luminance <= 0.5), use light shimmer
-        if (luminance > 0.5) {
-            // Dark shimmer for light backgrounds
-            element.style.background = 'linear-gradient(90deg, #333, #666, #333)';
-        } else {
-            // Light shimmer for dark backgrounds
-            element.style.background = 'linear-gradient(90deg, #fff, #ddd, #fff)';
-        }
-        
-        // Maintain shimmer properties
-        element.style.backgroundSize = '200% auto';
-        element.style.backgroundClip = 'text';
-        element.style.webkitBackgroundClip = 'text';
-        element.style.webkitTextFillColor = 'transparent';
-    }
-
-    // Sync all shimmer texts with their backgrounds
-    function syncShimmerTexts() {
-        document.querySelectorAll('.shimmer').forEach(element => {
-            updateShimmerColors(element);
         });
-    }
-
-    // Initial sync
-    syncShimmerTexts();
-
-    // Throttled scroll handler
-    let scrollTimeout;
-    document.addEventListener('scroll', () => {
-        if (scrollTimeout) return;
-        scrollTimeout = setTimeout(() => {
-            syncShimmerTexts();
-            scrollTimeout = null;
-        }, 100);
-    }, { passive: true });
-
-    // Update shimmer colors on resize
-    window.addEventListener('resize', syncShimmerTexts);
-
-    // Update shimmer colors on animation frame for smooth transitions with the background
-    // Only run when page is visible
-    let lastUpdateTime = 0;
-    const updateInterval = 500; // Update every 500ms to avoid performance issues
-    let animationFrameId;
-
-    function updateShimmerOnFrame(timestamp) {
-        if (document.hidden) {
-            // Pause when page is not visible
-            animationFrameId = requestAnimationFrame(updateShimmerOnFrame);
-            return;
-        }
-        
-        if (timestamp - lastUpdateTime >= updateInterval) {
-            syncShimmerTexts();
-            lastUpdateTime = timestamp;
-        }
-        animationFrameId = requestAnimationFrame(updateShimmerOnFrame);
-    }
-
-    // Start animation frame updates
-    animationFrameId = requestAnimationFrame(updateShimmerOnFrame);
-
-    // Pause/resume on visibility change
-    document.addEventListener('visibilitychange', () => {
-        if (!document.hidden) {
-            lastUpdateTime = 0; // Reset to update immediately when visible
-        }
+    }, {
+        threshold: 0.5,
+        rootMargin: '0px'
     });
+
+    // Observe all h2 elements for shimmer effect
+    document.querySelectorAll('h2').forEach(h2 => {
+        h2.classList.add('shimmer');
+        shimmerObserver.observe(h2);
+    });
+
+
 });
