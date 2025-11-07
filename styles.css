@@ -1404,7 +1404,7 @@ section {
 
 
 
-/* Cursor-following gradient overlay - DISABLED */
+/* Cursor-following gradient overlay with glow and shadow */
 .cursor-gradient-overlay {
     position: fixed;
     top: 0;
@@ -1412,16 +1412,48 @@ section {
     width: 100vw;
     height: 100vh;
     pointer-events: none;
-    z-index: 0;
-    opacity: 0 !important; /* Disabled as per issue request */
-    background: radial-gradient(
-        circle 600px at var(--cursor-x, 50%) var(--cursor-y, 50%),
-        rgba(126, 89, 206, 0.3) 0%,
-        rgba(35, 103, 242, 0.2) 25%,
-        rgba(0, 191, 255, 0.1) 50%,
-        transparent 100%
-    );
+    z-index: 9998;
+    opacity: 1;
     transition: opacity 0.3s ease;
+}
+
+/* Create glow effect with pseudo-element */
+.cursor-gradient-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle 350px at var(--cursor-x, 50%) var(--cursor-y, 50%),
+        rgba(255, 255, 255, 0.25) 0%,
+        rgba(255, 255, 255, 0.12) 15%,
+        rgba(255, 255, 255, 0.05) 30%,
+        transparent 50%
+    );
+    filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 40px rgba(255, 255, 255, 0.3));
+    transition: all 0.3s ease;
+}
+
+/* Create shadow effect with pseudo-element */
+.cursor-gradient-overlay::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle 300px at var(--cursor-x, 50%) var(--cursor-y, 50%),
+        transparent 0%,
+        transparent 20%,
+        rgba(0, 0, 0, 0.15) 40%,
+        rgba(0, 0, 0, 0.08) 60%,
+        transparent 80%
+    );
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
 }
 
 /* Shape-shifting blob background */
@@ -1519,6 +1551,13 @@ section {
 
 /* Hide cursor gradient overlay on touch devices */
 @media (pointer: coarse) {
+    .cursor-gradient-overlay {
+        display: none;
+    }
+}
+
+/* Also hide on mobile devices based on screen size */
+@media (max-width: 768px) {
     .cursor-gradient-overlay {
         display: none;
     }

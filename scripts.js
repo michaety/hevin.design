@@ -51,8 +51,9 @@ function initCursorGradient() {
         // Use requestAnimationFrame for smooth, throttled updates
         if (!requestId) {
             requestId = requestAnimationFrame(() => {
-                overlay.style.setProperty('--cursor-x', `${cursorX}%`);
-                overlay.style.setProperty('--cursor-y', `${cursorY}%`);
+                // Set CSS variables on body for global access
+                document.body.style.setProperty('--cursor-x', `${cursorX}%`);
+                document.body.style.setProperty('--cursor-y', `${cursorY}%`);
                 requestId = null;
             });
         }
