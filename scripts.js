@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const nav = document.querySelector('nav');
     const navLinks = nav.querySelectorAll('a');
     
-    // Smooth scroll with nav offset - cache layout values once
+    // Smooth scroll with nav offset - cache layout values with resize handling
     let navHeight = null;
     const getNavHeight = () => {
         if (navHeight === null) {
@@ -96,6 +96,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return navHeight;
     };
+    
+    // Reset cached nav height on window resize (debounced)
+    let resizeTimeout = null;
+    window.addEventListener('resize', () => {
+        if (resizeTimeout) clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            navHeight = null; // Reset cache on resize
+        }, 150);
+    }, { passive: true });
     
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
