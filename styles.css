@@ -1402,7 +1402,7 @@ section {
 
 
 
-/* Cursor-following gradient overlay with glow and shadow */
+/* Cursor-following gradient overlay with subtle glow */
 .cursor-gradient-overlay {
     position: fixed;
     top: 0;
@@ -1411,44 +1411,17 @@ section {
     height: 100vh;
     pointer-events: none;
     z-index: 9998;
-    opacity: 1;
+    opacity: 0.15;
     transition: opacity 0.3s ease;
-}
-
-/* Create glow effect with pseudo-element */
-.cursor-gradient-overlay::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(
-        circle 300px at var(--cursor-x, 50%) var(--cursor-y, 50%),
-        rgba(255, 255, 255, 0.3) 0%,
-        rgba(167, 139, 250, 0.1) 30%,
-        transparent 70%
-    );
-    filter: drop-shadow(0 0 15px rgba(167, 139, 250, 0.3));
-    transition: all 0.3s ease;
-}
-
-/* Create shadow effect with pseudo-element */
-.cursor-gradient-overlay::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     background: radial-gradient(
         circle 250px at var(--cursor-x, 50%) var(--cursor-y, 50%),
-        transparent 0%,
-        transparent 30%,
-        rgba(0, 0, 0, 0.05) 50%,
-        transparent 80%
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(167, 139, 250, 0.1) 40%,
+        transparent 70%
     );
-    transition: all 0.3s ease;
+    filter: blur(10px);
+    background-position: var(--cursor-x, 50%) var(--cursor-y, 50%);
+    transition: background-position 0.3s ease, opacity 0.3s ease;
 }
 
 /* Shape-shifting blob background */
