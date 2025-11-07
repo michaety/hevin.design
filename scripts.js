@@ -24,8 +24,47 @@ function updateHeroPortal(e) {
     hero.style.setProperty('--mouse-y', y + '%');
 }
 
+// Cursor-following gradient overlay effect
+function initCursorGradient() {
+    const isMobile = window.matchMedia('(pointer: coarse)').matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    // Don't initialize on mobile or if user prefers reduced motion
+    if (isMobile || prefersReducedMotion) {
+        return;
+    }
+    
+    const overlay = document.querySelector('.cursor-gradient-overlay');
+    if (!overlay) return;
+    
+    let cursorX = 50;
+    let cursorY = 50;
+    let requestId = null;
+    
+    // Update cursor position
+    function updateCursorPosition(e) {
+        cursorX = (e.clientX / window.innerWidth) * 100;
+        cursorY = (e.clientY / window.innerHeight) * 100;
+        
+        // Use requestAnimationFrame for smooth, throttled updates
+        if (!requestId) {
+            requestId = requestAnimationFrame(() => {
+                overlay.style.setProperty('--cursor-x', `${cursorX}%`);
+                overlay.style.setProperty('--cursor-y', `${cursorY}%`);
+                requestId = null;
+            });
+        }
+    }
+    
+    // Add event listener with passive flag for better performance
+    document.addEventListener('mousemove', updateCursorPosition, { passive: true });
+}
+
 // Enhanced scroll animations with IntersectionObserver
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize cursor-following gradient effect
+    initCursorGradient();
+    
     // Hero subtitle unblur on page load
     document.body.classList.add('loaded');
     
