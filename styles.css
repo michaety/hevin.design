@@ -50,7 +50,7 @@ h1, h2, h3, h4, h5, h6 {
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.3); /* Subtle glow for readability */
 }
 
-/* Shimmer effect for titles - controlled by JavaScript and Intersection Observer */
+/* Basic heading styles */
 h1, h2, h3 {
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
@@ -58,46 +58,6 @@ h1, h2, h3 {
     font-style: normal;
     text-transform: uppercase;
     color: #ffffff; /* Fallback color for accessibility */
-}
-
-/* Fallback for browsers that don't support background-clip: text */
-@supports not (background-clip: text) or not (-webkit-background-clip: text) {
-    h1, h2, h3 {
-        color: #ffffff;
-        background: none;
-    }
-}
-
-/* Shimmer class for specific titles - triggered on scroll */
-.shimmer {
-    background: linear-gradient(135deg, #ffffff, #a78bfa, #c084fc, #7c3aed, #ffffff);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 200% auto;
-    animation: none; /* No animation by default */
-    transition: background 0.5s ease;
-}
-
-/* Active shimmer animation - triggered once on scroll into view */
-.shimmer-active {
-    animation: shimmer 5s linear 1;
-}
-
-@keyframes shimmer {
-    0% {
-        background-position: 200% 0;
-    }
-    100% {
-        background-position: -200% 0;
-    }
-}
-
-/* Respect user's motion preferences for shimmer effect */
-@media (prefers-reduced-motion: reduce) {
-    .shimmer-active {
-        animation: none;
-    }
 }
 
 /* Remove any pseudo-elements on h3 that could create bars */
@@ -378,6 +338,56 @@ h2 {
     border: none; /* No borders */
     box-shadow: none; /* No shadows */
     text-decoration: none; /* No underlines */
+    text-shadow: none; /* No text shadows */
+    background: none; /* No backgrounds */
+    transition: none; /* No transitions */
+}
+
+/* New Holographic Shimmer Effect */
+.shimmer {
+    position: relative;
+    display: inline-block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #d4c9ff;
+    background: linear-gradient(
+        90deg,
+        #d4c9ff 0%,
+        #ffffff 40%,
+        #d4c9ff 80%
+    );
+    background-size: 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+        filter: drop-shadow(0 0 0 rgba(255,255,255,0));
+    }
+    50% {
+        filter: drop-shadow(0 0 25px rgba(255,255,255,0.7));
+    }
+    100% {
+        background-position: 200% 0;
+        filter: drop-shadow(0 0 0 rgba(255,255,255,0));
+    }
+}
+
+.shimmer:hover {
+    animation: shimmer 2s ease-in-out 1;
+}
+
+.shimmer.visible {
+    opacity: 1;
+    transform: translateY(0);
+    animation: shimmer 2s ease-in-out 1 forwards;
 }
 
 /* About Section */
