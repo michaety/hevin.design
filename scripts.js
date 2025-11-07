@@ -256,45 +256,57 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add holographic shimmer effect on card mouse move
     const cards = document.querySelectorAll('.service-card, .project-card');
     
-    // Check if device is touch-enabled
+    // Check if device is touch-enabled or user prefers reduced motion
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
     cards.forEach(card => {
-        if (!isTouchDevice && window.innerWidth > 768) {
-            // Throttled mousemove handler for holographic effect
-            let mouseMoveTimeout = null;
+        if (!isTouchDevice && !prefersReducedMotion && window.innerWidth > 768) {
+            // Use requestAnimationFrame for smooth, throttled mousemove handler
+            let rafId = null;
+            let lastMouseEvent = null;
+            
+            const updateCardEffect = () => {
+                if (!lastMouseEvent) return;
+                
+                const e = lastMouseEvent;
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Update CSS custom properties for holographic effect
+                const xPercent = (x / rect.width) * 100;
+                const yPercent = (y / rect.height) * 100;
+                
+                card.style.setProperty('--mouse-x', `${xPercent}%`);
+                card.style.setProperty('--mouse-y', `${yPercent}%`);
+                
+                // Also apply tilt effect
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -10;
+                const rotateY = ((x - centerX) / centerX) * 10;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+                
+                rafId = null;
+            };
             
             card.addEventListener('mousemove', (e) => {
-                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+                lastMouseEvent = e;
                 
-                if (!mouseMoveTimeout) {
-                    mouseMoveTimeout = setTimeout(() => {
-                        const rect = card.getBoundingClientRect();
-                        const x = e.clientX - rect.left;
-                        const y = e.clientY - rect.top;
-                        
-                        // Update CSS custom properties for holographic effect
-                        const xPercent = (x / rect.width) * 100;
-                        const yPercent = (y / rect.height) * 100;
-                        
-                        card.style.setProperty('--mouse-x', `${xPercent}%`);
-                        card.style.setProperty('--mouse-y', `${yPercent}%`);
-                        
-                        // Also apply tilt effect
-                        const centerX = rect.width / 2;
-                        const centerY = rect.height / 2;
-                        
-                        const rotateX = ((y - centerY) / centerY) * -10;
-                        const rotateY = ((x - centerX) / centerX) * 10;
-                        
-                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
-                        
-                        mouseMoveTimeout = null;
-                    }, 16); // ~60fps throttling
+                if (!rafId) {
+                    rafId = requestAnimationFrame(updateCardEffect);
                 }
             });
             
             card.addEventListener('mouseleave', () => {
+                lastMouseEvent = null;
+                if (rafId) {
+                    cancelAnimationFrame(rafId);
+                    rafId = null;
+                }
                 card.style.transform = '';
                 card.style.setProperty('--mouse-x', '50%');
                 card.style.setProperty('--mouse-y', '50%');
@@ -303,29 +315,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     // Holographic shimmer effect for h2 titles - triggered once on scroll into view
-    const shimmerObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !entry.target.classList.contains('shimmer-played')) {
-                // Add shimmer-active class to trigger animation once
-                entry.target.classList.add('shimmer-active');
-                entry.target.classList.add('shimmer-played');
-                
-                // Remove shimmer-active class after animation completes (5s)
-                setTimeout(() => {
-                    entry.target.classList.remove('shimmer-active');
-                }, 5000);
-            }
+    // Only enable if user hasn't set prefers-reduced-motion
+    const prefersReducedMotionForShimmer = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    if (!prefersReducedMotionForShimmer) {
+        const shimmerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.classList.contains('shimmer-played')) {
+                    // Add shimmer-active class to trigger animation once
+                    entry.target.classList.add('shimmer-active');
+                    entry.target.classList.add('shimmer-played');
+                    
+                    // Remove shimmer-active class after animation completes (5s)
+                    setTimeout(() => {
+                        entry.target.classList.remove('shimmer-active');
+                    }, 5000);
+                }
+            });
+        }, {
+            threshold: 0.5,
+            rootMargin: '0px'
         });
-    }, {
-        threshold: 0.5,
-        rootMargin: '0px'
-    });
 
-    // Observe all h2 elements for shimmer effect
-    document.querySelectorAll('h2').forEach(h2 => {
-        h2.classList.add('shimmer');
-        shimmerObserver.observe(h2);
-    });
+        // Observe all h2 elements for shimmer effect
+        document.querySelectorAll('h2').forEach(h2 => {
+            h2.classList.add('shimmer');
+            shimmerObserver.observe(h2);
+        });
+    }
 
 
 });

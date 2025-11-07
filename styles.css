@@ -93,6 +93,13 @@ h1, h2, h3 {
     }
 }
 
+/* Respect user's motion preferences for shimmer effect */
+@media (prefers-reduced-motion: reduce) {
+    .shimmer-active {
+        animation: none;
+    }
+}
+
 /* Remove any pseudo-elements on h3 that could create bars */
 h3::before, h3::after {
     content: none;
