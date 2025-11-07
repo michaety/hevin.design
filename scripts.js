@@ -11,6 +11,19 @@ const FORM_MESSAGES = {
     networkError: 'Network error. Please email us directly at info@hevin.design'
 };
 
+// Utility function for debouncing
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
 // Hero portal mouse effect - REMOVED
 /*
 function updateHeroPortal(e) {
@@ -132,30 +145,33 @@ document.addEventListener('DOMContentLoaded', () => {
         mainObserver.observe(element);
     });
 
-    // FAQ Accordion functionality with cursor-follow effect
-    const faqItems = document.querySelectorAll('.faq-item');
-    const faqQuestions = document.querySelectorAll('.faq-question');
+    // FAQ Accordion functionality with event delegation
+    const faqSection = document.querySelector('.faq');
     
-    // Track mouse position for radial gradient effect with RAF throttling
-    faqItems.forEach(item => {
+    if (faqSection) {
         let rafId = null;
-        item.addEventListener('mousemove', (e) => {
-            if (!rafId) {
-                rafId = requestAnimationFrame(() => {
-                    const rect = item.getBoundingClientRect();
-                    const x = ((e.clientX - rect.left) / rect.width) * 100;
-                    const y = ((e.clientY - rect.top) / rect.height) * 100;
-                    
-                    item.style.setProperty('--mouse-x', x + '%');
-                    item.style.setProperty('--mouse-y', y + '%');
-                    rafId = null;
-                });
-            }
+        
+        // Use event delegation for mousemove on FAQ items
+        faqSection.addEventListener('mousemove', (e) => {
+            const item = e.target.closest('.faq-item');
+            if (!item || rafId) return;
+            
+            rafId = requestAnimationFrame(() => {
+                const rect = item.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                
+                item.style.setProperty('--mouse-x', x + '%');
+                item.style.setProperty('--mouse-y', y + '%');
+                rafId = null;
+            });
         });
-    });
-    
-    faqQuestions.forEach(question => {
-        question.addEventListener('click', () => {
+        
+        // Use event delegation for clicks on FAQ questions
+        faqSection.addEventListener('click', (e) => {
+            const question = e.target.closest('.faq-question');
+            if (!question) return;
+            
             const isExpanded = question.getAttribute('aria-expanded') === 'true';
             const answer = question.nextElementSibling;
             const icon = question.querySelector('.faq-icon');
@@ -165,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
             answer.classList.toggle('open');
             icon.textContent = isExpanded ? '+' : '-';
         });
-    });
+    }
     
     // Hero portal effect - REMOVED
     /*
@@ -270,14 +286,12 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Cache card dimensions to avoid repeated getBoundingClientRect calls
             let cardRect = card.getBoundingClientRect();
-            let resizeTimer;
             
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(() => {
-                    cardRect = card.getBoundingClientRect();
-                }, 150);
-            });
+            const updateCardRect = debounce(() => {
+                cardRect = card.getBoundingClientRect();
+            }, 150);
+            
+            window.addEventListener('resize', updateCardRect, { passive: true });
             
             const updateCardEffect = () => {
                 if (!lastMouseEvent) return;
