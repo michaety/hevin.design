@@ -1432,8 +1432,7 @@ section {
         rgba(255, 255, 255, 0.05) 30%,
         transparent 50%
     );
-    filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.6)) 
-            drop-shadow(0 0 40px rgba(255, 255, 255, 0.3));
+    filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 40px rgba(255, 255, 255, 0.3));
     transition: all 0.3s ease;
 }
 
@@ -1539,11 +1538,7 @@ section {
     .project-card::after,
     .process-step::before,
     .cta-button::before,
-    button::after {
-        display: none !important;
-    }
-    
-    /* Hide cursor gradient overlay for reduced motion */
+    button::after,
     .cursor-gradient-overlay {
         display: none !important;
     }
