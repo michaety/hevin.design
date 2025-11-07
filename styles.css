@@ -213,7 +213,8 @@ nav ul li a:hover::after {
     height: 60vh;
 }
 
-/* Particle container for hero portal effect */
+/* Particle container for hero portal effect - REMOVED */
+/*
 .hero::before {
     content: '';
     position: absolute;
@@ -231,6 +232,7 @@ nav ul li a:hover::after {
 .hero:hover::before {
     opacity: 1;
 }
+*/
 
 @keyframes gradientMove {
     0% { background-position: 0% 50%; }
@@ -1305,9 +1307,7 @@ section {
         padding: 4rem 1rem;
         min-height: 60vh;
     }
-    .hero::before {
-        display: none; /* Disable portal effect on mobile */
-    }
+    /* .hero::before rule removed - no longer needed as effect is disabled globally */
     .hero-content {
         text-align: center !important;
         margin: 0 auto;
@@ -1394,7 +1394,7 @@ section {
 
 
 
-/* Cursor-following gradient overlay */
+/* Cursor-following gradient overlay - DISABLED */
 .cursor-gradient-overlay {
     position: fixed;
     top: 0;
@@ -1403,7 +1403,7 @@ section {
     height: 100vh;
     pointer-events: none;
     z-index: 0;
-    opacity: 0.5;
+    opacity: 0 !important; /* Disabled as per issue request */
     background: radial-gradient(
         circle 600px at var(--cursor-x, 50%) var(--cursor-y, 50%),
         rgba(126, 89, 206, 0.3) 0%,
