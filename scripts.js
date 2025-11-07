@@ -328,8 +328,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (entry.isIntersecting) {
                 setTimeout(() => {
                     entry.target.classList.add('visible');
-                    // Only animate the shimmer effect, don't remove visible class
-                    // This ensures h2 elements stay visible at opacity: 1
+                    // Removed timeout that previously hid h2 elements after 2 seconds
+                    // to keep them permanently visible. Only the shimmer animation runs,
+                    // opacity stays at 1 (defined in CSS)
                 }, delay);
                 delay += 400;
                 // Stop observing after first intersection to prevent re-animation

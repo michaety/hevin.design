@@ -360,8 +360,9 @@ h2 {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 1; /* Always visible - no fade effects */
+    transform: translateY(0); /* No slide-in animation */
+    /* Transitions removed to prevent h2 elements from fading */
     filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
 }
 
