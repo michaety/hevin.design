@@ -1,0 +1,46 @@
+# Cache and compression headers for Cloudflare Pages/Netlify/Vercel
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+
+/*.css
+  Cache-Control: public, max-age=2592000
+  Content-Type: text/css; charset=utf-8
+
+/*.js
+  Cache-Control: public, max-age=2592000
+  Content-Type: application/javascript; charset=utf-8
+
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: image/webp
+
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: image/png
+
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: image/jpeg
+
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: image/svg+xml
+
+/*.ico
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: image/x-icon
+
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: font/woff2
+
+/*.webmanifest
+  Cache-Control: public, max-age=604800
+  Content-Type: application/manifest+json
