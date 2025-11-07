@@ -11,7 +11,8 @@ const FORM_MESSAGES = {
     networkError: 'Network error. Please email us directly at info@hevin.design'
 };
 
-// Hero portal mouse effect
+// Hero portal mouse effect - REMOVED
+/*
 function updateHeroPortal(e) {
     const hero = document.querySelector('.hero');
     if (!hero) return;
@@ -23,6 +24,7 @@ function updateHeroPortal(e) {
     hero.style.setProperty('--mouse-x', x + '%');
     hero.style.setProperty('--mouse-y', y + '%');
 }
+*/
 
 // Cursor-following gradient overlay effect
 function initCursorGradient() {
@@ -148,10 +150,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // Hero portal effect (passive for performance)
+    // Hero portal effect - REMOVED
+    /*
     document.addEventListener('mousemove', (e) => {
         updateHeroPortal(e);
     }, { passive: true });
+    */
     
     // Section color shift on scroll
     const sections = document.querySelectorAll('section');
