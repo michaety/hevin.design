@@ -31,3 +31,6 @@ temp/
 .env
 .env.local
 .env.*.local
+
+# Lighthouse reports (test artifacts)
+lighthouse-*.json
