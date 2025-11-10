@@ -329,8 +329,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Calculate all values
                 const xPercent = (x / cardRect.width) * 100;
                 const yPercent = (y / cardRect.height) * 100;
-                const rotateX = ((y - centerY) / centerY) * -10;
-                const rotateY = ((x - centerX) / centerX) * 10;
+                const rotateX = ((y - centerY) / centerY) * -2;
+                const rotateY = ((x - centerX) / centerX) * 2;
                 
                 // Batch DOM writes
                 card.style.setProperty('--mouse-x', `${xPercent}%`);
