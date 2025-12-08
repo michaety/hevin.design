@@ -1085,3 +1085,60 @@ section h2 {
         position: relative;
     }
 }
+
+
+/* Improved Mobile Touch Targets & Accessibility */
+@media (max-width: 767px) {
+    /* Ensure all interactive elements have adequate touch targets (minimum 44x44px) */
+    .btn,
+    button,
+    .nav-menu a,
+    .package-option,
+    .addon-option,
+    .legal-checkbox {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    /* Better form field sizing on mobile */
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 12px;
+    }
+    
+    /* Stack package and addon options on mobile */
+    .package-options,
+    .addon-options {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Improve price estimator readability */
+    .price-estimator {
+        padding: 1.5rem 1rem;
+    }
+    
+    .estimate-value {
+        font-size: 1.25rem;
+    }
+    
+    .estimate-total .estimate-value {
+        font-size: 1.5rem;
+    }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .gradient-orb {
+        animation: none;
+    }
+}
