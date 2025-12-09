@@ -460,53 +460,47 @@ document.addEventListener('DOMContentLoaded', function() {
     updatePriceCalculator();
     
     // ==================================
-    // Portfolio Filter System
+    // Featured Carousel Touch/Swipe Support
     // ==================================
     
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const portfolioCards = document.querySelectorAll('.portfolio-card');
+    const featuredCarousel = document.querySelector('.featured-carousel');
     
-    if (filterButtons.length > 0 && portfolioCards.length > 0) {
-        filterButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const filterValue = this.getAttribute('data-filter');
-                
-                // Update active button
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Filter cards with staggered animation
-                let visibleIndex = 0;
-                portfolioCards.forEach((card, index) => {
-                    const categories = card.getAttribute('data-category').split(' ');
-                    const shouldShow = filterValue === 'all' || categories.includes(filterValue);
-                    
-                    if (shouldShow) {
-                        // Remove hidden class first to enable animation
-                        card.classList.remove('filter-hidden');
-                        
-                        // Force reflow to restart animation - using offsetWidth triggers layout recalculation
-                        void card.offsetWidth;
-                        
-                        // Add visible class with staggered delay
-                        setTimeout(() => {
-                            card.classList.add('filter-visible');
-                        }, visibleIndex * 50); // 50ms stagger between cards
-                        
-                        visibleIndex++;
-                    } else {
-                        card.classList.remove('filter-visible');
-                        card.classList.add('filter-hidden');
-                    }
-                });
-            });
+    if (featuredCarousel) {
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        
+        // Mouse events for desktop drag
+        featuredCarousel.addEventListener('mousedown', (e) => {
+            isDown = true;
+            featuredCarousel.style.cursor = 'grabbing';
+            startX = e.pageX - featuredCarousel.offsetLeft;
+            scrollLeft = featuredCarousel.scrollLeft;
         });
         
-        // Initialize: show all cards on page load
-        portfolioCards.forEach((card, index) => {
-            setTimeout(() => {
-                card.classList.add('filter-visible');
-            }, index * 50);
+        featuredCarousel.addEventListener('mouseleave', () => {
+            isDown = false;
+            featuredCarousel.style.cursor = 'grab';
         });
+        
+        featuredCarousel.addEventListener('mouseup', () => {
+            isDown = false;
+            featuredCarousel.style.cursor = 'grab';
+        });
+        
+        featuredCarousel.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - featuredCarousel.offsetLeft;
+            const walk = (x - startX) * 2; // Scroll speed multiplier
+            featuredCarousel.scrollLeft = scrollLeft - walk;
+        });
+        
+        // Set initial cursor
+        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            featuredCarousel.style.cursor = 'grab';
+        }
+        
+        // Touch events are handled natively by the browser with scroll-snap
     }
 });
