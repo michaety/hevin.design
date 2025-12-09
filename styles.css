@@ -221,6 +221,18 @@ a:hover {
     color: var(--color-primary);
 }
 
+/* Dark mode: increase nav link contrast */
+@media (prefers-color-scheme: dark) {
+    .nav-menu li a {
+        color: #ffffff;
+        font-weight: 600;
+    }
+    
+    .nav-menu li a:hover {
+        color: #00d9ff;
+    }
+}
+
 .nav-cta {
     padding: var(--spacing-xs) var(--spacing-md) !important;
     background-color: var(--color-black);
@@ -298,12 +310,13 @@ a:hover {
 
 .btn-primary {
     background-color: #0066ff;
-    color: var(--color-white);
+    color: #ffffff;
     border: 2px solid transparent;
 }
 
 .btn-primary:hover {
     background-color: #0052cc;
+    color: #ffffff;
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
 }
@@ -317,6 +330,7 @@ a:hover {
     
     .btn-primary:hover {
         background-color: #00b8db;
+        color: #000000;
     }
 }
 
@@ -343,17 +357,17 @@ a:hover {
     color: var(--color-white);
 }
 
-/* Dark mode: ensure good contrast for outline buttons */
+/* Dark mode: black background with white text for outline buttons in pricing section */
 @media (prefers-color-scheme: dark) {
     .btn-outline {
-        color: var(--color-white);
-        border-color: var(--color-gray-600);
+        background-color: #000000;
+        color: #ffffff;
+        border-color: rgba(255, 255, 255, 0.2);
     }
     
     .btn-outline:hover {
-        border-color: #00d9ff;
-        background-color: #00d9ff;
-        color: #000000;
+        background-color: #1a1a1a;
+        border-color: #ffffff;
     }
 }
 
@@ -374,10 +388,10 @@ a:hover {
     background: radial-gradient(circle at top left, #f3e9ff, #f8fbff 45%, #fdfdfd 100%);
 }
 
-/* Mobile dark mode: solid black background */
-@media (max-width: 767px) and (prefers-color-scheme: dark) {
+/* Dark mode: pure black background on all devices */
+@media (prefers-color-scheme: dark) {
     .hero {
-        background: var(--color-black);
+        background: #000000;
     }
 }
 
@@ -536,7 +550,7 @@ section h2 {
 /* Portfolio Section */
 .portfolio {
     background-color: var(--color-off-white);
-    padding-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-md);
 }
 
 /* Unified Portfolio Carousel */
@@ -1402,6 +1416,36 @@ section h2 {
     border-color: var(--color-black);
 }
 
+/* Tier-specific hover glows for package options - desktop only */
+@media (hover: hover) and (pointer: fine) {
+    .package-option:has(input[value="basic"]):hover {
+        box-shadow: 0 0 0 1px rgba(0,0,0,0.25), 0 8px 30px rgba(0,0,0,0.25);
+    }
+    
+    .package-option:has(input[value="starter"]):hover {
+        box-shadow: 0 0 0 1px rgba(220,38,38,0.4), 0 8px 30px rgba(220,38,38,0.35);
+    }
+    
+    .package-option:has(input[value="pro"]):hover {
+        box-shadow: 0 0 0 1px rgba(37,99,235,0.45), 0 8px 30px rgba(37,99,235,0.4);
+    }
+    
+    .package-option:has(input[value="shopify"]):hover {
+        box-shadow: 0 0 0 1px rgba(22,163,74,0.45), 0 8px 30px rgba(22,163,74,0.4);
+    }
+    
+    .package-option:has(input[value="elite"]):hover {
+        box-shadow: 0 0 0 1px rgba(212,175,55,0.5), 0 8px 30px rgba(212,175,55,0.5);
+    }
+}
+
+/* Dark mode: use white glow for basic tier */
+@media (hover: hover) and (pointer: fine) and (prefers-color-scheme: dark) {
+    .package-option:has(input[value="basic"]):hover {
+        box-shadow: 0 0 0 1px rgba(255,255,255,0.4), 0 8px 30px rgba(255,255,255,0.35);
+    }
+}
+
 .package-option input[type="radio"]:checked + .package-label,
 .addon-option input[type="checkbox"]:checked + .addon-label {
     font-weight: 600;
@@ -1435,12 +1479,21 @@ section h2 {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Dark mode: reduce shadow, use subtle border */
+/* Dark mode: white background with dark text and shadow for contrast */
 @media (prefers-color-scheme: dark) {
     .price-estimator {
-        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow: none;
+        background: #ffffff;
+        color: #000000;
+        border: none;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+    
+    .estimate-label {
+        color: #333333;
+    }
+    
+    .estimate-value {
+        color: #000000;
     }
 }
 
@@ -1619,6 +1672,14 @@ section h2 {
 .footer-section h4 {
     color: var(--color-white);
     margin-bottom: var(--spacing-md);
+}
+
+/* Dark mode: ensure footer headings are always white */
+@media (prefers-color-scheme: dark) {
+    .footer-section h4 {
+        color: #ffffff;
+        font-weight: 700;
+    }
 }
 
 .footer-section p {
