@@ -120,8 +120,18 @@
             <div class="container">
                 <h2>Recent Work</h2>
                 <p class="section-subtitle">Real projects delivered for real clients</p>
+                
+                <!-- Portfolio Filter UI -->
+                <div class="portfolio-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="ecommerce">Ecommerce</button>
+                    <button class="filter-btn" data-filter="booking">Booking</button>
+                    <button class="filter-btn" data-filter="portfolio">Portfolio</button>
+                    <button class="filter-btn" data-filter="business">Business</button>
+                </div>
+                
                 <div class="portfolio-grid">
-                    <div class="portfolio-card">
+                    <div class="portfolio-card" data-category="booking">
                         <div class="portfolio-image">
                             <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop" alt="Wedding Website" loading="lazy" width="600" height="400">
                         </div>
@@ -132,7 +142,7 @@
                             <a href="https://jamieandmichaelwedding.com" target="_blank" rel="noopener" class="portfolio-link">View Live Site →</a>
                         </div>
                     </div>
-                    <div class="portfolio-card">
+                    <div class="portfolio-card" data-category="business">
                         <div class="portfolio-image">
                             <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=400&fit=crop" alt="Business Website" loading="lazy" width="600" height="400">
                         </div>
@@ -143,7 +153,7 @@
                             <a href="https://associatedprinting.pages.dev" target="_blank" rel="noopener" class="portfolio-link">View Live Site →</a>
                         </div>
                     </div>
-                    <div class="portfolio-card">
+                    <div class="portfolio-card" data-category="portfolio ecommerce">
                         <div class="portfolio-image">
                             <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&h=400&fit=crop" alt="Artist Portfolio" loading="lazy" width="600" height="400">
                         </div>
@@ -201,7 +211,7 @@
                 <h2>Transparent Pricing</h2>
                 <p class="section-subtitle">Clear packages designed for small business budgets</p>
                 <div class="pricing-grid">
-                    <div class="pricing-card">
+                    <div class="pricing-card" data-package="basic">
                         <div class="pricing-header">
                             <h3>Basic</h3>
                             <p class="pricing-description">One Page Launch Site</p>
@@ -224,7 +234,7 @@
                         <a href="#enquiry" class="btn btn-outline" data-package="basic">Select This Package</a>
                     </div>
                     
-                    <div class="pricing-card">
+                    <div class="pricing-card" data-package="starter">
                         <div class="pricing-header">
                             <h3>Starter</h3>
                             <p class="pricing-description">Ongoing Web Presence</p>
@@ -248,7 +258,7 @@
                         <a href="#enquiry" class="btn btn-outline" data-package="starter">Select This Package</a>
                     </div>
                     
-                    <div class="pricing-card featured">
+                    <div class="pricing-card featured" data-package="pro">
                         <div class="pricing-badge">Most Popular</div>
                         <div class="pricing-header">
                             <h3>Pro Booking</h3>
@@ -274,7 +284,7 @@
                         <a href="#enquiry" class="btn btn-primary" data-package="pro">Select This Package</a>
                     </div>
                     
-                    <div class="pricing-card pricing-card-shopify">
+                    <div class="pricing-card" data-package="shopify">
                         <div class="pricing-header">
                             <h3>Shopify Store</h3>
                             <p class="pricing-description">Fully Managed</p>
@@ -299,7 +309,7 @@
                         <a href="#enquiry" class="btn btn-outline" data-package="shopify">Select This Package</a>
                     </div>
                     
-                    <div class="pricing-card pricing-card-elite">
+                    <div class="pricing-card" data-package="elite">
                         <div class="pricing-header">
                             <h3>Elite Custom Store</h3>
                             <p class="pricing-description">Cloudflare Ecommerce</p>

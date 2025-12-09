@@ -458,4 +458,55 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initial calculator update
     updatePriceCalculator();
+    
+    // ==================================
+    // Portfolio Filter System
+    // ==================================
+    
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const portfolioCards = document.querySelectorAll('.portfolio-card');
+    
+    if (filterButtons.length > 0 && portfolioCards.length > 0) {
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const filterValue = this.getAttribute('data-filter');
+                
+                // Update active button
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Filter cards with staggered animation
+                let visibleIndex = 0;
+                portfolioCards.forEach((card, index) => {
+                    const categories = card.getAttribute('data-category').split(' ');
+                    const shouldShow = filterValue === 'all' || categories.includes(filterValue);
+                    
+                    if (shouldShow) {
+                        // Remove hidden class first to enable animation
+                        card.classList.remove('filter-hidden');
+                        
+                        // Force reflow to restart animation - using offsetWidth triggers layout recalculation
+                        void card.offsetWidth;
+                        
+                        // Add visible class with staggered delay
+                        setTimeout(() => {
+                            card.classList.add('filter-visible');
+                        }, visibleIndex * 50); // 50ms stagger between cards
+                        
+                        visibleIndex++;
+                    } else {
+                        card.classList.remove('filter-visible');
+                        card.classList.add('filter-hidden');
+                    }
+                });
+            });
+        });
+        
+        // Initialize: show all cards on page load
+        portfolioCards.forEach((card, index) => {
+            setTimeout(() => {
+                card.classList.add('filter-visible');
+            }, index * 50);
+        });
+    }
 });
