@@ -322,19 +322,13 @@ a:hover {
 /* Hero Section */
 .hero {
     position: relative;
-    min-height: 90vh;
+    min-height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    padding: var(--spacing-3xl) var(--spacing-md);
-    background: 
-        radial-gradient(ellipse at 20% 30%, var(--hero-gradient-1) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 70%, var(--hero-gradient-2) 0%, transparent 50%),
-        radial-gradient(ellipse at 60% 80%, var(--hero-gradient-3) 0%, transparent 50%),
-        radial-gradient(ellipse at 40% 20%, var(--hero-gradient-4) 0%, transparent 50%),
-        linear-gradient(180deg, var(--hero-bg-base) 0%, var(--hero-bg-secondary) 100%);
+    padding: 6rem 1.5rem;
     overflow: hidden;
+    background: radial-gradient(circle at top left, #f3e9ff, #f8fbff 45%, #fdfdfd 100%);
 }
 
 /* Reduced motion: disable gradient animation */
@@ -350,19 +344,18 @@ a:hover {
 
 .hero-canvas {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    display: block;
     pointer-events: none;
-    will-change: transform;
 }
 
 .hero-content {
     position: relative;
     z-index: 2;
-    max-width: 900px;
+    max-width: 720px;
+    text-align: center;
     margin: 0 auto;
 }
 
@@ -389,35 +382,23 @@ a:hover {
 
 .hero-visual {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
+    inset: 0;
     pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .gradient-orb {
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, var(--hero-gradient-2) 0%, transparent 70%);
-    filter: blur(80px);
-    opacity: 0.6;
-    animation: float 12s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%, 100% { 
-        transform: translateY(0) scale(1);
-        opacity: 0.6;
-    }
-    33% { 
-        transform: translateY(-40px) scale(1.05);
-        opacity: 0.7;
-    }
-    66% { 
-        transform: translateY(20px) scale(0.95);
-        opacity: 0.5;
-    }
+    width: 480px;
+    height: 480px;
+    border-radius: 999px;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(140, 80, 255, 0.9), transparent 60%),
+        radial-gradient(circle at 80% 20%, rgba(0, 200, 255, 0.8), transparent 60%),
+        radial-gradient(circle at 50% 80%, rgba(255, 120, 200, 0.7), transparent 65%);
+    filter: blur(45px);
+    opacity: 0.9;
 }
 
 /* Sections */
