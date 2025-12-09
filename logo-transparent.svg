@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none">
+  <!-- Transparent SVG wordmark - Tech minimal, type-first, no background -->
+  <style>
+    .logo-text { 
+      fill: currentColor;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      .logo-text { fill: #ffffff; }
+    }
+  </style>
+  
+  <!-- HEVIN wordmark -->
+  <text x="0" y="32" font-size="36" font-weight="800" letter-spacing="-0.02em" class="logo-text">hevin</text>
+  
+  <!-- DESIGN label (smaller, below) -->
+  <text x="0" y="46" font-size="10" font-weight="600" letter-spacing="0.1em" class="logo-text" opacity="0.6">DESIGN</text>
+</svg>

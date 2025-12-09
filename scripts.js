@@ -33,17 +33,17 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Color palettes
         const dayPalette = [
-            { r: 255, g: 182, b: 193, a: 0.50 }, // Pastel Peach
-            { r: 173, g: 216, b: 230, a: 0.50 }, // Soft Blue
-            { r: 221, g: 160, b: 221, a: 0.50 }, // Lilac
-            { r: 255, g: 239, b: 213, a: 0.45 }, // Peach Cream
+            { r: 255, g: 182, b: 193, a: 0.60 }, // Pastel Peach - increased
+            { r: 173, g: 216, b: 230, a: 0.60 }, // Soft Blue - increased
+            { r: 221, g: 160, b: 221, a: 0.60 }, // Lilac - increased
+            { r: 255, g: 239, b: 213, a: 0.50 }, // Peach Cream - increased
         ];
         
         const nightPalette = [
-            { r: 99, g: 102, b: 241, a: 0.60 },  // Indigo
-            { r: 139, g: 92, b: 246, a: 0.60 },  // Violet
-            { r: 34, g: 211, b: 238, a: 0.50 },  // Cyan
-            { r: 236, g: 72, b: 153, a: 0.50 },  // Magenta
+            { r: 99, g: 102, b: 241, a: 0.70 },  // Indigo - increased
+            { r: 139, g: 92, b: 246, a: 0.70 },  // Violet - increased
+            { r: 34, g: 211, b: 238, a: 0.60 },  // Cyan - increased
+            { r: 236, g: 72, b: 153, a: 0.60 },  // Magenta - increased
         ];
         
         const palette = isDarkMode ? nightPalette : dayPalette;
@@ -144,15 +144,15 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Draw cursor glow (if active)
             if (cursorActive && hasPointer) {
-                const glowRadius = 250;
+                const glowRadius = 300; // Increased from 250
                 const glowGradient = ctx.createRadialGradient(
                     cursorX, cursorY, 0,
                     cursorX, cursorY, glowRadius
                 );
                 
                 const glowColor = isDarkMode 
-                    ? 'rgba(255, 255, 255, 0.08)'
-                    : 'rgba(99, 102, 241, 0.1)';
+                    ? 'rgba(255, 255, 255, 0.12)' // Increased from 0.08
+                    : 'rgba(99, 102, 241, 0.15)'; // Increased from 0.1
                 
                 glowGradient.addColorStop(0, glowColor);
                 glowGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
