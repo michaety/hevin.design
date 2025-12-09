@@ -538,6 +538,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const portfolioNextBtn = document.querySelector('.portfolio-carousel-wrapper .carousel-nav-next');
         
         if (portfolioPrevBtn && portfolioNextBtn) {
+            // Configuration constants for carousel behavior
+            const CAROUSEL_SCROLL_DURATION = 800; // Milliseconds for smooth scroll animation
+            const WHEEL_SENSITIVITY = 0.5; // Reduce wheel speed for better control (0.5 = half speed)
+            
             function updatePortfolioNavButtons() {
                 const scrollLeft = portfolioCarousel.scrollLeft;
                 const maxScroll = portfolioCarousel.scrollWidth - portfolioCarousel.clientWidth;
@@ -551,9 +555,12 @@ document.addEventListener('DOMContentLoaded', function() {
             function smoothScrollCarousel(targetScroll) {
                 const startScroll = portfolioCarousel.scrollLeft;
                 const distance = targetScroll - startScroll;
-                const duration = 800; // Increased from default for slower, more deliberate scroll
+                const duration = CAROUSEL_SCROLL_DURATION;
                 const startTime = performance.now();
                 
+                // easeOutCubic: starts fast, slows down at the end
+                // Creates a more natural, deliberate feel for carousel navigation
+                // Formula: 1 - (1 - t)^3 where t is progress from 0 to 1
                 function easeOutCubic(t) {
                     return 1 - Math.pow(1 - t, 3);
                 }
@@ -600,7 +607,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Add wheel event listener for smoother mouse wheel scrolling
         if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            const WHEEL_SENSITIVITY = 0.5; // Reduce wheel speed for better control
             let wheelTimeout;
+            
             portfolioCarousel.addEventListener('wheel', (e) => {
                 e.preventDefault();
                 
@@ -610,7 +619,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 
                 // Reduce wheel sensitivity for slower, more controlled scroll
-                const scrollAmount = e.deltaY * 0.5; // Reduced from default 1.0
+                const scrollAmount = e.deltaY * WHEEL_SENSITIVITY;
                 const maxScroll = portfolioCarousel.scrollWidth - portfolioCarousel.clientWidth;
                 const targetScroll = Math.max(0, Math.min(maxScroll, portfolioCarousel.scrollLeft + scrollAmount));
                 

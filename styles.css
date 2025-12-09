@@ -377,7 +377,7 @@ a:hover {
 /* Mobile dark mode: solid black background */
 @media (max-width: 767px) and (prefers-color-scheme: dark) {
     .hero {
-        background: #000000;
+        background: var(--color-black);
     }
 }
 
