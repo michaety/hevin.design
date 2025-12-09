@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Hevin Design: Professional web design, branding, and digital marketing services. Transform your business with custom websites, SEO optimization, and creative solutions. Starting at $1,000.">
-    <meta name="keywords" content="web design, SEO, digital branding, startup websites, creative consultancy, custom website design, professional web development, brand identity, responsive design, e-commerce, Sydney web design">
-    <meta property="og:title" content="Hevin Design - Professional Web Design & Branding Services">
-    <meta property="og:description" content="Transform your business with professional web design, branding, and SEO services. Affordable packages starting at $1,000 for startups and businesses.">
-    <meta property="og:image" content="https://via.placeholder.com/1200x630?text=Hevin+Design">
+    <meta name="description" content="Hevin Design: Custom websites & ecommerce for small businesses. Fast, secure, high-performance sites built in Sydney using Cloudflare & Shopify. Starting at $1,999.">
+    <meta name="keywords" content="custom websites, ecommerce, web design Sydney, Shopify, Cloudflare, small business websites, booking systems, branding, SEO, Google Business">
+    <meta property="og:title" content="Hevin Design - Custom Websites & Ecommerce for Small Businesses">
+    <meta property="og:description" content="Fast, secure, high-performance sites built in Sydney. Custom websites, Shopify stores, booking systems, and branding solutions.">
+    <meta property="og:image" content="https://hevin.design/logo.svg">
     <meta property="og:url" content="https://hevin.design">
     <meta name="author" content="Hevin Design">
     <meta name="robots" content="index, follow">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://formspree.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: http:; connect-src 'self' https://formspree.io https://www.googletagmanager.com; base-uri 'self'; form-action 'self' https://formspree.io">
+    <!-- TODO: PRODUCTION - Remove 'unsafe-inline' from CSP and use nonces or hashes for better security -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self';">
     <link rel="canonical" href="https://hevin.design">
-    <title>Hevin Design - Professional Web Design & Branding Services | Sydney</title>
+    <title>Hevin Design - Custom Websites & Ecommerce for Small Businesses | Sydney</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -21,270 +22,559 @@
     <link rel="apple-touch-icon" sizes="192x192" href="favicon-192.png">
     <link rel="manifest" href="site.webmanifest">
     
-    <!-- Google Analytics - Replace 'G-XXXXXXXXXX' with your actual Google Analytics Measurement ID -->
-    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX');
-    </script> -->
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link rel="dns-prefetch" href="https://images.unsplash.com">
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://images.unsplash.com">
-    <link rel="preload" href="styles.min.css" as="style">
-    <link rel="preload" href="scripts.min.js" as="script">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&display=swap"></noscript>
-    <link rel="stylesheet" href="styles.min.css">
-    <script defer src="scripts.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="scripts.js"></script>
 </head>
 <body>
-    <!-- Cursor-following gradient overlay -->
-    <div class="cursor-gradient-overlay"></div>
-    
-    <!-- Shape-shifting blob background -->
-    <div class="blob-container">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
-    </div>
-    
-    <header>
-        <img src="logo.svg" class="logo" alt="Hevin Design Logo" width="300" height="120" fetchpriority="high">
-    </header>
-    <nav>
-        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-        <ul id="nav-menu">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#why-us">Why Us</a></li>
-            <li><a href="#process">Process</a></li>
-            <li><a href="#faq">FAQ</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <img src="logo.svg" alt="Hevin Design" width="120" height="48">
+            </a>
+            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#enquiry" class="nav-cta">Start a Project</a></li>
+            </ul>
+        </div>
     </nav>
 
     <main>
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title">Elevate Your Brand</h1>
-            <p class="hero-subtitle">focused on simple design</p>
-            <p>Creative consultancy crafting successful brands and experiences. Tailored for startups, creatives, and businesses on a budget.</p>
-            <a href="#contact" class="cta-button">Get Started Today</a>
-        </div>
-    </section>
-
-    <section id="about">
-        <h2 class="shimmer">Your Creative Growth Partner</h2>
-        <p>We’re not just another agency—we’re an extension of your team. With strategy-led design, development, and marketing, we help brands scale, innovate, and stay ahead.</p>
-        <p>As a new creative consultancy, we ground our work in innovative concepts, thoughtful strategy, and creative execution. We're eager to partner with our first clients and build lasting relationships.</p>
-    </section>
-
-    <section id="services" class="services">
-        <h2 class="shimmer">Our Services</h2>
-        <div class="services-container">
-            <div class="service-card">
-                <h3>Custom Website Design</h3>
-                <p>We create unique, visually stunning websites that reflect your brand identity, starting at affordable prices for startups.</p>
-            </div>
-            <div class="service-card">
-                <h3>SEO Optimization</h3>
-                <p>Improve your search engine rankings with our on-page SEO services to attract more traffic.</p>
-            </div>
-            <div class="service-card">
-                <h3>Google Business</h3>
-                <p>Enable customers to find you more easily on the biggest search engine on the web.</p>
-            </div>
-            <div class="service-card">
-                <h3>24/7 Support</h3>
-                <p>Receive around-the-clock support for a fraction of the price of competitors.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="skills">
-        <h2 class="shimmer">Skills & Tech Stack</h2>
-        <p>We leverage modern technologies to deliver cutting-edge solutions</p>
-        <div class="skills-grid">
-            <div class="skill-category">
-                <h3>Frontend</h3>
-                <ul>
-                    <li>HTML5 / CSS3 / JavaScript</li>
-                    <li>React / Vue.js</li>
-                    <li>Tailwind CSS / Bootstrap</li>
-                    <li>Responsive Design</li>
-                </ul>
-            </div>
-            <div class="skill-category">
-                <h3>Backend & DevOps</h3>
-                <ul>
-                    <li>Node.js / Python</li>
-                    <li>Cloudflare Workers</li>
-                    <li>Git / GitHub</li>
-                    <li>CI/CD Pipelines</li>
-                </ul>
-            </div>
-            <div class="skill-category">
-                <h3>Design & Marketing</h3>
-                <ul>
-                    <li>Figma / Adobe Creative Suite</li>
-                    <li>SEO Optimization</li>
-                    <li>Google Analytics</li>
-                    <li>Brand Strategy</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <section id="portfolio">
-        <h2 class="shimmer">Sample Projects</h2>
-        <p>Explore our recent work showcasing custom web design, branding, and e-commerce solutions tailored to our clients' needs.</p>
-        <div class="projects">
-            <div class="project-card">
-                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Wedding Website with RSVP and Photo Gallery" loading="lazy" width="600" height="400">
-                <h3>Wedding Website</h3>
-                <p>An elegant, interactive site for wedding planning with RSVP forms and photo galleries.</p>
-                <a href="https://jamieandmichaelwedding.com" target="_blank" rel="noopener noreferrer" class="cta-button" aria-label="View Wedding Website live site">View Live Site</a>
-            </div>
-            <div class="project-card">
-                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Professional Business Website for Printing Company" loading="lazy" width="600" height="400">
-                <h3>Business Brand Website</h3>
-                <p>A professional brand site for a printing business, featuring services, portfolio, and contact integration.</p>
-                <a href="https://associatedprinting.pages.dev" target="_blank" rel="noopener noreferrer" class="cta-button" aria-label="View Business Brand Website live site">View Live Site</a>
-            </div>
-            <div class="project-card">
-                <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Artist Portfolio and E-commerce Store" loading="lazy" width="600" height="400">
-                <h3>Artist Portfolio & E-commerce</h3>
-                <p>An immersive portfolio and shop for an artist, with e-commerce functionality for digital downloads.</p>
-                <a href="https://prodbypiras.h3vin.workers.dev" target="_blank" rel="noopener noreferrer" class="cta-button" aria-label="View Artist Portfolio & E-commerce live site">View Live Site</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="testimonials">
-        <h2 class="shimmer">What Our Clients Say</h2>
-        <div class="testimonials-container">
-            <div class="testimonial-card">
-                <p class="testimonial-text">"Hevin Design transformed our vision into a stunning website that perfectly represents our brand. The team was professional, responsive, and delivered beyond our expectations."</p>
-                <p class="testimonial-author">— Jamie M., Wedding Client</p>
-            </div>
-            <div class="testimonial-card">
-                <p class="testimonial-text">"Working with Hevin Design was a game-changer for our business. They created a beautiful, functional site that has significantly improved our online presence and customer engagement."</p>
-                <p class="testimonial-author">— Sarah L., Business Owner</p>
-            </div>
-            <div class="testimonial-card">
-                <p class="testimonial-text">"The attention to detail and creative approach made all the difference. Hevin Design delivered a portfolio site that truly showcases my work and has helped me connect with new clients."</p>
-                <p class="testimonial-author">— Alex P., Artist</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="why-us">
-        <h2 class="shimmer">Why Choose Hevin Design</h2>
-        <div class="services-grid">
-            <div class="service-card">
-                <h3>Affordable for Startups</h3>
-                <p>High-quality design and marketing solutions starting at just $1,000, tailored to tight budgets.</p>
-            </div>
-            <div class="service-card">
-                <h3>Agile and Responsive</h3>
-                <p>We deliver fast, flexible solutions to meet your deadlines without compromising quality.</p>
-            </div>
-            <div class="service-card">
-                <h3>Personalized Partnership</h3>
-                <p>We work closely with you, acting as an extension of your team to bring your vision to life.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="process" class="process">
-        <h2 class="shimmer">Our Process</h2>
-        <p class="process-description">We follow a structured yet flexible approach to deliver high-quality results efficiently.</p>
-        <div class="process-steps">
-            <div class="process-step">
-                <h3>1. Discovery & Strategy</h3>
-                <p>Understand your needs, goals, and brand vision through consultations.</p>
-            </div>
-            <div class="process-step">
-                <h3>2. Design & Prototyping</h3>
-                <p>Create wireframes and mockups, iterating based on your feedback.</p>
-            </div>
-            <div class="process-step">
-                <h3>3. Development & Testing</h3>
-                <p>Build the site with responsive features, test across devices, and optimize for speed.</p>
-            </div>
-            <div class="process-step">
-                <h3>4. Launch & Support</h3>
-                <p>Deploy your site, provide training, and offer ongoing 24/7 support.</p>
-            </div>
-        </div>
-        <p class="process-timeline">From concept to launch in 4-8 weeks, tailored to your budget and timeline.</p>
-    </section>
-
-        <section id="faq">
-        <h2 class="shimmer">Frequently Asked Questions</h2>
-        <div class="faq">
-            <div class="faq-item">
-                <button class="faq-question" aria-expanded="false">
-                    <h3>How much does a website cost?</h3>
-                    <span class="faq-icon">+</span>
-                </button>
-                <div class="faq-answer">
-                    <p>Website prices vary depending on your needs. We offer affordable packages starting from $1,000 for small business websites.</p>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Custom Websites & Ecommerce for Small Businesses</h1>
+                <p class="hero-subtitle">Fast, secure, high-performance sites built in Sydney using Cloudflare & Shopify.</p>
+                <div class="hero-cta">
+                    <a href="#pricing" class="btn btn-primary">View Pricing</a>
+                    <a href="#enquiry" class="btn btn-secondary">Start a Project</a>
                 </div>
             </div>
-            <div class="faq-item">
-                <button class="faq-question" aria-expanded="false">
-                    <h3>Where are you located?</h3>
-                    <span class="faq-icon">+</span>
-                </button>
-                <div class="faq-answer">
-                    <p>We are a remote team serving clients worldwide, with a base in Sydney, NSW.</p>
-                </div>
+            <div class="hero-visual">
+                <div class="gradient-orb"></div>
             </div>
-            <div class="faq-item">
-                <button class="faq-question" aria-expanded="false">
-                    <h3>How long does it take to build a website?</h3>
-                    <span class="faq-icon">+</span>
-                </button>
-                <div class="faq-answer">
-                    <p>Typically 4-8 weeks, depending on complexity and revisions.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question" aria-expanded="false">
-                    <h3>Do you offer SEO services?</h3>
-                    <span class="faq-icon">+</span>
-                </button>
-                <div class="faq-answer">
-                    <p>Yes, we specialize in SEO to help your site rank higher and attract more traffic.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="contact">
-        <h2 class="shimmer">Let's Elevate Your Brand</h2>
-        <form id="contact-form" action="https://formspree.io/f/mnnoeznk" method="POST">
-            <input type="text" name="name" placeholder="Your Name" required aria-label="Your Name" autocomplete="name">
-            <input type="email" name="email" placeholder="Your Email" required aria-label="Your Email" autocomplete="email">
-            <textarea name="message" placeholder="Your Message" rows="5" required aria-label="Your Message"></textarea>
-            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
-            <button type="submit">Get Started</button>
-        </form>
-    </section>
+        <!-- Services Section -->
+        <section id="services" class="services">
+            <div class="container">
+                <h2>What We Build</h2>
+                <p class="section-subtitle">Modern web solutions tailored to your business needs</p>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">🌐</div>
+                        <h3>Custom Websites</h3>
+                        <p>Built on Cloudflare's global network for maximum speed and security</p>
+                        <span class="service-price">From $1,999</span>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">📅</div>
+                        <h3>Booking Systems & Payments</h3>
+                        <p>Integrated scheduling and secure payment processing</p>
+                        <span class="service-price">From $2,499</span>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🛒</div>
+                        <h3>Ecommerce Solutions</h3>
+                        <p>Custom stores and Shopify integrations for online selling</p>
+                        <span class="service-price">From $3,499</span>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🎨</div>
+                        <h3>Branding & Logos</h3>
+                        <p>Professional brand identity that stands out</p>
+                        <span class="service-price">From $799</span>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">☁️</div>
+                        <h3>Hosting & Maintenance</h3>
+                        <p>Reliable hosting with ongoing support and updates</p>
+                        <span class="service-price">From $49/mo</span>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">📈</div>
+                        <h3>SEO & Google Business</h3>
+                        <p>Improve visibility and reach more customers</p>
+                        <span class="service-price">From $399</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="portfolio">
+            <div class="container">
+                <h2>Recent Work</h2>
+                <p class="section-subtitle">Real projects delivered for real clients</p>
+                <div class="portfolio-grid">
+                    <div class="portfolio-card">
+                        <div class="portfolio-image">
+                            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop" alt="Wedding Website" loading="lazy" width="600" height="400">
+                        </div>
+                        <div class="portfolio-info">
+                            <h3>Wedding Website</h3>
+                            <p class="portfolio-meta">Hospitality • Custom Build • Cloudflare</p>
+                            <p>Elegant wedding site with RSVP system and photo galleries</p>
+                            <a href="https://jamieandmichaelwedding.com" target="_blank" rel="noopener" class="portfolio-link">View Live Site →</a>
+                        </div>
+                    </div>
+                    <div class="portfolio-card">
+                        <div class="portfolio-image">
+                            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=400&fit=crop" alt="Business Website" loading="lazy" width="600" height="400">
+                        </div>
+                        <div class="portfolio-info">
+                            <h3>Printing Company</h3>
+                            <p class="portfolio-meta">B2B • Corporate • Cloudflare Pages</p>
+                            <p>Professional business site with portfolio and contact integration</p>
+                            <a href="https://associatedprinting.pages.dev" target="_blank" rel="noopener" class="portfolio-link">View Live Site →</a>
+                        </div>
+                    </div>
+                    <div class="portfolio-card">
+                        <div class="portfolio-image">
+                            <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&h=400&fit=crop" alt="Artist Portfolio" loading="lazy" width="600" height="400">
+                        </div>
+                        <div class="portfolio-info">
+                            <h3>Artist Portfolio & Shop</h3>
+                            <p class="portfolio-meta">Creative • Ecommerce • Cloudflare Workers</p>
+                            <p>Immersive portfolio with integrated digital download store</p>
+                            <a href="https://prodbypiras.h3vin.workers.dev" target="_blank" rel="noopener" class="portfolio-link">View Live Site →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>Sydney-Based, Globally Connected</h2>
+                        <p>Hevin Design brings together art and code to create custom web experiences for small businesses. Based in Sydney, we build on Cloudflare's global infrastructure to ensure your site is fast, secure, and always online.</p>
+                        <p>We believe every business deserves a professional web presence. Our expertise in modern web technologies means you get enterprise-grade performance without enterprise pricing.</p>
+                        <div class="about-features">
+                            <div class="about-feature">
+                                <span class="feature-icon">⚡</span>
+                                <span>Lightning-fast performance</span>
+                            </div>
+                            <div class="about-feature">
+                                <span class="feature-icon">🔒</span>
+                                <span>Bank-level security</span>
+                            </div>
+                            <div class="about-feature">
+                                <span class="feature-icon">🎯</span>
+                                <span>Built for conversion</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-visual">
+                        <div class="tech-stack">
+                            <h3>Built With</h3>
+                            <div class="tech-logos">
+                                <span class="tech-logo">Cloudflare</span>
+                                <span class="tech-logo">Shopify</span>
+                                <span class="tech-logo">Stripe</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="pricing">
+            <div class="container">
+                <h2>Transparent Pricing</h2>
+                <p class="section-subtitle">Clear packages designed for small business budgets</p>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>Starter</h3>
+                            <p class="pricing-description">Perfect for getting online quickly</p>
+                        </div>
+                        <div class="pricing-price">
+                            <span class="price-amount">$1,999</span>
+                            <span class="price-period">setup</span>
+                        </div>
+                        <div class="pricing-monthly">
+                            <span class="monthly-amount">$49</span>
+                            <span class="monthly-period">/month hosting</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>Up to 5 pages</li>
+                            <li>Mobile responsive design</li>
+                            <li>Contact form</li>
+                            <li>Basic SEO setup</li>
+                            <li>Cloudflare hosting</li>
+                            <li>Free SSL certificate</li>
+                        </ul>
+                        <a href="#enquiry" class="btn btn-outline" data-package="starter">Select This Package</a>
+                    </div>
+                    
+                    <div class="pricing-card featured">
+                        <div class="pricing-badge">Most Popular</div>
+                        <div class="pricing-header">
+                            <h3>Pro</h3>
+                            <p class="pricing-description">Complete business website</p>
+                        </div>
+                        <div class="pricing-price">
+                            <span class="price-amount">$3,499</span>
+                            <span class="price-period">setup</span>
+                        </div>
+                        <div class="pricing-monthly">
+                            <span class="monthly-amount">$79</span>
+                            <span class="monthly-period">/month hosting</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>Up to 10 pages</li>
+                            <li>Custom design</li>
+                            <li>Booking system OR blog</li>
+                            <li>Advanced SEO</li>
+                            <li>Google Business setup</li>
+                            <li>Payment integration</li>
+                            <li>Analytics dashboard</li>
+                        </ul>
+                        <a href="#enquiry" class="btn btn-primary" data-package="pro">Select This Package</a>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>Elite</h3>
+                            <p class="pricing-description">Premium custom solution</p>
+                        </div>
+                        <div class="pricing-price">
+                            <span class="price-amount">$5,999</span>
+                            <span class="price-period">setup</span>
+                        </div>
+                        <div class="pricing-monthly">
+                            <span class="monthly-amount">$129</span>
+                            <span class="monthly-period">/month hosting</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>Unlimited pages</li>
+                            <li>Fully custom design</li>
+                            <li>Advanced functionality</li>
+                            <li>CRM integration</li>
+                            <li>Priority support</li>
+                            <li>Dedicated account manager</li>
+                            <li>Quarterly strategy calls</li>
+                        </ul>
+                        <a href="#enquiry" class="btn btn-outline" data-package="elite">Select This Package</a>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>Shopify</h3>
+                            <p class="pricing-description">Ecommerce store</p>
+                        </div>
+                        <div class="pricing-price">
+                            <span class="price-amount">$4,499</span>
+                            <span class="price-period">setup</span>
+                        </div>
+                        <div class="pricing-monthly">
+                            <span class="monthly-amount">$99</span>
+                            <span class="monthly-period">/month + Shopify fees</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>Full Shopify setup</li>
+                            <li>Custom theme design</li>
+                            <li>Product catalog setup</li>
+                            <li>Payment gateway</li>
+                            <li>Inventory management</li>
+                            <li>Shipping configuration</li>
+                            <li>Order management system</li>
+                        </ul>
+                        <a href="#enquiry" class="btn btn-outline" data-package="shopify">Select This Package</a>
+                    </div>
+                </div>
+                
+                <div class="pricing-addons">
+                    <h3>Add-On Services</h3>
+                    <div class="addons-grid">
+                        <div class="addon-item">
+                            <strong>SEO Optimization</strong>
+                            <span>$399 setup + $49/mo</span>
+                        </div>
+                        <div class="addon-item">
+                            <strong>Branding Package</strong>
+                            <span>$799 one-time</span>
+                        </div>
+                        <div class="addon-item">
+                            <strong>Business Email</strong>
+                            <span>$15/mo per user</span>
+                        </div>
+                        <div class="addon-item">
+                            <strong>Extra Pages</strong>
+                            <span>$199 per page</span>
+                        </div>
+                        <div class="addon-item">
+                            <strong>Advanced Custom Features</strong>
+                            <span>From $499</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pricing-notes">
+                    <p><strong>Note:</strong> All prices in AUD. Setup fees are one-time charges. Monthly hosting includes updates, security, and 24/7 support. You own your domain and content. Shopify package requires separate Shopify subscription ($39-$399/mo depending on plan).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Client Enquiry Section -->
+        <section id="enquiry" class="enquiry">
+            <div class="container">
+                <h2>Start Your Project</h2>
+                <p class="section-subtitle">Get a detailed quote tailored to your needs</p>
+                
+                <form id="enquiry-form" class="enquiry-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="business">Business Name *</label>
+                            <input type="text" id="business" name="business" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="business-type">Business Type *</label>
+                            <select id="business-type" name="business-type" required>
+                                <option value="">Select...</option>
+                                <option value="retail">Retail</option>
+                                <option value="hospitality">Hospitality</option>
+                                <option value="professional-services">Professional Services</option>
+                                <option value="creative">Creative/Arts</option>
+                                <option value="health-wellness">Health & Wellness</option>
+                                <option value="trades">Trades</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="suburb">Suburb/Location (NSW) *</label>
+                            <input type="text" id="suburb" name="suburb" placeholder="e.g., Sydney CBD, Parramatta" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Select Your Package *</h3>
+                        <div class="package-options">
+                            <label class="package-option">
+                                <input type="radio" name="package" value="starter" data-setup="1999" data-monthly="49" required>
+                                <span class="package-label">
+                                    <strong>Starter</strong>
+                                    <span class="package-detail">$1,999 setup + $49/mo</span>
+                                </span>
+                            </label>
+                            <label class="package-option">
+                                <input type="radio" name="package" value="pro" data-setup="3499" data-monthly="79">
+                                <span class="package-label">
+                                    <strong>Pro</strong>
+                                    <span class="package-detail">$3,499 setup + $79/mo</span>
+                                </span>
+                            </label>
+                            <label class="package-option">
+                                <input type="radio" name="package" value="elite" data-setup="5999" data-monthly="129">
+                                <span class="package-label">
+                                    <strong>Elite</strong>
+                                    <span class="package-detail">$5,999 setup + $129/mo</span>
+                                </span>
+                            </label>
+                            <label class="package-option">
+                                <input type="radio" name="package" value="shopify" data-setup="4499" data-monthly="99">
+                                <span class="package-label">
+                                    <strong>Shopify</strong>
+                                    <span class="package-detail">$4,499 setup + $99/mo</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Add-On Services (Optional)</h3>
+                        <div class="addon-options">
+                            <label class="addon-option">
+                                <input type="checkbox" name="addon-seo" value="seo" data-setup="399" data-monthly="49">
+                                <span class="addon-label">
+                                    <strong>SEO Optimization</strong>
+                                    <span class="addon-detail">$399 setup + $49/mo</span>
+                                </span>
+                            </label>
+                            <label class="addon-option">
+                                <input type="checkbox" name="addon-branding" value="branding" data-setup="799" data-monthly="0">
+                                <span class="addon-label">
+                                    <strong>Branding Package</strong>
+                                    <span class="addon-detail">$799 one-time</span>
+                                </span>
+                            </label>
+                            <label class="addon-option">
+                                <input type="checkbox" name="addon-email" value="email" data-setup="0" data-monthly="15">
+                                <span class="addon-label">
+                                    <strong>Business Email</strong>
+                                    <span class="addon-detail">$15/mo per user</span>
+                                </span>
+                            </label>
+                            <label class="addon-option">
+                                <input type="checkbox" name="addon-pages" value="pages" data-setup="199" data-monthly="0">
+                                <span class="addon-label">
+                                    <strong>Extra Page</strong>
+                                    <span class="addon-detail">$199 per page</span>
+                                </span>
+                            </label>
+                            <label class="addon-option">
+                                <input type="checkbox" name="addon-custom" value="custom" data-setup="499" data-monthly="0">
+                                <span class="addon-label">
+                                    <strong>Advanced Custom Features</strong>
+                                    <span class="addon-detail">From $499</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="price-estimator">
+                        <div class="estimate-row">
+                            <span class="estimate-label">Setup Cost:</span>
+                            <span class="estimate-value" id="setup-cost">$0</span>
+                        </div>
+                        <div class="estimate-row">
+                            <span class="estimate-label">Monthly Cost:</span>
+                            <span class="estimate-value" id="monthly-cost">$0/mo</span>
+                        </div>
+                        <div class="estimate-total">
+                            <span class="estimate-label">First Year Total:</span>
+                            <span class="estimate-value" id="first-year-cost">$0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Tell us about your project</label>
+                        <textarea id="message" name="message" rows="5" placeholder="What are your goals? Any specific features you need?"></textarea>
+                    </div>
+                    
+                    <div class="form-section legal-section">
+                        <h3>Legal Acknowledgements *</h3>
+                        <label class="legal-checkbox">
+                            <input type="checkbox" name="privacy-agree" id="privacy-agree" required>
+                            <span>I have read and agree to the <a href="privacy.html" target="_blank">Privacy Policy</a></span>
+                        </label>
+                        <label class="legal-checkbox">
+                            <input type="checkbox" name="contract-agree" id="contract-agree" required>
+                            <span>I understand that this enquiry does not constitute a contract. Final pricing and scope will be confirmed in a written proposal.</span>
+                        </label>
+                    </div>
+                    
+                    <!-- Honeypot spam protection -->
+                    <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+                    
+                    <button type="submit" class="btn btn-primary btn-large" id="submit-btn">
+                        <span class="btn-text">Submit Enquiry</span>
+                        <span class="btn-loader" style="display:none;">Sending...</span>
+                    </button>
+                    
+                    <div id="form-message" class="form-message" style="display:none;"></div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Trust Section -->
+        <section id="trust" class="trust">
+            <div class="container">
+                <h2>Why Choose Hevin Design</h2>
+                <div class="trust-grid">
+                    <div class="trust-item">
+                        <div class="trust-icon">🚀</div>
+                        <h3>Fast & Reliable</h3>
+                        <p>Built on Cloudflare's global network. Your site loads in under 1 second worldwide.</p>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-icon">🔐</div>
+                        <h3>Secure by Default</h3>
+                        <p>Enterprise-grade security, free SSL, DDoS protection, and automatic backups included.</p>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-icon">👤</div>
+                        <h3>You Own Everything</h3>
+                        <p>Your domain, your content, your data. No lock-in, full ownership and control.</p>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-icon">💬</div>
+                        <h3>Local Support</h3>
+                        <p>Sydney-based team providing direct support. No offshore call centers.</p>
+                    </div>
+                </div>
+                <div class="trust-logos">
+                    <span class="trust-logo-text">Powered by:</span>
+                    <div class="tech-badges">
+                        <span class="tech-badge">Cloudflare</span>
+                        <span class="tech-badge">Shopify</span>
+                        <span class="tech-badge">Stripe</span>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <footer>
-        <p>&copy; 2025 Hevin Design. All rights reserved.</p>
-        <p>info@hevin.design</p>
-        <p><a href="privacy.html">Privacy Policy</a> | <img src="https://www.cloudflare.com/img/logo-cloudflare-dark.svg" alt="Secured by Cloudflare" style="height: 20px; vertical-align: middle; margin-left: 10px;" loading="lazy" width="100" height="20"></p>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Hevin Design</h4>
+                    <p>Custom websites & ecommerce for small businesses in Sydney and beyond.</p>
+                    <p class="footer-contact">
+                        <a href="mailto:hello@hevin.design">hello@hevin.design</a><br>
+                        Sydney, NSW, Australia<br>
+                        ABN: [Your ABN] <!-- TODO: Replace with actual ABN before production deployment -->
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#enquiry">Start a Project</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Hevin Design. All rights reserved.</p>
+                <p class="footer-secure">Secured by Cloudflare</p>
+            </div>
+        </div>
     </footer>
 </body>
 </html>

@@ -1,383 +1,197 @@
-// Menu toggle
-function toggleMenu() {
-    const menu = document.getElementById('nav-menu');
-    menu.classList.toggle('active');
-}
+// ==================================
+//  Hevin Design - JavaScript
+//  Pricing Calculator & Form Handler
+// ==================================
 
-// Constants
-const FORM_MESSAGES = {
-    success: 'Message sent successfully! We\'ll get back to you soon.',
-    error: 'Error sending message. Please email us directly at info@hevin.design',
-    networkError: 'Network error. Please email us directly at info@hevin.design'
-};
-
-// Utility function for debouncing
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Hero portal mouse effect - REMOVED
-/*
-function updateHeroPortal(e) {
-    const hero = document.querySelector('.hero');
-    if (!hero) return;
+document.addEventListener('DOMContentLoaded', function() {
+    // Mobile Menu Toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
     
-    const rect = hero.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    
-    hero.style.setProperty('--mouse-x', x + '%');
-    hero.style.setProperty('--mouse-y', y + '%');
-}
-*/
-
-// Cursor-following gradient overlay effect
-function initCursorGradient() {
-    const isMobile = window.matchMedia('(pointer: coarse)').matches;
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
-    // Don't initialize on mobile or if user prefers reduced motion
-    if (isMobile || prefersReducedMotion) {
-        return;
+    if (menuToggle) {
+        menuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !expanded);
+        });
     }
     
-    const overlay = document.querySelector('.cursor-gradient-overlay');
-    if (!overlay) return;
-    
-    let cursorX = 50;
-    let cursorY = 50;
-    let requestId = null;
-    
-    // Update cursor position
-    function updateCursorPosition(e) {
-        cursorX = (e.clientX / window.innerWidth) * 100;
-        cursorY = (e.clientY / window.innerHeight) * 100;
-        
-        // Use requestAnimationFrame for smooth, throttled updates
-        if (!requestId) {
-            requestId = requestAnimationFrame(() => {
-                // Set CSS variables on body for global access
-                document.body.style.setProperty('--cursor-x', `${cursorX}%`);
-                document.body.style.setProperty('--cursor-y', `${cursorY}%`);
-                requestId = null;
-            });
-        }
-    }
-    
-    // Add event listener with passive flag for better performance
-    document.addEventListener('mousemove', updateCursorPosition, { passive: true });
-}
-
-// Enhanced scroll animations with IntersectionObserver
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialize cursor-following gradient effect
-    initCursorGradient();
-    
-    // Hero subtitle unblur on page load
-    document.body.classList.add('loaded');
-    
-    // Cache DOM queries
-    const nav = document.querySelector('nav');
-    const navLinks = nav.querySelectorAll('a');
-    
-    // Smooth scroll with nav offset - cache layout values with resize handling
-    let navHeight = null;
-    const getNavHeight = () => {
-        if (navHeight === null) {
-            navHeight = nav.offsetHeight;
-        }
-        return navHeight;
-    };
-    
-    // Reset cached nav height on window resize (debounced)
-    let resizeTimeout = null;
-    window.addEventListener('resize', () => {
-        if (resizeTimeout) clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-            navHeight = null; // Reset cache on resize
-        }, 150);
-    }, { passive: true });
-    
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
+    // Smooth Scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            const target = document.querySelector(link.getAttribute('href'));
+            const target = document.querySelector(this.getAttribute('href'));
             if (target) {
-                // Use getBoundingClientRect for better performance
-                const targetRect = target.getBoundingClientRect();
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                window.scrollTo({ 
-                    top: scrollTop + targetRect.top - getNavHeight() - 20, 
-                    behavior: 'smooth' 
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
                 });
-            }
-        });
-    });
-
-    // Enhanced hamburger menu behavior for mobile
-    const menu = document.querySelector('#nav-menu');
-    const hamburger = document.querySelector('.menu-toggle');
-    const links = menu ? menu.querySelectorAll('a') : [];
-
-    // Close menu on outside click
-    if (menu && hamburger) {
-        document.addEventListener('click', (e) => {
-            if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
-                menu.classList.remove('active');
-            }
-        });
-
-        // Close menu after selecting a link
-        links.forEach(link => {
-            link.addEventListener('click', () => {
-                menu.classList.remove('active');
-            });
-        });
-    }
-
-
-    // Consolidated IntersectionObserver for all animated elements
-    const animatedElements = document.querySelectorAll('section, .service-card, .project-card, .process-step');
-    const mainObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                // Apply in-view class for sections
-                if (entry.target.nodeName.toLowerCase() === 'section') {
-                    entry.target.classList.add('in-view');
-                    entry.target.style.opacity = '1';
+                // Close mobile menu if open
+                if (navMenu && navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
                 }
-                mainObserver.unobserve(entry.target);
             }
         });
-    }, { 
-        threshold: 0.1,
-        rootMargin: '50px'
     });
-
-    animatedElements.forEach(element => {
-        mainObserver.observe(element);
-    });
-
-    // FAQ Accordion functionality with event delegation
-    const faqSection = document.querySelector('.faq');
     
-    if (faqSection) {
-        let rafId = null;
-        
-        // Use event delegation for mousemove on FAQ items
-        faqSection.addEventListener('mousemove', (e) => {
-            const item = e.target.closest('.faq-item');
-            if (!item || rafId) return;
-            
-            rafId = requestAnimationFrame(() => {
-                const rect = item.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / rect.width) * 100;
-                const y = ((e.clientY - rect.top) / rect.height) * 100;
-                
-                item.style.setProperty('--mouse-x', x + '%');
-                item.style.setProperty('--mouse-y', y + '%');
-                rafId = null;
-            });
-        });
-        
-        // Use event delegation for clicks on FAQ questions
-        faqSection.addEventListener('click', (e) => {
-            const question = e.target.closest('.faq-question');
-            if (!question) return;
-            
-            const isExpanded = question.getAttribute('aria-expanded') === 'true';
-            const answer = question.nextElementSibling;
-            const icon = question.querySelector('.faq-icon');
-            
-            // Toggle current FAQ
-            question.setAttribute('aria-expanded', !isExpanded);
-            answer.classList.toggle('open');
-            icon.textContent = isExpanded ? '+' : '-';
-        });
-    }
-    
-    // Hero portal effect - REMOVED
-    /*
-    document.addEventListener('mousemove', (e) => {
-        updateHeroPortal(e);
-    }, { passive: true });
-    */
-    
-    // About section background fade on scroll
-    const aboutSection = document.getElementById('about');
-    if (aboutSection) {
-        const aboutObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    aboutSection.classList.add('fade-to-white');
-                } else {
-                    aboutSection.classList.remove('fade-to-white');
-                }
-            });
-        }, {
-            threshold: 0.2
-        });
-        
-        aboutObserver.observe(aboutSection);
-    }
-    
-    // Form submission handler
-    const form = document.getElementById('contact-form');
-    if (form) {
-        form.addEventListener('submit', async (e) => {
+    // Package Selection CTAs
+    document.querySelectorAll('[data-package]').forEach(button => {
+        button.addEventListener('click', function(e) {
             e.preventDefault();
-            const submitButton = form.querySelector('button[type="submit"]');
-            const originalText = submitButton.textContent;
+            const packageName = this.getAttribute('data-package');
+            const packageRadio = document.querySelector(`input[name="package"][value="${packageName}"]`);
+            if (packageRadio) {
+                packageRadio.checked = true;
+                // Trigger calculator update
+                updatePriceCalculator();
+            }
+            // Scroll to enquiry form
+            const enquirySection = document.querySelector('#enquiry');
+            if (enquirySection) {
+                enquirySection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+    
+    // Pricing Calculator
+    const setupCostEl = document.getElementById('setup-cost');
+    const monthlyCostEl = document.getElementById('monthly-cost');
+    const firstYearCostEl = document.getElementById('first-year-cost');
+    
+    function updatePriceCalculator() {
+        let setupCost = 0;
+        let monthlyCost = 0;
+        
+        // Get selected package
+        const selectedPackage = document.querySelector('input[name="package"]:checked');
+        if (selectedPackage) {
+            setupCost += parseInt(selectedPackage.getAttribute('data-setup')) || 0;
+            monthlyCost += parseInt(selectedPackage.getAttribute('data-monthly')) || 0;
+        }
+        
+        // Get selected addons
+        const selectedAddons = document.querySelectorAll('input[type="checkbox"][name^="addon-"]:checked');
+        selectedAddons.forEach(addon => {
+            setupCost += parseInt(addon.getAttribute('data-setup')) || 0;
+            monthlyCost += parseInt(addon.getAttribute('data-monthly')) || 0;
+        });
+        
+        // Calculate first year total
+        const firstYearCost = setupCost + (monthlyCost * 12);
+        
+        // Update display
+        if (setupCostEl) {
+            setupCostEl.textContent = '$' + setupCost.toLocaleString();
+        }
+        if (monthlyCostEl) {
+            monthlyCostEl.textContent = '$' + monthlyCost.toLocaleString() + '/mo';
+        }
+        if (firstYearCostEl) {
+            firstYearCostEl.textContent = '$' + firstYearCost.toLocaleString();
+        }
+    }
+    
+    // Add event listeners for calculator
+    document.querySelectorAll('input[name="package"]').forEach(radio => {
+        radio.addEventListener('change', updatePriceCalculator);
+    });
+    
+    document.querySelectorAll('input[type="checkbox"][name^="addon-"]').forEach(checkbox => {
+        checkbox.addEventListener('change', updatePriceCalculator);
+    });
+    
+    // Form Submission Handler
+    const enquiryForm = document.getElementById('enquiry-form');
+    if (enquiryForm) {
+        enquiryForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
             
-            // Create or get message container
-            let messageEl = document.getElementById('form-message');
-            if (!messageEl) {
-                messageEl = document.createElement('div');
-                messageEl.id = 'form-message';
-                messageEl.style.cssText = 'margin-top: 1rem; padding: 1rem; border-radius: 0.375rem; text-align: center; font-weight: 500;';
-                form.appendChild(messageEl);
+            const submitBtn = document.getElementById('submit-btn');
+            const formMessage = document.getElementById('form-message');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnLoader = submitBtn.querySelector('.btn-loader');
+            
+            // Validate legal checkboxes
+            const privacyAgree = document.getElementById('privacy-agree');
+            const contractAgree = document.getElementById('contract-agree');
+            
+            if (!privacyAgree.checked || !contractAgree.checked) {
+                if (formMessage) {
+                    formMessage.textContent = 'Please accept both legal acknowledgements to proceed.';
+                    formMessage.className = 'form-message error';
+                    formMessage.style.display = 'block';
+                }
+                return;
             }
             
-            submitButton.textContent = 'Sending...';
-            submitButton.disabled = true;
-            messageEl.textContent = '';
-            messageEl.style.display = 'none';
+            // Disable button and show loader
+            submitBtn.disabled = true;
+            btnText.style.display = 'none';
+            btnLoader.style.display = 'inline';
             
-            const data = new FormData(form);
+            // Get form data
+            const formData = new FormData(enquiryForm);
+            
+            // Get selected package info
+            const selectedPackage = document.querySelector('input[name="package"]:checked');
+            if (selectedPackage) {
+                formData.append('package_name', selectedPackage.value);
+                formData.append('setup_cost', setupCostEl.textContent);
+                formData.append('monthly_cost', monthlyCostEl.textContent);
+                formData.append('first_year_cost', firstYearCostEl.textContent);
+            }
+            
+            // Get selected addons
+            const addons = [];
+            document.querySelectorAll('input[type="checkbox"][name^="addon-"]:checked').forEach(addon => {
+                addons.push(addon.value);
+            });
+            formData.append('addons', addons.join(', '));
             
             try {
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    body: data,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
+                // TODO: PRODUCTION - Replace with actual Cloudflare Worker endpoint
+                // Example:
+                // const response = await fetch('/api/enquiry', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify(Object.fromEntries(formData))
+                // });
+                // const result = await response.json();
                 
-                if (response.ok) {
-                    messageEl.textContent = FORM_MESSAGES.success;
-                    messageEl.style.backgroundColor = '#D1FAE5';
-                    messageEl.style.color = '#065F46';
-                    messageEl.style.display = 'block';
-                    messageEl.setAttribute('role', 'status');
-                    messageEl.setAttribute('aria-live', 'polite');
-                    form.reset();
-                } else {
-                    messageEl.textContent = FORM_MESSAGES.error;
-                    messageEl.style.backgroundColor = '#FEE2E2';
-                    messageEl.style.color = '#991B1B';
-                    messageEl.style.display = 'block';
-                    messageEl.setAttribute('role', 'alert');
-                    messageEl.setAttribute('aria-live', 'assertive');
+                // Simulate API call for development
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Show success message
+                if (formMessage) {
+                    formMessage.textContent = 'Thank you! We\'ve received your enquiry and will be in touch within 24 hours.';
+                    formMessage.className = 'form-message success';
+                    formMessage.style.display = 'block';
                 }
+                
+                // Reset form
+                enquiryForm.reset();
+                updatePriceCalculator();
+                
+                // Scroll to message
+                formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
             } catch (error) {
-                messageEl.textContent = FORM_MESSAGES.networkError;
-                messageEl.style.backgroundColor = '#FEE2E2';
-                messageEl.style.color = '#991B1B';
-                messageEl.style.display = 'block';
-                messageEl.setAttribute('role', 'alert');
-                messageEl.setAttribute('aria-live', 'assertive');
+                // Show error message
+                if (formMessage) {
+                    formMessage.textContent = 'Sorry, there was an error submitting your enquiry. Please email us directly at hello@hevin.design';
+                    formMessage.className = 'form-message error';
+                    formMessage.style.display = 'block';
+                }
             } finally {
-                submitButton.textContent = originalText;
-                submitButton.disabled = false;
+                // Re-enable button
+                submitBtn.disabled = false;
+                btnText.style.display = 'inline';
+                btnLoader.style.display = 'none';
             }
         });
     }
     
-    // Add holographic shimmer effect on card mouse move
-    const cards = document.querySelectorAll('.service-card, .project-card');
-    
-    // Check if device is touch-enabled or user prefers reduced motion
-    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
-    cards.forEach(card => {
-        if (!isTouchDevice && !prefersReducedMotion && window.innerWidth > 768) {
-            // Use requestAnimationFrame for smooth, throttled mousemove handler
-            let rafId = null;
-            let lastMouseEvent = null;
-            
-            // Cache card dimensions to avoid repeated getBoundingClientRect calls
-            let cardRect = card.getBoundingClientRect();
-            
-            const updateCardRect = debounce(() => {
-                cardRect = card.getBoundingClientRect();
-            }, 150);
-            
-            window.addEventListener('resize', updateCardRect, { passive: true });
-            
-            const updateCardEffect = () => {
-                if (!lastMouseEvent) return;
-                
-                const e = lastMouseEvent;
-                const x = e.clientX - cardRect.left;
-                const y = e.clientY - cardRect.top;
-                
-                // Batch DOM reads first
-                const centerX = cardRect.width / 2;
-                const centerY = cardRect.height / 2;
-                
-                // Calculate all values
-                const xPercent = (x / cardRect.width) * 100;
-                const yPercent = (y / cardRect.height) * 100;
-                const rotateX = ((y - centerY) / centerY) * -2;
-                const rotateY = ((x - centerX) / centerX) * 2;
-                
-                // Batch DOM writes
-                card.style.setProperty('--mouse-x', `${xPercent}%`);
-                card.style.setProperty('--mouse-y', `${yPercent}%`);
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
-                
-                rafId = null;
-            };
-            
-            card.addEventListener('mousemove', (e) => {
-                lastMouseEvent = e;
-                
-                if (!rafId) {
-                    rafId = requestAnimationFrame(updateCardEffect);
-                }
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                lastMouseEvent = null;
-                if (rafId) {
-                    cancelAnimationFrame(rafId);
-                    rafId = null;
-                }
-                card.style.transform = '';
-                card.style.setProperty('--mouse-x', '50%');
-                card.style.setProperty('--mouse-y', '50%');
-            });
-        }
-    });
-    
-    // New Holographic Shimmer Effect for specific h2 elements
-    const shimmerElements = document.querySelectorAll('.shimmer');
-
-    // Reuse mainObserver with shimmer-specific handling
-    shimmerElements.forEach((el, index) => {
-        const shimmerCallback = (entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('visible');
-                    }, index * 400);
-                    shimmerObserver.unobserve(entry.target);
-                }
-            });
-        };
-        const shimmerObserver = new IntersectionObserver(shimmerCallback, { threshold: 0.2 });
-        shimmerObserver.observe(el);
-    });
-
+    // Initial calculator update
+    updatePriceCalculator();
 });
