@@ -538,6 +538,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const portfolioNextBtn = document.querySelector('.portfolio-carousel-wrapper .carousel-nav-next');
         
         if (portfolioPrevBtn && portfolioNextBtn) {
+            // Configuration constants for carousel behavior
+            const CAROUSEL_SCROLL_DURATION = 800; // Milliseconds for smooth scroll animation
+            const WHEEL_SENSITIVITY = 0.5; // Reduce wheel speed for better control (0.5 = half speed)
+            
             function updatePortfolioNavButtons() {
                 const scrollLeft = portfolioCarousel.scrollLeft;
                 const maxScroll = portfolioCarousel.scrollWidth - portfolioCarousel.clientWidth;
@@ -547,22 +551,48 @@ document.addEventListener('DOMContentLoaded', function() {
                 portfolioNextBtn.disabled = scrollLeft >= maxScroll - 1;
             }
             
+            // Smooth scroll function with custom easing and slower speed
+            function smoothScrollCarousel(targetScroll) {
+                const startScroll = portfolioCarousel.scrollLeft;
+                const distance = targetScroll - startScroll;
+                const duration = CAROUSEL_SCROLL_DURATION;
+                const startTime = performance.now();
+                
+                // easeOutCubic: starts fast, slows down at the end
+                // Creates a more natural, deliberate feel for carousel navigation
+                // Formula: 1 - (1 - t)^3 where t is progress from 0 to 1
+                function easeOutCubic(t) {
+                    return 1 - Math.pow(1 - t, 3);
+                }
+                
+                function animateScroll(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const easedProgress = easeOutCubic(progress);
+                    
+                    portfolioCarousel.scrollLeft = startScroll + (distance * easedProgress);
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(animateScroll);
+                    }
+                }
+                
+                requestAnimationFrame(animateScroll);
+            }
+            
             portfolioPrevBtn.addEventListener('click', () => {
                 const cardWidth = portfolioCarousel.querySelector('.portfolio-card').offsetWidth;
                 const gap = parseInt(getComputedStyle(portfolioCarousel).gap);
-                portfolioCarousel.scrollBy({
-                    left: -(cardWidth + gap),
-                    behavior: 'smooth'
-                });
+                const targetScroll = portfolioCarousel.scrollLeft - (cardWidth + gap);
+                smoothScrollCarousel(Math.max(0, targetScroll));
             });
             
             portfolioNextBtn.addEventListener('click', () => {
                 const cardWidth = portfolioCarousel.querySelector('.portfolio-card').offsetWidth;
                 const gap = parseInt(getComputedStyle(portfolioCarousel).gap);
-                portfolioCarousel.scrollBy({
-                    left: cardWidth + gap,
-                    behavior: 'smooth'
-                });
+                const maxScroll = portfolioCarousel.scrollWidth - portfolioCarousel.clientWidth;
+                const targetScroll = portfolioCarousel.scrollLeft + (cardWidth + gap);
+                smoothScrollCarousel(Math.min(maxScroll, targetScroll));
             });
             
             // Update button states on scroll
@@ -573,6 +603,37 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Initial update
             updatePortfolioNavButtons();
+        }
+        
+        // Add wheel event listener for smoother mouse wheel scrolling
+        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            const WHEEL_SENSITIVITY = 0.5; // Reduce wheel speed for better control
+            let wheelTimeout;
+            
+            portfolioCarousel.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                
+                // Clear existing timeout
+                if (wheelTimeout) {
+                    clearTimeout(wheelTimeout);
+                }
+                
+                // Reduce wheel sensitivity for slower, more controlled scroll
+                const scrollAmount = e.deltaY * WHEEL_SENSITIVITY;
+                const maxScroll = portfolioCarousel.scrollWidth - portfolioCarousel.clientWidth;
+                const targetScroll = Math.max(0, Math.min(maxScroll, portfolioCarousel.scrollLeft + scrollAmount));
+                
+                // Smooth scroll to target
+                portfolioCarousel.scrollTo({
+                    left: targetScroll,
+                    behavior: 'smooth'
+                });
+                
+                // Debounce to prevent scroll accumulation
+                wheelTimeout = setTimeout(() => {
+                    wheelTimeout = null;
+                }, 50);
+            }, { passive: false });
         }
     }
     
