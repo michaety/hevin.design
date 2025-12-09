@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // TODO: PRODUCTION - Remove console.log before deploying
                 // Simulate API call for development
-                if (typeof window.DEBUG === 'undefined' || window.DEBUG) {
+                if (window.DEBUG === true) {
                     console.log('Enquiry Data:', enquiryData);
                 }
                 await new Promise(resolve => setTimeout(resolve, 1500));
