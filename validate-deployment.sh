@@ -77,8 +77,9 @@ test_content_exists() {
 test_resource_size() {
     local url="$1"
     local max_size="$2"
-    local size=$(curl -s "$url" | wc -c)
-    [ $size -gt 0 ] && [ $size -lt $max_size ]
+    # Use HEAD request to get Content-Length header without downloading full file
+    local size=$(curl -sI "$url" | grep -i "content-length" | awk '{print $2}' | tr -d '\r')
+    [ -n "$size" ] && [ $size -gt 0 ] && [ $size -lt $max_size ]
 }
 
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -160,25 +161,23 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo ""
 
 # Check if cache headers are present
-if command -v curl > /dev/null 2>&1; then
-    printf "%-50s ... " "CSS has cache-control header"
-    if curl -s -I "$BASE_URL/styles.min.css" | grep -qi "cache-control"; then
-        echo -e "${GREEN}✓ PASS${NC}"
-        PASSED_TESTS=$((PASSED_TESTS + 1))
-    else
-        echo -e "${YELLOW}⚠ WARN${NC}"
-    fi
-    TOTAL_TESTS=$((TOTAL_TESTS + 1))
-    
-    printf "%-50s ... " "JS has cache-control header"
-    if curl -s -I "$BASE_URL/scripts.min.js" | grep -qi "cache-control"; then
-        echo -e "${GREEN}✓ PASS${NC}"
-        PASSED_TESTS=$((PASSED_TESTS + 1))
-    else
-        echo -e "${YELLOW}⚠ WARN${NC}"
-    fi
-    TOTAL_TESTS=$((TOTAL_TESTS + 1))
+printf "%-50s ... " "CSS has cache-control header"
+if curl -s -I "$BASE_URL/styles.min.css" | grep -qi "cache-control"; then
+    echo -e "${GREEN}✓ PASS${NC}"
+    PASSED_TESTS=$((PASSED_TESTS + 1))
+else
+    echo -e "${YELLOW}⚠ WARN${NC}"
 fi
+TOTAL_TESTS=$((TOTAL_TESTS + 1))
+
+printf "%-50s ... " "JS has cache-control header"
+if curl -s -I "$BASE_URL/scripts.min.js" | grep -qi "cache-control"; then
+    echo -e "${GREEN}✓ PASS${NC}"
+    PASSED_TESTS=$((PASSED_TESTS + 1))
+else
+    echo -e "${YELLOW}⚠ WARN${NC}"
+fi
+TOTAL_TESTS=$((TOTAL_TESTS + 1))
 
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
