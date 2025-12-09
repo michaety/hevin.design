@@ -22,11 +22,39 @@ fi
 STYLES_SIZE_BEFORE=$(wc -c < styles.css)
 SCRIPTS_SIZE_BEFORE=$(wc -c < scripts.js)
 
+# Validate file sizes
+if [ "$STYLES_SIZE_BEFORE" -eq 0 ]; then
+    echo "❌ Error: styles.css is empty"
+    exit 1
+fi
+
+if [ "$SCRIPTS_SIZE_BEFORE" -eq 0 ]; then
+    echo "❌ Error: scripts.js is empty"
+    exit 1
+fi
+
 echo "📦 Minifying CSS..."
-npx clean-css-cli -o styles.min.css styles.css
+if ! npx clean-css-cli -o styles.min.css styles.css; then
+    echo "❌ Error: CSS minification failed"
+    exit 1
+fi
 
 echo "📦 Minifying JavaScript..."
-npx terser scripts.js -o scripts.min.js -c -m
+if ! npx terser scripts.js -o scripts.min.js -c -m; then
+    echo "❌ Error: JavaScript minification failed"
+    exit 1
+fi
+
+# Verify minified files were created
+if [ ! -f "styles.min.css" ]; then
+    echo "❌ Error: styles.min.css was not created"
+    exit 1
+fi
+
+if [ ! -f "scripts.min.js" ]; then
+    echo "❌ Error: scripts.min.js was not created"
+    exit 1
+fi
 
 # Get file sizes after
 STYLES_MIN_SIZE=$(wc -c < styles.min.css)
