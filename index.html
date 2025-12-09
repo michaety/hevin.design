@@ -121,47 +121,95 @@
                 <h2>Recent Work</h2>
                 <p class="section-subtitle">Real projects delivered for real clients</p>
                 
-                <!-- Portfolio Filter UI -->
-                <div class="portfolio-filters">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="ecommerce">Ecommerce</button>
-                    <button class="filter-btn" data-filter="booking">Booking</button>
-                    <button class="filter-btn" data-filter="portfolio">Portfolio</button>
-                    <button class="filter-btn" data-filter="business">Business</button>
+                <!-- Featured Case Carousel -->
+                <!-- TODO: PRODUCTION - Replace Unsplash placeholder images with real project screenshots -->
+                <div class="featured-carousel-wrapper">
+                    <div class="featured-carousel" role="region" aria-label="Featured projects">
+                        <article class="featured-card">
+                            <div class="featured-card-image">
+                                <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800&h=500&fit=crop" alt="yourbig.day event management platform" loading="lazy" width="800" height="500">
+                            </div>
+                            <div class="featured-card-content">
+                                <div class="featured-card-info">
+                                    <h3>yourbig.day</h3>
+                                    <p class="featured-meta">Online RSVP & Event Management</p>
+                                    <p class="featured-description">Custom event system: guest management, QR-code uploads, automated RSVPs, admin host access.</p>
+                                    <p class="featured-usecase">Best for: Events, weddings, venues, ticketed experiences</p>
+                                </div>
+                                <a href="https://yourbig.day/" target="_blank" rel="noopener" class="btn btn-featured">View Live →</a>
+                            </div>
+                        </article>
+                        
+                        <article class="featured-card">
+                            <div class="featured-card-image">
+                                <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=800&h=500&fit=crop" alt="prodbypiras digital store" loading="lazy" width="800" height="500">
+                            </div>
+                            <div class="featured-card-content">
+                                <div class="featured-card-info">
+                                    <h3>prodbypiras</h3>
+                                    <p class="featured-meta">Digital Ecommerce Store</p>
+                                    <p class="featured-description">Secure digital product store: online payments, instant delivery, full backend management.</p>
+                                    <p class="featured-usecase">Best for: Creators, musicians, product sellers</p>
+                                </div>
+                                <a href="https://prodbypiras.h3vin.workers.dev/" target="_blank" rel="noopener" class="btn btn-featured">View Live →</a>
+                            </div>
+                        </article>
+                        
+                        <article class="featured-card">
+                            <div class="featured-card-image">
+                                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=500&fit=crop" alt="jamieandmichaelwedding custom site" loading="lazy" width="800" height="500">
+                            </div>
+                            <div class="featured-card-content">
+                                <div class="featured-card-info">
+                                    <h3>jamieandmichaelwedding</h3>
+                                    <p class="featured-meta">Custom Wedding Site & RSVP</p>
+                                    <p class="featured-description">Bespoke site: RSVP tracking, guest management, galleries, automated confirmations.</p>
+                                    <p class="featured-usecase">Best for: Weddings, private events</p>
+                                </div>
+                                <a href="https://jamieandmichaelwedding.com/" target="_blank" rel="noopener" class="btn btn-featured">View Live →</a>
+                            </div>
+                        </article>
+                    </div>
                 </div>
                 
-                <div class="portfolio-grid">
-                    <div class="portfolio-card" data-category="booking">
-                        <div class="portfolio-image">
-                            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop" alt="Wedding Website" loading="lazy" width="600" height="400">
+                <!-- Secondary Project Grid -->
+                <div class="secondary-grid">
+                    <div class="secondary-card">
+                        <div class="secondary-image">
+                            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=400&fit=crop" alt="Associated Printing website" loading="lazy" width="600" height="400">
                         </div>
-                        <div class="portfolio-info">
-                            <h3>Wedding Website</h3>
-                            <p class="portfolio-meta">Hospitality • Custom Build • Cloudflare</p>
-                            <p>Elegant wedding site with RSVP system and photo galleries</p>
-                            <a href="https://jamieandmichaelwedding.com" target="_blank" rel="noopener" class="portfolio-link">View Live Site →</a>
-                        </div>
-                    </div>
-                    <div class="portfolio-card" data-category="business">
-                        <div class="portfolio-image">
-                            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=400&fit=crop" alt="Business Website" loading="lazy" width="600" height="400">
-                        </div>
-                        <div class="portfolio-info">
-                            <h3>Printing Company</h3>
-                            <p class="portfolio-meta">B2B • Corporate • Cloudflare Pages</p>
-                            <p>Professional business site with portfolio and contact integration</p>
-                            <a href="https://associatedprinting.pages.dev" target="_blank" rel="noopener" class="portfolio-link">View Live Site →</a>
+                        <div class="secondary-info">
+                            <h3>associatedprinting</h3>
+                            <p class="secondary-meta">Professional Print Shop</p>
+                            <p>Service listings, enquiries, brand focus.</p>
+                            <p class="secondary-usecase">Best for: Tradies, print shops, service/SMBs</p>
+                            <a href="https://associatedprinting.pages.dev/" target="_blank" rel="noopener" class="secondary-link">View Live →</a>
                         </div>
                     </div>
-                    <div class="portfolio-card" data-category="portfolio ecommerce">
-                        <div class="portfolio-image">
-                            <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&h=400&fit=crop" alt="Artist Portfolio" loading="lazy" width="600" height="400">
+                    
+                    <div class="secondary-card">
+                        <div class="secondary-image">
+                            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&h=400&fit=crop" alt="fishtank.news platform" loading="lazy" width="600" height="400">
                         </div>
-                        <div class="portfolio-info">
-                            <h3>Artist Portfolio & Shop</h3>
-                            <p class="portfolio-meta">Creative • Ecommerce • Cloudflare Workers</p>
-                            <p>Immersive portfolio with integrated digital download store</p>
-                            <a href="https://prodbypiras.h3vin.workers.dev" target="_blank" rel="noopener" class="portfolio-link">View Live Site →</a>
+                        <div class="secondary-info">
+                            <h3>fishtank.news</h3>
+                            <p class="secondary-meta">Editorial News Platform</p>
+                            <p>Writers, admin, image hosting, workflows.</p>
+                            <p class="secondary-usecase">Best for: Media, blogs, publications</p>
+                            <a href="https://fishtank.news/" target="_blank" rel="noopener" class="secondary-link">View Live →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="secondary-card experimental">
+                        <div class="secondary-image">
+                            <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&h=400&fit=crop" alt="h3v.in creative portfolio" loading="lazy" width="600" height="400">
+                        </div>
+                        <div class="secondary-info">
+                            <h3>h3v.in</h3>
+                            <p class="secondary-meta">Creative & Experimental</p>
+                            <p>Artist portfolio, interactive showcase.</p>
+                            <p class="secondary-usecase">Best for: Artists, personal brands</p>
+                            <a href="https://h3v.in/" target="_blank" rel="noopener" class="secondary-link">View Live →</a>
                         </div>
                     </div>
                 </div>
