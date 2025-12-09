@@ -150,11 +150,16 @@ document.addEventListener('DOMContentLoaded', function() {
             formData.append('addons', addons.join(', '));
             
             try {
-                // TODO: Replace with actual backend endpoint
-                // For now, we'll simulate a successful submission
-                // In production, this should POST to a Cloudflare Worker
+                // TODO: PRODUCTION - Replace with actual Cloudflare Worker endpoint
+                // Example:
+                // const response = await fetch('/api/enquiry', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify(Object.fromEntries(formData))
+                // });
+                // const result = await response.json();
                 
-                // Simulate API call
+                // Simulate API call for development
                 await new Promise(resolve => setTimeout(resolve, 1500));
                 
                 // Show success message
