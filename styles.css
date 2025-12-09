@@ -29,6 +29,14 @@
     --color-secondary: #6366f1;
     --color-accent: #8b5cf6;
     
+    /* Hero Gradient Colors - Day/Light Mode */
+    --hero-bg-base: #ffffff;
+    --hero-bg-secondary: #f5f5f5;
+    --hero-gradient-1: rgba(255, 182, 193, 0.45); /* Pastel Peach */
+    --hero-gradient-2: rgba(173, 216, 230, 0.45); /* Soft Blue */
+    --hero-gradient-3: rgba(221, 160, 221, 0.45); /* Lilac */
+    --hero-gradient-4: rgba(255, 239, 213, 0.35); /* Peach Cream */
+    
     /* Spacing */
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
@@ -66,6 +74,36 @@
     --transition-fast: 150ms ease;
     --transition-base: 250ms ease;
     --transition-slow: 350ms ease;
+}
+
+/* Dark Mode / Night Theme */
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Hero Gradient Colors - Night/Dark Mode */
+        --hero-bg-base: #05070b;
+        --hero-bg-secondary: #0b0d12;
+        --hero-gradient-1: rgba(99, 102, 241, 0.55); /* Indigo */
+        --hero-gradient-2: rgba(139, 92, 246, 0.55); /* Violet */
+        --hero-gradient-3: rgba(34, 211, 238, 0.45); /* Cyan */
+        --hero-gradient-4: rgba(236, 72, 153, 0.45); /* Magenta */
+        
+        /* Adjust text colors for dark mode */
+        --color-black: #ffffff;
+        --color-charcoal: #e5e5e5;
+        --color-gray-800: #d4d4d4;
+        --color-gray-600: #a3a3a3;
+        --color-white: #05070b;
+        --color-off-white: #0b0d12;
+    }
+    
+    body {
+        background-color: var(--hero-bg-base);
+    }
+    
+    .main-nav {
+        background-color: rgba(5, 7, 11, 0.95);
+        border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
 }
 
 html {
@@ -283,8 +321,35 @@ a:hover {
     justify-content: center;
     text-align: center;
     padding: var(--spacing-3xl) var(--spacing-md);
-    background: linear-gradient(180deg, var(--color-white) 0%, var(--color-off-white) 100%);
+    background: 
+        radial-gradient(ellipse at 20% 30%, var(--hero-gradient-1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, var(--hero-gradient-2) 0%, transparent 50%),
+        radial-gradient(ellipse at 60% 80%, var(--hero-gradient-3) 0%, transparent 50%),
+        radial-gradient(ellipse at 40% 20%, var(--hero-gradient-4) 0%, transparent 50%),
+        linear-gradient(180deg, var(--hero-bg-base) 0%, var(--hero-bg-secondary) 100%);
     overflow: hidden;
+}
+
+/* Reduced motion: disable gradient animation */
+@media (prefers-reduced-motion: reduce) {
+    .hero {
+        background: linear-gradient(180deg, var(--hero-bg-base) 0%, var(--hero-bg-secondary) 100%);
+    }
+    
+    .gradient-orb {
+        animation: none !important;
+    }
+}
+
+.hero-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    will-change: transform;
 }
 
 .hero-content {
@@ -326,14 +391,25 @@ a:hover {
 .gradient-orb {
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
-    filter: blur(60px);
-    animation: float 8s ease-in-out infinite;
+    background: radial-gradient(circle, var(--hero-gradient-2) 0%, transparent 70%);
+    filter: blur(80px);
+    opacity: 0.6;
+    animation: float 12s ease-in-out infinite;
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-30px); }
+    0%, 100% { 
+        transform: translateY(0) scale(1);
+        opacity: 0.6;
+    }
+    33% { 
+        transform: translateY(-40px) scale(1.05);
+        opacity: 0.7;
+    }
+    66% { 
+        transform: translateY(20px) scale(0.95);
+        opacity: 0.5;
+    }
 }
 
 /* Sections */

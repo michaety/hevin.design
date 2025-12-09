@@ -5,6 +5,206 @@
 // ==================================
 
 document.addEventListener('DOMContentLoaded', function() {
+    // ==================================
+    // Hero Canvas Fluid Gradient
+    // ==================================
+    
+    const canvas = document.getElementById('hero-canvas');
+    if (canvas) {
+        initHeroCanvas(canvas);
+    }
+    
+    function initHeroCanvas(canvas) {
+        // Feature detection and performance checks
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+        const hasPointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        
+        // Don't initialize canvas if reduced motion is preferred or on mobile
+        if (prefersReducedMotion || !isDesktop) {
+            return;
+        }
+        
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+        
+        // Detect dark mode
+        const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        // Color palettes
+        const dayPalette = [
+            { r: 255, g: 182, b: 193, a: 0.50 }, // Pastel Peach
+            { r: 173, g: 216, b: 230, a: 0.50 }, // Soft Blue
+            { r: 221, g: 160, b: 221, a: 0.50 }, // Lilac
+            { r: 255, g: 239, b: 213, a: 0.45 }, // Peach Cream
+        ];
+        
+        const nightPalette = [
+            { r: 99, g: 102, b: 241, a: 0.60 },  // Indigo
+            { r: 139, g: 92, b: 246, a: 0.60 },  // Violet
+            { r: 34, g: 211, b: 238, a: 0.50 },  // Cyan
+            { r: 236, g: 72, b: 153, a: 0.50 },  // Magenta
+        ];
+        
+        const palette = isDarkMode ? nightPalette : dayPalette;
+        
+        // Resize canvas to match display size
+        function resizeCanvas() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+        }
+        
+        // Throttle resize for performance
+        let resizeTimeout;
+        function handleResize() {
+            if (resizeTimeout) {
+                cancelAnimationFrame(resizeTimeout);
+            }
+            resizeTimeout = requestAnimationFrame(resizeCanvas);
+        }
+        
+        resizeCanvas();
+        window.addEventListener('resize', handleResize);
+        
+        // Fluid gradient blobs
+        const blobs = palette.map((color, i) => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.3,
+            radius: 150 + Math.random() * 200,
+            color: color,
+            phase: Math.random() * Math.PI * 2,
+        }));
+        
+        // Cursor glow (only on desktop with pointer)
+        let cursorX = canvas.width / 2;
+        let cursorY = canvas.height / 2;
+        let targetCursorX = cursorX;
+        let targetCursorY = cursorY;
+        let cursorActive = false;
+        
+        if (hasPointer) {
+            canvas.parentElement.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                targetCursorX = e.clientX - rect.left;
+                targetCursorY = e.clientY - rect.top;
+                cursorActive = true;
+            });
+            
+            canvas.parentElement.addEventListener('mouseleave', () => {
+                cursorActive = false;
+            });
+        }
+        
+        // Animation loop
+        let animationFrame;
+        let time = 0;
+        
+        function animate() {
+            time += 0.005;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Smooth cursor movement
+            cursorX += (targetCursorX - cursorX) * 0.1;
+            cursorY += (targetCursorY - cursorY) * 0.1;
+            
+            // Update and draw blobs
+            blobs.forEach((blob) => {
+                // Update position with organic motion
+                blob.x += blob.vx + Math.sin(time + blob.phase) * 0.5;
+                blob.y += blob.vy + Math.cos(time + blob.phase * 0.7) * 0.5;
+                
+                // Boundary bounce
+                if (blob.x < -blob.radius || blob.x > canvas.width + blob.radius) {
+                    blob.vx *= -1;
+                }
+                if (blob.y < -blob.radius || blob.y > canvas.height + blob.radius) {
+                    blob.vy *= -1;
+                }
+                
+                // Draw blob with radial gradient using circular path
+                const gradient = ctx.createRadialGradient(
+                    blob.x, blob.y, 0,
+                    blob.x, blob.y, blob.radius
+                );
+                
+                gradient.addColorStop(0, `rgba(${blob.color.r}, ${blob.color.g}, ${blob.color.b}, ${blob.color.a})`);
+                gradient.addColorStop(0.5, `rgba(${blob.color.r}, ${blob.color.g}, ${blob.color.b}, ${blob.color.a * 0.5})`);
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(blob.x, blob.y, blob.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            
+            // Draw cursor glow (if active)
+            if (cursorActive && hasPointer) {
+                const glowRadius = 250;
+                const glowGradient = ctx.createRadialGradient(
+                    cursorX, cursorY, 0,
+                    cursorX, cursorY, glowRadius
+                );
+                
+                const glowColor = isDarkMode 
+                    ? 'rgba(255, 255, 255, 0.08)'
+                    : 'rgba(99, 102, 241, 0.1)';
+                
+                glowGradient.addColorStop(0, glowColor);
+                glowGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                
+                ctx.globalCompositeOperation = 'screen';
+                ctx.fillStyle = glowGradient;
+                ctx.beginPath();
+                ctx.arc(cursorX, cursorY, glowRadius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalCompositeOperation = 'source-over';
+            }
+            
+            animationFrame = requestAnimationFrame(animate);
+        }
+        
+        let isAnimating = false;
+        
+        function startAnimation() {
+            if (!isAnimating) {
+                isAnimating = true;
+                animate();
+            }
+        }
+        
+        function stopAnimation() {
+            if (animationFrame) {
+                cancelAnimationFrame(animationFrame);
+                animationFrame = null;
+            }
+            isAnimating = false;
+        }
+        
+        function cleanup() {
+            stopAnimation();
+            window.removeEventListener('resize', handleResize);
+        }
+        
+        startAnimation();
+        
+        // Cleanup on visibility change and page unload
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                stopAnimation();
+            } else {
+                startAnimation();
+            }
+        });
+        
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', cleanup);
+    }
+    
     // Mobile Menu Toggle
     const menuToggle = document.querySelector('.menu-toggle');
     const navMenu = document.querySelector('.nav-menu');
