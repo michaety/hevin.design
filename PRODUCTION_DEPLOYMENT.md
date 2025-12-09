@@ -2,63 +2,78 @@
 
 This document explains how to deploy the optimized production version of the website.
 
+## ✅ Current Configuration (As of Dec 2025)
+
+**All HTML files now reference minified assets directly:**
+- `index.html` → uses `styles.min.css` and `scripts.min.js`
+- `privacy.html` → uses `styles.min.css`
+- `terms.html` → uses `styles.min.css`
+
+This ensures **preview and production deployments behave identically**.
+
 ## Production Assets
 
 The repository includes minified versions of CSS and JavaScript for production use:
 
-- `styles.min.css` - Minified CSS (18KB, 44% smaller than original)
-- `scripts.min.js` - Minified JavaScript (3.8KB, 68% smaller than original)
+- `styles.min.css` - Minified CSS (~28KB, 28% smaller than source)
+- `scripts.min.js` - Minified JavaScript (~8KB, 67% smaller than source)
 
-## Deployment Options
+## Quick Start: Making Changes
 
-### Option 1: Update index.html for Production
+### 1. Edit Source Files
+Make your changes to `styles.css` or `scripts.js`
 
-To use the minified versions, update the following lines in `index.html`:
+### 2. Regenerate Minified Files
+```bash
+# Use the provided build script (recommended)
+./build.sh
 
-**Before:**
-```html
-<link rel="stylesheet" href="styles.css">
-<script defer src="scripts.js"></script>
+# Or manually:
+npx clean-css-cli -o styles.min.css styles.css
+npx terser scripts.js -o scripts.min.js -c -m
 ```
 
-**After:**
-```html
-<link rel="stylesheet" href="styles.min.css">
-<script defer src="scripts.min.js"></script>
+### 3. Commit All Files
+```bash
+git add styles.css styles.min.css scripts.js scripts.min.js
+git commit -m "Update styles/scripts"
+git push
 ```
 
-### Option 2: Use Build Script
+### 4. Post-Deployment: Purge Cache
+After deployment, purge Cloudflare cache:
+```bash
+# Via Cloudflare Dashboard
+# Caching > Configuration > Purge Everything
+```
 
-Create a simple build script that copies `index.html` and replaces references:
+## Build Script
+
+A build script (`build.sh`) is provided to automate minification:
 
 ```bash
-#!/bin/bash
-# build.sh
-mkdir -p dist
-cp index.html dist/index.html
-cp privacy.html dist/privacy.html
-cp styles.min.css dist/styles.css
-cp scripts.min.js dist/scripts.js
-echo "Production build created in dist/"
+./build.sh
 ```
 
-### Option 3: Server-Side Configuration
+This will:
+- Minify `styles.css` → `styles.min.css`
+- Minify `scripts.js` → `scripts.min.js`
+- Display size savings
+- Remind you to commit and purge cache
 
-Configure your web server to automatically serve `.min.css` and `.min.js` files when `.css` and `.js` are requested:
+## Manual Minification
 
-**Apache (.htaccess):**
-```apache
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.+)\.(css|js)$ $1.min.$2 [L]
+If you prefer to minify manually:
+
+```bash
+# CSS minification
+npx clean-css-cli -o styles.min.css styles.css
+
+# JavaScript minification
+npx terser scripts.js -o scripts.min.js -c -m
 ```
 
-**Nginx:**
-```nginx
-location ~* \.(css|js)$ {
-    try_files $uri.min $uri =404;
-}
-```
+**Note:** No need to install packages globally - `npx` will download them as needed.
 
 ## Performance Optimizations
 
@@ -91,18 +106,36 @@ location ~* \.(css|js)$ {
 
 ## Regenerating Minified Files
 
-If you make changes to `styles.css` or `scripts.js`, regenerate minified versions:
+⚠️ **IMPORTANT:** Always regenerate minified files after editing source files!
 
 ```bash
-# Install tools (one-time)
-npm install -g terser csso-cli
+# Recommended: Use build script
+./build.sh
 
-# Minify CSS
-csso styles.css -o styles.min.css
-
-# Minify JavaScript
-terser scripts.js -c -m -o scripts.min.js
+# Alternative: Manual commands
+npx clean-css-cli -o styles.min.css styles.css
+npx terser scripts.js -o scripts.min.js -c -m
 ```
+
+## Deployment Workflow
+
+1. Edit `styles.css` or `scripts.js`
+2. Run `./build.sh` to regenerate minified files
+3. Commit all changed files (source + minified)
+4. Push to trigger deployment
+5. Purge Cloudflare cache after deployment completes
+
+## Troubleshooting
+
+### Changes not appearing in production?
+1. Verify minified files were regenerated (`git status` should show them modified)
+2. Check files were committed and pushed
+3. Purge Cloudflare cache (required due to 30-day cache headers)
+4. Hard refresh browser (Ctrl+Shift+R or Cmd+Shift+R)
+
+### Preview works but production doesn't?
+- This usually indicates minified files are out of sync with source
+- Solution: Run `./build.sh` and commit the updated minified files
 
 ## Rollback
 
