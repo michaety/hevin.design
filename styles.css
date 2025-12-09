@@ -487,7 +487,7 @@ section h2 {
 }
 
 .featured-card {
-    flex: 0 0 min(700px, 85vw);
+    flex: 0 0 min(550px, 85vw);
     background-color: var(--color-white);
     border-radius: var(--radius-lg);
     overflow: hidden;
@@ -526,7 +526,7 @@ section h2 {
 
 .featured-card-image {
     width: 100%;
-    height: 300px;
+    height: 240px;
     overflow: hidden;
     position: relative;
 }
@@ -539,27 +539,27 @@ section h2 {
 }
 
 .featured-card-content {
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md);
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-md);
+    gap: var(--spacing-sm);
 }
 
 .featured-card-info h3 {
-    font-size: var(--font-size-2xl);
+    font-size: var(--font-size-xl);
     margin-bottom: var(--spacing-xs);
     font-weight: 700;
 }
 
 .featured-meta {
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-sm);
     font-weight: 600;
     color: var(--color-primary);
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
 }
 
 .featured-description {
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-sm);
     line-height: 1.6;
     color: var(--color-gray-800);
     margin-bottom: var(--spacing-xs);
@@ -631,20 +631,116 @@ section h2 {
     }
 }
 
-/* Secondary Project Grid */
-.secondary-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--spacing-lg);
+/* Carousel Navigation Controls */
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-base);
+    z-index: 10;
+    color: var(--color-black);
+}
+
+.carousel-nav:hover:not(:disabled) {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    border-color: var(--color-black);
+    box-shadow: var(--shadow-lg);
+}
+
+.carousel-nav:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.carousel-nav:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+}
+
+.carousel-nav-prev {
+    left: -24px;
+}
+
+.carousel-nav-next {
+    right: -24px;
+}
+
+/* Hide navigation arrows on touch devices */
+@media (hover: none) {
+    .carousel-nav {
+        display: none;
+    }
+}
+
+/* Hide navigation arrows on smaller screens */
+@media (max-width: 1024px) {
+    .carousel-nav {
+        display: none;
+    }
+}
+
+/* Secondary Project Carousel */
+.secondary-carousel-wrapper {
     margin-top: var(--spacing-xl);
+    position: relative;
+}
+
+.secondary-title {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-black);
+}
+
+.secondary-carousel {
+    display: flex;
+    gap: var(--spacing-lg);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: var(--spacing-md);
+}
+
+.secondary-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.secondary-carousel-wrapper .carousel-nav {
+    width: 40px;
+    height: 40px;
+}
+
+.secondary-carousel-wrapper .carousel-nav-prev {
+    left: -20px;
+    top: calc(50% + 20px);
+}
+
+.secondary-carousel-wrapper .carousel-nav-next {
+    right: -20px;
+    top: calc(50% + 20px);
 }
 
 .secondary-card {
+    flex: 0 0 min(280px, 75vw);
     background-color: var(--color-white);
     border-radius: var(--radius-lg);
     overflow: hidden;
     border: 1px solid var(--color-gray-200);
     transition: all var(--transition-base);
+    scroll-snap-align: start;
     opacity: 0;
     transform: translateY(20px);
     animation: fadeInSlideY 0.5s ease forwards;
@@ -686,7 +782,7 @@ section h2 {
 
 .secondary-image {
     width: 100%;
-    height: 200px;
+    height: 160px;
     overflow: hidden;
     position: relative;
 }
@@ -699,11 +795,11 @@ section h2 {
 }
 
 .secondary-info {
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm);
 }
 
 .secondary-info h3 {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-base);
     margin-bottom: var(--spacing-xs);
     font-weight: 600;
 }
@@ -753,13 +849,6 @@ section h2 {
     .secondary-card:hover .secondary-link {
         transform: translateX(4px);
         opacity: 1;
-    }
-}
-
-/* Mobile: Single column for secondary grid */
-@media (max-width: 767px) {
-    .secondary-grid {
-        grid-template-columns: 1fr;
     }
 }
 

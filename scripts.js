@@ -502,5 +502,132 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Touch events are handled natively by the browser with scroll-snap
+        
+        // Desktop Navigation Buttons for Featured Carousel
+        const featuredPrevBtn = document.querySelector('.featured-carousel-wrapper .carousel-nav-prev');
+        const featuredNextBtn = document.querySelector('.featured-carousel-wrapper .carousel-nav-next');
+        
+        if (featuredPrevBtn && featuredNextBtn) {
+            function updateFeaturedNavButtons() {
+                const scrollLeft = featuredCarousel.scrollLeft;
+                const maxScroll = featuredCarousel.scrollWidth - featuredCarousel.clientWidth;
+                
+                // Update disabled state
+                featuredPrevBtn.disabled = scrollLeft <= 0;
+                featuredNextBtn.disabled = scrollLeft >= maxScroll - 1;
+            }
+            
+            featuredPrevBtn.addEventListener('click', () => {
+                const cardWidth = featuredCarousel.querySelector('.featured-card').offsetWidth;
+                const gap = parseInt(getComputedStyle(featuredCarousel).gap);
+                featuredCarousel.scrollBy({
+                    left: -(cardWidth + gap),
+                    behavior: 'smooth'
+                });
+            });
+            
+            featuredNextBtn.addEventListener('click', () => {
+                const cardWidth = featuredCarousel.querySelector('.featured-card').offsetWidth;
+                const gap = parseInt(getComputedStyle(featuredCarousel).gap);
+                featuredCarousel.scrollBy({
+                    left: cardWidth + gap,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Update button states on scroll
+            featuredCarousel.addEventListener('scroll', updateFeaturedNavButtons);
+            
+            // Update on resize
+            window.addEventListener('resize', updateFeaturedNavButtons);
+            
+            // Initial update
+            updateFeaturedNavButtons();
+        }
+    }
+    
+    // ==================================
+    // Secondary Carousel Navigation
+    // ==================================
+    
+    const secondaryCarousel = document.querySelector('.secondary-carousel');
+    
+    if (secondaryCarousel) {
+        // Mouse drag support for secondary carousel
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        
+        secondaryCarousel.addEventListener('mousedown', (e) => {
+            isDown = true;
+            secondaryCarousel.style.cursor = 'grabbing';
+            startX = e.pageX - secondaryCarousel.offsetLeft;
+            scrollLeft = secondaryCarousel.scrollLeft;
+        });
+        
+        secondaryCarousel.addEventListener('mouseleave', () => {
+            isDown = false;
+            secondaryCarousel.style.cursor = 'grab';
+        });
+        
+        secondaryCarousel.addEventListener('mouseup', () => {
+            isDown = false;
+            secondaryCarousel.style.cursor = 'grab';
+        });
+        
+        secondaryCarousel.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - secondaryCarousel.offsetLeft;
+            const walk = (x - startX) * 2;
+            secondaryCarousel.scrollLeft = scrollLeft - walk;
+        });
+        
+        // Set initial cursor
+        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            secondaryCarousel.style.cursor = 'grab';
+        }
+        
+        // Desktop Navigation Buttons for Secondary Carousel
+        const secondaryPrevBtn = document.querySelector('.secondary-carousel-wrapper .secondary-prev');
+        const secondaryNextBtn = document.querySelector('.secondary-carousel-wrapper .secondary-next');
+        
+        if (secondaryPrevBtn && secondaryNextBtn) {
+            function updateSecondaryNavButtons() {
+                const scrollLeft = secondaryCarousel.scrollLeft;
+                const maxScroll = secondaryCarousel.scrollWidth - secondaryCarousel.clientWidth;
+                
+                // Update disabled state
+                secondaryPrevBtn.disabled = scrollLeft <= 0;
+                secondaryNextBtn.disabled = scrollLeft >= maxScroll - 1;
+            }
+            
+            secondaryPrevBtn.addEventListener('click', () => {
+                const cardWidth = secondaryCarousel.querySelector('.secondary-card').offsetWidth;
+                const gap = parseInt(getComputedStyle(secondaryCarousel).gap);
+                secondaryCarousel.scrollBy({
+                    left: -(cardWidth + gap),
+                    behavior: 'smooth'
+                });
+            });
+            
+            secondaryNextBtn.addEventListener('click', () => {
+                const cardWidth = secondaryCarousel.querySelector('.secondary-card').offsetWidth;
+                const gap = parseInt(getComputedStyle(secondaryCarousel).gap);
+                secondaryCarousel.scrollBy({
+                    left: cardWidth + gap,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Update button states on scroll
+            secondaryCarousel.addEventListener('scroll', updateSecondaryNavButtons);
+            
+            // Update on resize
+            window.addEventListener('resize', updateSecondaryNavButtons);
+            
+            // Initial update
+            updateSecondaryNavButtons();
+        }
     }
 });
