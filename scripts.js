@@ -1,6 +1,7 @@
 // ==================================
 //  Hevin Design - JavaScript
 //  Pricing Calculator & Form Handler
+//  Updated for New Pricing Structure
 // ==================================
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -54,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Pricing Calculator
+    // Pricing Calculator - Updated for New Structure
     const setupCostEl = document.getElementById('setup-cost');
     const monthlyCostEl = document.getElementById('monthly-cost');
     const firstYearCostEl = document.getElementById('first-year-cost');
@@ -135,31 +136,89 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Get selected package info
             const selectedPackage = document.querySelector('input[name="package"]:checked');
+            let packageData = {};
             if (selectedPackage) {
-                formData.append('package_name', selectedPackage.value);
-                formData.append('setup_cost', setupCostEl.textContent);
-                formData.append('monthly_cost', monthlyCostEl.textContent);
-                formData.append('first_year_cost', firstYearCostEl.textContent);
+                packageData = {
+                    package_name: selectedPackage.value,
+                    setup_cost: parseInt(selectedPackage.getAttribute('data-setup')) || 0,
+                    monthly_cost: parseInt(selectedPackage.getAttribute('data-monthly')) || 0
+                };
             }
             
             // Get selected addons
             const addons = [];
+            const addonDetails = [];
             document.querySelectorAll('input[type="checkbox"][name^="addon-"]:checked').forEach(addon => {
                 addons.push(addon.value);
+                addonDetails.push({
+                    name: addon.value,
+                    setup: parseInt(addon.getAttribute('data-setup')) || 0,
+                    monthly: parseInt(addon.getAttribute('data-monthly')) || 0
+                });
             });
-            formData.append('addons', addons.join(', '));
+            
+            // Build complete enquiry data
+            const enquiryData = {
+                // Personal Info
+                name: formData.get('name'),
+                business: formData.get('business'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                business_type: formData.get('business-type'),
+                location: formData.get('suburb'),
+                
+                // Package Selection
+                package: packageData,
+                
+                // Add-ons
+                addons: addonDetails,
+                addons_list: addons.join(', '),
+                
+                // Pricing Summary
+                total_setup: setupCostEl ? setupCostEl.textContent : '$0',
+                total_monthly: monthlyCostEl ? monthlyCostEl.textContent : '$0/mo',
+                first_year_total: firstYearCostEl ? firstYearCostEl.textContent : '$0',
+                
+                // Additional Message
+                message: formData.get('message'),
+                
+                // Legal Acknowledgements
+                privacy_agreed: privacyAgree.checked,
+                contract_agreed: contractAgree.checked,
+                
+                // Metadata
+                submitted_at: new Date().toISOString(),
+                user_agent: navigator.userAgent
+            };
             
             try {
                 // TODO: PRODUCTION - Replace with actual Cloudflare Worker endpoint
-                // Example:
+                // Example Worker endpoint structure:
+                // POST /api/enquiry
+                // Expected request body: JSON object with enquiryData
+                // Expected response: { success: boolean, message: string, enquiry_id?: string }
+                //
                 // const response = await fetch('/api/enquiry', {
                 //     method: 'POST',
-                //     headers: { 'Content-Type': 'application/json' },
-                //     body: JSON.stringify(Object.fromEntries(formData))
+                //     headers: { 
+                //         'Content-Type': 'application/json',
+                //         'X-Requested-With': 'XMLHttpRequest'
+                //     },
+                //     body: JSON.stringify(enquiryData)
                 // });
+                // 
+                // if (!response.ok) {
+                //     throw new Error('Network response was not ok');
+                // }
+                // 
                 // const result = await response.json();
+                // 
+                // if (!result.success) {
+                //     throw new Error(result.message || 'Submission failed');
+                // }
                 
                 // Simulate API call for development
+                console.log('Enquiry Data:', enquiryData);
                 await new Promise(resolve => setTimeout(resolve, 1500));
                 
                 // Show success message
@@ -177,6 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 
             } catch (error) {
+                console.error('Form submission error:', error);
                 // Show error message
                 if (formMessage) {
                     formMessage.textContent = 'Sorry, there was an error submitting your enquiry. Please email us directly at hello@hevin.design';
