@@ -217,8 +217,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 //     throw new Error(result.message || 'Submission failed');
                 // }
                 
+                // TODO: PRODUCTION - Remove console.log before deploying
                 // Simulate API call for development
-                console.log('Enquiry Data:', enquiryData);
+                if (typeof window.DEBUG === 'undefined' || window.DEBUG) {
+                    console.log('Enquiry Data:', enquiryData);
+                }
                 await new Promise(resolve => setTimeout(resolve, 1500));
                 
                 // Show success message
@@ -236,6 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 
             } catch (error) {
+                // TODO: PRODUCTION - Integrate with error monitoring service (e.g., Sentry)
                 console.error('Form submission error:', error);
                 // Show error message
                 if (formMessage) {
