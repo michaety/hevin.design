@@ -460,174 +460,125 @@ document.addEventListener('DOMContentLoaded', function() {
     updatePriceCalculator();
     
     // ==================================
-    // Featured Carousel Touch/Swipe Support
+    // Unified Portfolio Carousel Touch/Swipe Support
     // ==================================
     
-    const featuredCarousel = document.querySelector('.featured-carousel');
+    const portfolioCarousel = document.querySelector('.portfolio-carousel');
     
-    if (featuredCarousel) {
+    if (portfolioCarousel) {
         let isDown = false;
         let startX;
         let scrollLeft;
         
         // Mouse events for desktop drag
-        featuredCarousel.addEventListener('mousedown', (e) => {
+        portfolioCarousel.addEventListener('mousedown', (e) => {
             isDown = true;
-            featuredCarousel.style.cursor = 'grabbing';
-            startX = e.pageX - featuredCarousel.offsetLeft;
-            scrollLeft = featuredCarousel.scrollLeft;
+            portfolioCarousel.style.cursor = 'grabbing';
+            startX = e.pageX - portfolioCarousel.offsetLeft;
+            scrollLeft = portfolioCarousel.scrollLeft;
         });
         
-        featuredCarousel.addEventListener('mouseleave', () => {
+        portfolioCarousel.addEventListener('mouseleave', () => {
             isDown = false;
-            featuredCarousel.style.cursor = 'grab';
+            portfolioCarousel.style.cursor = 'grab';
         });
         
-        featuredCarousel.addEventListener('mouseup', () => {
+        portfolioCarousel.addEventListener('mouseup', () => {
             isDown = false;
-            featuredCarousel.style.cursor = 'grab';
+            portfolioCarousel.style.cursor = 'grab';
         });
         
-        featuredCarousel.addEventListener('mousemove', (e) => {
+        portfolioCarousel.addEventListener('mousemove', (e) => {
             if (!isDown) return;
             e.preventDefault();
-            const x = e.pageX - featuredCarousel.offsetLeft;
+            const x = e.pageX - portfolioCarousel.offsetLeft;
             const walk = (x - startX) * 2; // Scroll speed multiplier
-            featuredCarousel.scrollLeft = scrollLeft - walk;
+            portfolioCarousel.scrollLeft = scrollLeft - walk;
         });
         
         // Set initial cursor
         if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-            featuredCarousel.style.cursor = 'grab';
+            portfolioCarousel.style.cursor = 'grab';
         }
         
         // Touch events are handled natively by the browser with scroll-snap
         
-        // Desktop Navigation Buttons for Featured Carousel
-        const featuredPrevBtn = document.querySelector('.featured-carousel-wrapper .carousel-nav-prev');
-        const featuredNextBtn = document.querySelector('.featured-carousel-wrapper .carousel-nav-next');
+        // Desktop Navigation Buttons for Portfolio Carousel
+        const portfolioPrevBtn = document.querySelector('.portfolio-carousel-wrapper .carousel-nav-prev');
+        const portfolioNextBtn = document.querySelector('.portfolio-carousel-wrapper .carousel-nav-next');
         
-        if (featuredPrevBtn && featuredNextBtn) {
-            function updateFeaturedNavButtons() {
-                const scrollLeft = featuredCarousel.scrollLeft;
-                const maxScroll = featuredCarousel.scrollWidth - featuredCarousel.clientWidth;
+        if (portfolioPrevBtn && portfolioNextBtn) {
+            function updatePortfolioNavButtons() {
+                const scrollLeft = portfolioCarousel.scrollLeft;
+                const maxScroll = portfolioCarousel.scrollWidth - portfolioCarousel.clientWidth;
                 
                 // Update disabled state
-                featuredPrevBtn.disabled = scrollLeft <= 0;
-                featuredNextBtn.disabled = scrollLeft >= maxScroll - 1;
+                portfolioPrevBtn.disabled = scrollLeft <= 0;
+                portfolioNextBtn.disabled = scrollLeft >= maxScroll - 1;
             }
             
-            featuredPrevBtn.addEventListener('click', () => {
-                const cardWidth = featuredCarousel.querySelector('.featured-card').offsetWidth;
-                const gap = parseInt(getComputedStyle(featuredCarousel).gap);
-                featuredCarousel.scrollBy({
+            portfolioPrevBtn.addEventListener('click', () => {
+                const cardWidth = portfolioCarousel.querySelector('.portfolio-card').offsetWidth;
+                const gap = parseInt(getComputedStyle(portfolioCarousel).gap);
+                portfolioCarousel.scrollBy({
                     left: -(cardWidth + gap),
                     behavior: 'smooth'
                 });
             });
             
-            featuredNextBtn.addEventListener('click', () => {
-                const cardWidth = featuredCarousel.querySelector('.featured-card').offsetWidth;
-                const gap = parseInt(getComputedStyle(featuredCarousel).gap);
-                featuredCarousel.scrollBy({
+            portfolioNextBtn.addEventListener('click', () => {
+                const cardWidth = portfolioCarousel.querySelector('.portfolio-card').offsetWidth;
+                const gap = parseInt(getComputedStyle(portfolioCarousel).gap);
+                portfolioCarousel.scrollBy({
                     left: cardWidth + gap,
                     behavior: 'smooth'
                 });
             });
             
             // Update button states on scroll
-            featuredCarousel.addEventListener('scroll', updateFeaturedNavButtons);
+            portfolioCarousel.addEventListener('scroll', updatePortfolioNavButtons);
             
             // Update on resize
-            window.addEventListener('resize', updateFeaturedNavButtons);
+            window.addEventListener('resize', updatePortfolioNavButtons);
             
             // Initial update
-            updateFeaturedNavButtons();
+            updatePortfolioNavButtons();
         }
     }
     
     // ==================================
-    // Secondary Carousel Navigation
+    // Mobile Pricing Card Scroll-Triggered Glow
     // ==================================
     
-    const secondaryCarousel = document.querySelector('.secondary-carousel');
-    
-    if (secondaryCarousel) {
-        // Mouse drag support for secondary carousel
-        let isDown = false;
-        let startX;
-        let scrollLeft;
+    // Only initialize on touch devices (no hover capability)
+    if (window.matchMedia('(hover: none)').matches) {
+        const pricingCards = document.querySelectorAll('.pricing-card');
         
-        secondaryCarousel.addEventListener('mousedown', (e) => {
-            isDown = true;
-            secondaryCarousel.style.cursor = 'grabbing';
-            startX = e.pageX - secondaryCarousel.offsetLeft;
-            scrollLeft = secondaryCarousel.scrollLeft;
-        });
-        
-        secondaryCarousel.addEventListener('mouseleave', () => {
-            isDown = false;
-            secondaryCarousel.style.cursor = 'grab';
-        });
-        
-        secondaryCarousel.addEventListener('mouseup', () => {
-            isDown = false;
-            secondaryCarousel.style.cursor = 'grab';
-        });
-        
-        secondaryCarousel.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - secondaryCarousel.offsetLeft;
-            const walk = (x - startX) * 2;
-            secondaryCarousel.scrollLeft = scrollLeft - walk;
-        });
-        
-        // Set initial cursor
-        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-            secondaryCarousel.style.cursor = 'grab';
-        }
-        
-        // Desktop Navigation Buttons for Secondary Carousel
-        const secondaryPrevBtn = document.querySelector('.secondary-carousel-wrapper .secondary-prev');
-        const secondaryNextBtn = document.querySelector('.secondary-carousel-wrapper .secondary-next');
-        
-        if (secondaryPrevBtn && secondaryNextBtn) {
-            function updateSecondaryNavButtons() {
-                const scrollLeft = secondaryCarousel.scrollLeft;
-                const maxScroll = secondaryCarousel.scrollWidth - secondaryCarousel.clientWidth;
+        if (pricingCards.length > 0 && 'IntersectionObserver' in window) {
+            // Check if reduced motion is preferred
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            
+            if (!prefersReducedMotion) {
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '-20% 0px -20% 0px',
+                    threshold: 0.5
+                };
                 
-                // Update disabled state
-                secondaryPrevBtn.disabled = scrollLeft <= 0;
-                secondaryNextBtn.disabled = scrollLeft >= maxScroll - 1;
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('in-view');
+                        } else {
+                            entry.target.classList.remove('in-view');
+                        }
+                    });
+                }, observerOptions);
+                
+                pricingCards.forEach(card => {
+                    observer.observe(card);
+                });
             }
-            
-            secondaryPrevBtn.addEventListener('click', () => {
-                const cardWidth = secondaryCarousel.querySelector('.secondary-card').offsetWidth;
-                const gap = parseInt(getComputedStyle(secondaryCarousel).gap);
-                secondaryCarousel.scrollBy({
-                    left: -(cardWidth + gap),
-                    behavior: 'smooth'
-                });
-            });
-            
-            secondaryNextBtn.addEventListener('click', () => {
-                const cardWidth = secondaryCarousel.querySelector('.secondary-card').offsetWidth;
-                const gap = parseInt(getComputedStyle(secondaryCarousel).gap);
-                secondaryCarousel.scrollBy({
-                    left: cardWidth + gap,
-                    behavior: 'smooth'
-                });
-            });
-            
-            // Update button states on scroll
-            secondaryCarousel.addEventListener('scroll', updateSecondaryNavButtons);
-            
-            // Update on resize
-            window.addEventListener('resize', updateSecondaryNavButtons);
-            
-            // Initial update
-            updateSecondaryNavButtons();
         }
     }
 });
