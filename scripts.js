@@ -611,7 +611,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Reduce wheel sensitivity for slower, more controlled scroll
                 const scrollAmount = e.deltaY * 0.5; // Reduced from default 1.0
-                const targetScroll = portfolioCarousel.scrollLeft + scrollAmount;
+                const maxScroll = portfolioCarousel.scrollWidth - portfolioCarousel.clientWidth;
+                const targetScroll = Math.max(0, Math.min(maxScroll, portfolioCarousel.scrollLeft + scrollAmount));
                 
                 // Smooth scroll to target
                 portfolioCarousel.scrollTo({
