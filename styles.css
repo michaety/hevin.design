@@ -629,6 +629,12 @@ section h2 {
     color: var(--color-gray-600);
 }
 
+.monthly-note {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    font-style: italic;
+}
+
 .pricing-features {
     list-style: none;
     margin-bottom: var(--spacing-xl);
