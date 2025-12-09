@@ -229,12 +229,12 @@ All recent changes are deployed but cached. Must purge to make visible:
 - Or use API: See `CACHE_PURGE_INSTRUCTIONS.md`
 
 ### 2. Verify All Recent Changes
-Check that these merged PRs are now visible:
+Check that these merged PRs are now visible (10 total from December 2025):
 - PR #85: Hero button hover, spacing, tier glows, dark mode
 - PR #83: Carousel scroll, pricing UI, mobile dark mode
 - PR #81: Preview/production discrepancy fix
 - PR #79: Carousel scrolling, use-cases, comparison matrix
-- All other December 2025 merges (6 more PRs)
+- Plus 6 additional December 2025 PRs
 
 ### 3. Set Up Monitoring
 Prevent future issues:
@@ -317,7 +317,7 @@ All investigation artifacts are in repository root:
 
 ---
 
-**Investigation completed by:** GitHub Copilot Coding Agent  
+**Investigation completed by:** GitHub Copilot  
 **Date:** December 9, 2025  
 **Files created:** 3 (Investigation, Quick Fix, Summary)  
 **Next step:** Owner (@michaety) to access Cloudflare Dashboard and apply fixes

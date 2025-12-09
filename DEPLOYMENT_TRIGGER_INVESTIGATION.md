@@ -21,7 +21,7 @@
 
 3. **Recent Activity:**
    - Last automatic deployment: **September 15, 2025** (commit b506d008 - "Delete CNAME")
-   - Recent failed triggers: **All merges since December 9, 2025** (10+ successful merges)
+   - Recent failed triggers: **All merges between September and December 2025** (10+ successful merges to main)
    - Problem commit: **76b2ea0** (December 9/10, 2025) - did NOT trigger deployment
 
 4. **Workflow History Analysis:**
