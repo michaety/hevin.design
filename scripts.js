@@ -485,7 +485,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Remove hidden class first to enable animation
                         card.classList.remove('filter-hidden');
                         
-                        // Trigger reflow to restart animation
+                        // Force reflow to restart animation - using offsetWidth triggers layout recalculation
                         void card.offsetWidth;
                         
                         // Add visible class with staggered delay

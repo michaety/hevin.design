@@ -481,6 +481,7 @@ section h2 {
         padding-bottom: var(--spacing-sm);
         -webkit-overflow-scrolling: touch;
         scrollbar-width: thin;
+        scrollbar-color: var(--color-gray-600) var(--color-gray-200);
     }
     
     .portfolio-filters::-webkit-scrollbar {
