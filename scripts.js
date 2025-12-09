@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     blob.vy *= -1;
                 }
                 
-                // Draw blob with radial gradient
+                // Draw blob with radial gradient using circular path
                 const gradient = ctx.createRadialGradient(
                     blob.x, blob.y, 0,
                     blob.x, blob.y, blob.radius
@@ -128,14 +128,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
                 
                 ctx.fillStyle = gradient;
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.beginPath();
+                ctx.arc(blob.x, blob.y, blob.radius, 0, Math.PI * 2);
+                ctx.fill();
             });
             
             // Draw cursor glow (if active)
             if (cursorActive && hasPointer) {
+                const glowRadius = 250;
                 const glowGradient = ctx.createRadialGradient(
                     cursorX, cursorY, 0,
-                    cursorX, cursorY, 250
+                    cursorX, cursorY, glowRadius
                 );
                 
                 const glowColor = isDarkMode 
@@ -147,23 +150,40 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 ctx.globalCompositeOperation = 'screen';
                 ctx.fillStyle = glowGradient;
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.beginPath();
+                ctx.arc(cursorX, cursorY, glowRadius, 0, Math.PI * 2);
+                ctx.fill();
                 ctx.globalCompositeOperation = 'source-over';
             }
             
             animationFrame = requestAnimationFrame(animate);
         }
         
-        animate();
+        let isAnimating = false;
+        
+        function startAnimation() {
+            if (!isAnimating) {
+                isAnimating = true;
+                animate();
+            }
+        }
+        
+        function stopAnimation() {
+            if (animationFrame) {
+                cancelAnimationFrame(animationFrame);
+                animationFrame = null;
+            }
+            isAnimating = false;
+        }
+        
+        startAnimation();
         
         // Cleanup on visibility change
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
-                if (animationFrame) {
-                    cancelAnimationFrame(animationFrame);
-                }
+                stopAnimation();
             } else {
-                animate();
+                startAnimation();
             }
         });
     }
