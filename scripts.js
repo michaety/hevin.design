@@ -55,8 +55,17 @@ document.addEventListener('DOMContentLoaded', function() {
             canvas.height = rect.height;
         }
         
+        // Throttle resize for performance
+        let resizeTimeout;
+        function handleResize() {
+            if (resizeTimeout) {
+                cancelAnimationFrame(resizeTimeout);
+            }
+            resizeTimeout = requestAnimationFrame(resizeCanvas);
+        }
+        
         resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('resize', handleResize);
         
         // Fluid gradient blobs
         const blobs = palette.map((color, i) => ({
@@ -176,9 +185,14 @@ document.addEventListener('DOMContentLoaded', function() {
             isAnimating = false;
         }
         
+        function cleanup() {
+            stopAnimation();
+            window.removeEventListener('resize', handleResize);
+        }
+        
         startAnimation();
         
-        // Cleanup on visibility change
+        // Cleanup on visibility change and page unload
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
                 stopAnimation();
@@ -186,6 +200,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 startAnimation();
             }
         });
+        
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', cleanup);
     }
     
     // Mobile Menu Toggle
