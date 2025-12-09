@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Hevin Design: Custom websites & ecommerce for small businesses. Fast, secure, high-performance sites built in Sydney using Cloudflare & Shopify. Starting at $250.">
-    <meta name="keywords" content="custom websites, ecommerce, web design Sydney, Shopify, Cloudflare, small business websites, booking systems, branding, SEO, Google Business">
+    <meta name="description" content="Hevin Design: Custom websites & ecommerce for small businesses. Fast, secure, high-performance sites built in Sydney. Starting at $250.">
+    <meta name="keywords" content="custom websites, ecommerce, web design Sydney, small business websites, booking systems, branding, SEO, Google Business, online stores">
     <meta property="og:title" content="Hevin Design - Custom Websites & Ecommerce for Small Businesses">
-    <meta property="og:description" content="Fast, secure, high-performance sites built in Sydney. Custom websites, Shopify stores, booking systems, and branding solutions.">
+    <meta property="og:description" content="Fast, secure, high-performance sites built in Sydney. Custom websites, online stores, booking systems, and branding solutions.">
     <meta property="og:image" content="https://hevin.design/logo.svg">
     <meta property="og:url" content="https://hevin.design">
     <meta name="author" content="Hevin Design">
@@ -124,6 +124,16 @@
                 <!-- Featured Case Carousel -->
                 <!-- TODO: PRODUCTION - Replace Unsplash placeholder images with real project screenshots -->
                 <div class="featured-carousel-wrapper">
+                    <button class="carousel-nav carousel-nav-prev" aria-label="Previous project" disabled>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 18l-6-6 6-6"/>
+                        </svg>
+                    </button>
+                    <button class="carousel-nav carousel-nav-next" aria-label="Next project">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
                     <div class="featured-carousel" role="region" aria-label="Featured projects">
                         <article class="featured-card">
                             <div class="featured-card-image">
@@ -172,44 +182,57 @@
                     </div>
                 </div>
                 
-                <!-- Secondary Project Grid -->
-                <div class="secondary-grid">
-                    <div class="secondary-card">
-                        <div class="secondary-image">
-                            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=400&fit=crop" alt="Associated Printing website" loading="lazy" width="600" height="400">
+                <!-- Secondary Project Carousel -->
+                <div class="secondary-carousel-wrapper">
+                    <h3 class="secondary-title">More Projects</h3>
+                    <button class="carousel-nav carousel-nav-prev secondary-prev" aria-label="Previous project" disabled>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 18l-6-6 6-6"/>
+                        </svg>
+                    </button>
+                    <button class="carousel-nav carousel-nav-next secondary-next" aria-label="Next project">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <div class="secondary-carousel">
+                        <div class="secondary-card">
+                            <div class="secondary-image">
+                                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=400&fit=crop" alt="Associated Printing website" loading="lazy" width="600" height="400">
+                            </div>
+                            <div class="secondary-info">
+                                <h3>associatedprinting</h3>
+                                <p class="secondary-meta">Professional Print Shop</p>
+                                <p>Service listings, enquiries, brand focus.</p>
+                                <p class="secondary-usecase">Best for: Tradies, print shops, service/SMBs</p>
+                                <a href="https://associatedprinting.pages.dev/" target="_blank" rel="noopener" class="secondary-link">View Live →</a>
+                            </div>
                         </div>
-                        <div class="secondary-info">
-                            <h3>associatedprinting</h3>
-                            <p class="secondary-meta">Professional Print Shop</p>
-                            <p>Service listings, enquiries, brand focus.</p>
-                            <p class="secondary-usecase">Best for: Tradies, print shops, service/SMBs</p>
-                            <a href="https://associatedprinting.pages.dev/" target="_blank" rel="noopener" class="secondary-link">View Live →</a>
+                        
+                        <div class="secondary-card">
+                            <div class="secondary-image">
+                                <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&h=400&fit=crop" alt="fishtank.news platform" loading="lazy" width="600" height="400">
+                            </div>
+                            <div class="secondary-info">
+                                <h3>fishtank.news</h3>
+                                <p class="secondary-meta">Editorial News Platform</p>
+                                <p>Writers, admin, image hosting, workflows.</p>
+                                <p class="secondary-usecase">Best for: Media, blogs, publications</p>
+                                <a href="https://fishtank.news/" target="_blank" rel="noopener" class="secondary-link">View Live →</a>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="secondary-card">
-                        <div class="secondary-image">
-                            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&h=400&fit=crop" alt="fishtank.news platform" loading="lazy" width="600" height="400">
-                        </div>
-                        <div class="secondary-info">
-                            <h3>fishtank.news</h3>
-                            <p class="secondary-meta">Editorial News Platform</p>
-                            <p>Writers, admin, image hosting, workflows.</p>
-                            <p class="secondary-usecase">Best for: Media, blogs, publications</p>
-                            <a href="https://fishtank.news/" target="_blank" rel="noopener" class="secondary-link">View Live →</a>
-                        </div>
-                    </div>
-                    
-                    <div class="secondary-card experimental">
-                        <div class="secondary-image">
-                            <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&h=400&fit=crop" alt="h3v.in creative portfolio" loading="lazy" width="600" height="400">
-                        </div>
-                        <div class="secondary-info">
-                            <h3>h3v.in</h3>
-                            <p class="secondary-meta">Creative & Experimental</p>
-                            <p>Artist portfolio, interactive showcase.</p>
-                            <p class="secondary-usecase">Best for: Artists, personal brands</p>
-                            <a href="https://h3v.in/" target="_blank" rel="noopener" class="secondary-link">View Live →</a>
+                        
+                        <div class="secondary-card experimental">
+                            <div class="secondary-image">
+                                <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&h=400&fit=crop" alt="h3v.in creative portfolio" loading="lazy" width="600" height="400">
+                            </div>
+                            <div class="secondary-info">
+                                <h3>h3v.in</h3>
+                                <p class="secondary-meta">Creative & Experimental</p>
+                                <p>Artist portfolio, interactive showcase.</p>
+                                <p class="secondary-usecase">Best for: Artists, personal brands</p>
+                                <a href="https://h3v.in/" target="_blank" rel="noopener" class="secondary-link">View Live →</a>
+                            </div>
                         </div>
                     </div>
                 </div>
