@@ -277,6 +277,7 @@
                         <div class="pricing-header">
                             <h3>Basic</h3>
                             <p class="pricing-description">One Page Launch Site</p>
+                            <p class="pricing-usecase">For one-page launch sites, simple portfolios, or small service businesses starting out</p>
                         </div>
                         <div class="pricing-price">
                             <span class="price-amount">$250</span>
@@ -285,6 +286,10 @@
                         <div class="pricing-monthly">
                             <span class="monthly-note">No ongoing fees</span>
                         </div>
+                        <button class="pricing-toggle" aria-label="View details" aria-expanded="false">
+                            <span>View Details</span>
+                            <span class="pricing-toggle-icon">▼</span>
+                        </button>
                         <ul class="pricing-features">
                             <li>Domain (1 year included)</li>
                             <li>1-page site</li>
@@ -300,6 +305,7 @@
                         <div class="pricing-header">
                             <h3>Starter</h3>
                             <p class="pricing-description">Ongoing Web Presence</p>
+                            <p class="pricing-usecase">For cafes, tradies, barbers, or local service businesses needing a simple web presence</p>
                         </div>
                         <div class="pricing-price">
                             <span class="price-amount">$300</span>
@@ -309,6 +315,10 @@
                             <span class="monthly-amount">$30</span>
                             <span class="monthly-period">/month</span>
                         </div>
+                        <button class="pricing-toggle" aria-label="View details" aria-expanded="false">
+                            <span>View Details</span>
+                            <span class="pricing-toggle-icon">▼</span>
+                        </button>
                         <ul class="pricing-features">
                             <li>1–2 pages</li>
                             <li>Hosting included</li>
@@ -325,6 +335,7 @@
                         <div class="pricing-header">
                             <h3>Pro Booking</h3>
                             <p class="pricing-description">Services & Payments</p>
+                            <p class="pricing-usecase">Salons, trainers, coaches, venues, service businesses needing bookings/payments</p>
                         </div>
                         <div class="pricing-price">
                             <span class="price-amount">$500</span>
@@ -334,6 +345,10 @@
                             <span class="monthly-amount">$90</span>
                             <span class="monthly-period">/month</span>
                         </div>
+                        <button class="pricing-toggle" aria-label="View details" aria-expanded="false">
+                            <span>View Details</span>
+                            <span class="pricing-toggle-icon">▼</span>
+                        </button>
                         <ul class="pricing-features">
                             <li>4–6 pages</li>
                             <li>Booking system</li>
@@ -350,6 +365,7 @@
                         <div class="pricing-header">
                             <h3>Shopify Store</h3>
                             <p class="pricing-description">Fully Managed</p>
+                            <p class="pricing-usecase">For product brands that need inventory, payments, shipping, growth tools</p>
                         </div>
                         <div class="pricing-price">
                             <span class="price-amount">$950</span>
@@ -359,6 +375,10 @@
                             <span class="monthly-amount">$100</span>
                             <span class="monthly-period">/month + Shopify fees</span>
                         </div>
+                        <button class="pricing-toggle" aria-label="View details" aria-expanded="false">
+                            <span>View Details</span>
+                            <span class="pricing-toggle-icon">▼</span>
+                        </button>
                         <ul class="pricing-features">
                             <li>Full Shopify setup</li>
                             <li>Custom theme</li>
@@ -375,6 +395,7 @@
                         <div class="pricing-header">
                             <h3>Elite Custom Store</h3>
                             <p class="pricing-description">Cloudflare Ecommerce</p>
+                            <p class="pricing-usecase">Advanced ecommerce, digital products, dashboards, or custom system builds</p>
                         </div>
                         <div class="pricing-price">
                             <span class="price-amount">$1,200</span>
@@ -384,6 +405,10 @@
                             <span class="monthly-amount">$120</span>
                             <span class="monthly-period">/month</span>
                         </div>
+                        <button class="pricing-toggle" aria-label="View details" aria-expanded="false">
+                            <span>View Details</span>
+                            <span class="pricing-toggle-icon">▼</span>
+                        </button>
                         <ul class="pricing-features">
                             <li>Full ecommerce build</li>
                             <li>Content management system</li>
@@ -397,11 +422,81 @@
                     </div>
                 </div>
                 
-                <!-- Not Sure Which Plan? Conversion Panel -->
-                <div class="pricing-recommendation">
-                    <h3>Not sure which plan is right for you?</h3>
-                    <p>Tell us what your business needs and we'll recommend the best option for your budget.</p>
-                    <a href="#enquiry" class="btn btn-primary">Get a Recommendation →</a>
+                <!-- Compare Plans Matrix -->
+                <div class="pricing-comparison">
+                    <h3>Compare Plans at a Glance</h3>
+                    <div class="comparison-table-wrapper">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th class="feature-column">Feature</th>
+                                    <th>Basic</th>
+                                    <th>Starter</th>
+                                    <th>Pro</th>
+                                    <th>Shopify</th>
+                                    <th>Elite</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="feature-name">Mobile Friendly</td>
+                                    <td><span class="check">✓</span></td>
+                                    <td><span class="check">✓</span></td>
+                                    <td><span class="check">✓</span></td>
+                                    <td><span class="check">✓</span></td>
+                                    <td><span class="check">✓</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-name">Multiple Pages</td>
+                                    <td><span class="cross">❌</span></td>
+                                    <td><span class="check">✓</span></td>
+                                    <td><span class="check">✓</span></td>
+                                    <td><span class="check">✓</span></td>
+                                    <td><span class="check">✓</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-name">Booking System</td>
+                                    <td><span class="cross">❌</span></td>
+                                    <td><span class="cross">❌</span></td>
+                                    <td><span class="check">✓</span></td>
+                                    <td><span class="cross">❌</span></td>
+                                    <td><span class="check-note">✓ (opt)</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-name">Online Payments</td>
+                                    <td><span class="cross">❌</span></td>
+                                    <td><span class="cross">❌</span></td>
+                                    <td><span class="check">✓</span></td>
+                                    <td><span class="check">✓</span></td>
+                                    <td><span class="check">✓</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-name">Ecommerce</td>
+                                    <td><span class="cross">❌</span></td>
+                                    <td><span class="cross">❌</span></td>
+                                    <td><span class="cross">❌</span></td>
+                                    <td><span class="check">✓</span></td>
+                                    <td><span class="check">✓</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-name">Custom Systems</td>
+                                    <td><span class="cross">❌</span></td>
+                                    <td><span class="cross">❌</span></td>
+                                    <td><span class="cross">❌</span></td>
+                                    <td><span class="cross">❌</span></td>
+                                    <td><span class="check">✓</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-name">Priority Support</td>
+                                    <td><span class="cross">❌</span></td>
+                                    <td><span class="cross">❌</span></td>
+                                    <td><span class="check">✓</span></td>
+                                    <td><span class="check">✓</span></td>
+                                    <td><span class="check">✓</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 
                 <div class="pricing-addons">

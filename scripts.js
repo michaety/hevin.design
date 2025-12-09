@@ -460,6 +460,36 @@ document.addEventListener('DOMContentLoaded', function() {
     updatePriceCalculator();
     
     // ==================================
+    // Mobile Pricing Card Accordion
+    // ==================================
+    
+    if (window.matchMedia('(max-width: 767px)').matches) {
+        const pricingCards = document.querySelectorAll('.pricing-card');
+        
+        pricingCards.forEach(card => {
+            const toggleBtn = card.querySelector('.pricing-toggle');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', function() {
+                    const isExpanded = card.classList.contains('expanded');
+                    
+                    // Optional: Close other cards (remove these lines to allow multiple open)
+                    // pricingCards.forEach(c => {
+                    //     if (c !== card) {
+                    //         c.classList.remove('expanded');
+                    //         const btn = c.querySelector('.pricing-toggle');
+                    //         if (btn) btn.setAttribute('aria-expanded', 'false');
+                    //     }
+                    // });
+                    
+                    // Toggle current card
+                    card.classList.toggle('expanded');
+                    toggleBtn.setAttribute('aria-expanded', !isExpanded);
+                });
+            }
+        });
+    }
+    
+    // ==================================
     // Unified Portfolio Carousel Touch/Swipe Support
     // ==================================
     
