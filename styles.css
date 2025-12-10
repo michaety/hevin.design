@@ -816,6 +816,20 @@ section h2 {
     }
 }
 
+/* Dark mode: ensure carousel nav buttons have black text on hover */
+@media (prefers-color-scheme: dark) {
+    .carousel-nav:hover:not(:disabled) {
+        background-color: #ffffff;
+        color: #000000;
+        border-color: #ffffff;
+    }
+    
+    .btn-portfolio:hover {
+        background-color: var(--color-primary);
+        color: #000000;
+    }
+}
+
 /* About Section */
 .about {
     background-color: var(--color-white);

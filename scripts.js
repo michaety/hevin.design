@@ -539,7 +539,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (portfolioPrevBtn && portfolioNextBtn) {
             // Configuration constants for carousel behavior
-            const CAROUSEL_SCROLL_DURATION = 800; // Milliseconds for smooth scroll animation
+            const CAROUSEL_SCROLL_DURATION = 400; // Milliseconds for smooth scroll animation (reduced for smoother feel)
             const WHEEL_SENSITIVITY = 0.5; // Reduce wheel speed for better control (0.5 = half speed)
             
             function updatePortfolioNavButtons() {
