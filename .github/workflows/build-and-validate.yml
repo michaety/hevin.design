@@ -28,6 +28,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          clean: true
       
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -60,33 +61,13 @@ jobs:
           chmod +x build.sh
           ./build.sh
 
-      - name: Commit and push generated minified files
-        if: steps.check_changes.outputs.source_changed == 'true'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "🔁 Committing generated minified assets (if any)..."
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Ensure we are on the correct branch
-          git checkout -B "${{ github.ref_name }}"
-          git add styles.min.css scripts.min.js || true
-          # If there are staged changes, commit and push them
-          if ! git diff --cached --quiet; then
-            git commit -m "chore: update minified files [skip ci]"
-            git push origin HEAD
-            echo "✅ Pushed updated minified files"
-          else
-            echo "No changes to commit"
-          fi
-      
       - name: Check if minified files changed
         if: steps.check_changes.outputs.source_changed == 'true'
         id: check_minified
         run: |
-          # Check if minified files exist and have changes
+          # Check if minified files exist and have changes (before staging them)
           if [ -f "styles.min.css" ] && [ -f "scripts.min.js" ]; then
-            if git diff --exit-code styles.min.css scripts.min.js; then
+            if git diff --exit-code styles.min.css scripts.min.js > /dev/null 2>&1; then
               echo "minified_changed=false" >> $GITHUB_OUTPUT
               echo "⚠️  WARNING: Source files changed but minified files are identical"
             else
@@ -97,6 +78,21 @@ jobs:
             echo "minified_changed=false" >> $GITHUB_OUTPUT
             echo "⚠️  WARNING: Minified files do not exist"
           fi
+
+      - name: Commit and push generated minified files
+        if: steps.check_changes.outputs.source_changed == 'true' && steps.check_minified.outputs.minified_changed == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🔁 Committing generated minified assets..."
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Ensure we are on the correct branch
+          git checkout -B "${{ github.ref_name }}"
+          git add styles.min.css scripts.min.js
+          git commit -m "chore: update minified files [skip ci]"
+          git push origin HEAD
+          echo "✅ Pushed updated minified files"
       
       - name: Fail if minified files are out of sync
         if: steps.check_changes.outputs.source_changed == 'true' && steps.check_minified.outputs.minified_changed == 'false'
