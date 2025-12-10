@@ -21,11 +21,13 @@ jobs:
     
     # Limit permissions to minimum required (security best practice)
     permissions:
-      contents: read
+      contents: write
     
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -57,6 +59,26 @@ jobs:
           echo "🔨 Building minified assets..."
           chmod +x build.sh
           ./build.sh
+
+      - name: Commit and push generated minified files
+        if: steps.check_changes.outputs.source_changed == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🔁 Committing generated minified assets (if any)..."
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Ensure we are on the correct branch
+          git checkout -B "${{ github.ref_name }}"
+          git add styles.min.css scripts.min.js || true
+          # If there are staged changes, commit and push them
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: update minified files [skip ci]"
+            git push origin HEAD
+            echo "✅ Pushed updated minified files"
+          else
+            echo "No changes to commit"
+          fi
       
       - name: Check if minified files changed
         if: steps.check_changes.outputs.source_changed == 'true'
