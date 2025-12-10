@@ -661,6 +661,8 @@ section h2 {
     height: 240px;
     overflow: hidden;
     position: relative;
+    display: block;
+    text-decoration: none;
 }
 
 .portfolio-card-image img {
