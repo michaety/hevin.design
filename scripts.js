@@ -392,37 +392,27 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             
             try {
-                // TODO: PRODUCTION - Replace with actual Cloudflare Worker endpoint
-                // Example Worker endpoint structure:
-                // POST /api/enquiry
-                // Expected request body: JSON object with enquiryData
-                // Expected response: { success: boolean, message: string, enquiry_id?: string }
-                //
-                // const response = await fetch('/api/enquiry', {
-                //     method: 'POST',
-                //     headers: { 
-                //         'Content-Type': 'application/json',
-                //         'X-Requested-With': 'XMLHttpRequest'
-                //     },
-                //     body: JSON.stringify(enquiryData)
-                // });
-                // 
-                // if (!response.ok) {
-                //     throw new Error('Network response was not ok');
-                // }
-                // 
-                // const result = await response.json();
-                // 
-                // if (!result.success) {
-                //     throw new Error(result.message || 'Submission failed');
-                // }
+                // Submit to Formspree
+                // Formspree will send email to hello@hevin.design
+                const response = await fetch(enquiryForm.action, {
+                    method: 'POST',
+                    headers: { 
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(enquiryData)
+                });
                 
-                // TODO: PRODUCTION - Remove console.log before deploying
-                // Simulate API call for development
-                if (window.DEBUG === true) {
-                    console.log('Enquiry Data:', enquiryData);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
                 }
-                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                const result = await response.json();
+                
+                // Formspree returns { ok: true } on success
+                if (!result.ok) {
+                    throw new Error(result.error || 'Submission failed');
+                }
                 
                 // Show success message
                 if (formMessage) {
@@ -439,7 +429,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 
             } catch (error) {
-                // TODO: PRODUCTION - Integrate with error monitoring service (e.g., Sentry)
                 console.error('Form submission error:', error);
                 // Show error message
                 if (formMessage) {
