@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Package Selection CTAs
-    document.querySelectorAll('[data-package]').forEach(button => {
+    document.querySelectorAll('.btn[data-package]').forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
             const packageName = this.getAttribute('data-package');
