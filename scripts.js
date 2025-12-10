@@ -394,24 +394,33 @@ document.addEventListener('DOMContentLoaded', function() {
             try {
                 // Submit to Formspree
                 // Formspree will send email to hello@hevin.design
+                
+                // Create abort controller for timeout
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+                
                 const response = await fetch(enquiryForm.action, {
                     method: 'POST',
                     headers: { 
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(enquiryData)
+                    body: JSON.stringify(enquiryData),
+                    signal: controller.signal
                 });
                 
+                clearTimeout(timeoutId);
+                
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error(`Server responded with status ${response.status}`);
                 }
                 
                 const result = await response.json();
                 
                 // Formspree returns { ok: true } on success
                 if (!result.ok) {
-                    throw new Error(result.error || 'Submission failed');
+                    const errorMsg = result.error || result.errors?.map(e => e.message).join(', ') || 'Submission failed';
+                    throw new Error(errorMsg);
                 }
                 
                 // Show success message
@@ -430,9 +439,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 
             } catch (error) {
                 console.error('Form submission error:', error);
-                // Show error message
+                // Show error message with more specific information
                 if (formMessage) {
-                    formMessage.textContent = 'Sorry, there was an error submitting your enquiry. Please email us directly at hello@hevin.design';
+                    let errorMessage = 'Sorry, there was an error submitting your enquiry. ';
+                    
+                    if (error.name === 'AbortError') {
+                        errorMessage += 'The request timed out. Please check your connection and try again, or ';
+                    } else if (error.message.includes('status')) {
+                        errorMessage += 'The server encountered an issue. Please try again later, or ';
+                    } else {
+                        errorMessage += 'Please try again, or ';
+                    }
+                    
+                    errorMessage += 'email us directly at hello@hevin.design';
+                    
+                    formMessage.textContent = errorMessage;
                     formMessage.className = 'form-message error';
                     formMessage.style.display = 'block';
                 }
