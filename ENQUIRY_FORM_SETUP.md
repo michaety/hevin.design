@@ -1,13 +1,12 @@
 # Enquiry Form Configuration
 
-## ⚠️ IMPORTANT: Initial Setup Required
+## Setup Status
 
-Before the form can work, you need to:
-1. Create a Formspree account at https://formspree.io
-2. Create a new form and get your unique form ID
-3. Replace `xanykkdg` in `index.html` with your actual Formspree form ID
-4. Configure Formspree to send emails to hello@hevin.design
-5. Set up email forwarding at your domain provider (see below)
+The enquiry form is fully configured and ready to use:
+- ✅ Formspree account created
+- ✅ Form ID configured: `mnnoeznk`
+- ✅ Email delivery to hello@hevin.design
+- ✅ Email forwarding setup (see below for details)
 
 ## Overview
 The enquiry form on hevin.design is configured to send submissions to **hello@hevin.design** using Formspree, a third-party form handling service.
@@ -25,20 +24,19 @@ The enquiry form on hevin.design is configured to send submissions to **hello@he
 
 ## Formspree Configuration
 
-### Creating Your Formspree Form
-1. Go to https://formspree.io and sign up for a free account
-2. Click "New Form" or "Add Form"
-3. Enter `hello@hevin.design` as the email address where submissions should be sent
-4. Copy the Form ID (it will look like `xanykkdg`)
-5. Update `index.html` line 543:
+### Formspree Form Configuration
+The form has been created and configured with the following settings:
+1. Formspree account: Active
+2. Email destination: `hello@hevin.design`
+3. Form ID: `mnnoeznk`
+4. Form action in `index.html` line 543:
    ```html
-   <form id="enquiry-form" class="enquiry-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+   <form id="enquiry-form" class="enquiry-form" action="https://formspree.io/f/mnnoeznk" method="POST">
    ```
-6. Replace `YOUR_FORM_ID` with your actual Form ID from step 4
 
 ### Endpoint Details
 - **URL Pattern**: `https://formspree.io/f/{FORM_ID}`
-- **Current Form ID**: `xanykkdg` (placeholder - replace with your actual ID)
+- **Current Form ID**: `mnnoeznk`
 - **Method**: POST
 - **Format**: JSON
 - **Timeout**: 30 seconds (configurable in scripts.js)
@@ -86,7 +84,7 @@ To verify the email forwarding is working:
 ## Formspree Account Access
 To manage the Formspree form:
 1. Log in to Formspree account (formspree.io)
-2. Navigate to the form with ID `xanykkdg`
+2. Navigate to the form with ID `mnnoeznk`
 3. You can view:
    - Submission history
    - Configure email templates
