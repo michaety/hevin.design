@@ -224,7 +224,7 @@ a:hover {
 /* Dark mode: increase nav link contrast */
 @media (prefers-color-scheme: dark) {
     .nav-menu li a {
-        color: var(--color-gray-200);
+        color: #404040;
         font-weight: 600;
     }
     
@@ -357,18 +357,18 @@ a:hover {
     color: var(--color-white);
 }
 
-/* Dark mode: black background with white text for outline buttons in pricing section */
+/* Dark mode: white background with black text for outline buttons in pricing section, blue on hover */
 @media (prefers-color-scheme: dark) {
     .btn-outline {
-        background-color: var(--color-black);
-        color: var(--color-white);
+        background-color: #ffffff;
+        color: #000000;
         border-color: rgba(255, 255, 255, 0.2);
     }
     
     .btn-outline:hover {
-        background-color: var(--color-white);
-        color: var(--color-black);
-        border-color: var(--color-white);
+        background-color: #00b8db;
+        color: #000000;
+        border-color: #00b8db;
     }
 }
 
