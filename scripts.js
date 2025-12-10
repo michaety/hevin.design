@@ -4,6 +4,9 @@
 //  Updated for New Pricing Structure
 // ==================================
 
+// Configuration
+const FORM_SUBMISSION_TIMEOUT = 30000; // 30 seconds
+
 document.addEventListener('DOMContentLoaded', function() {
     // ==================================
     // Hero Canvas Fluid Gradient
@@ -397,7 +400,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Create abort controller for timeout
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+                const timeoutId = setTimeout(() => controller.abort(), FORM_SUBMISSION_TIMEOUT);
                 
                 const response = await fetch(enquiryForm.action, {
                     method: 'POST',
@@ -419,7 +422,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Formspree returns { ok: true } on success
                 if (!result.ok) {
-                    const errorMsg = result.error || result.errors?.map(e => e.message).join(', ') || 'Submission failed';
+                    // Extract error message from Formspree response
+                    let errorMsg = 'Submission failed';
+                    if (result.error) {
+                        errorMsg = result.error;
+                    } else if (result.errors && Array.isArray(result.errors)) {
+                        errorMsg = result.errors.map(e => e.message).join(', ');
+                    }
                     throw new Error(errorMsg);
                 }
                 
