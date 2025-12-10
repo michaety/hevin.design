@@ -4,6 +4,9 @@
 //  Updated for New Pricing Structure
 // ==================================
 
+// Configuration
+const FORM_SUBMISSION_TIMEOUT = 30000; // 30 seconds
+
 document.addEventListener('DOMContentLoaded', function() {
     // ==================================
     // Hero Canvas Fluid Gradient
@@ -392,37 +395,42 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             
             try {
-                // TODO: PRODUCTION - Replace with actual Cloudflare Worker endpoint
-                // Example Worker endpoint structure:
-                // POST /api/enquiry
-                // Expected request body: JSON object with enquiryData
-                // Expected response: { success: boolean, message: string, enquiry_id?: string }
-                //
-                // const response = await fetch('/api/enquiry', {
-                //     method: 'POST',
-                //     headers: { 
-                //         'Content-Type': 'application/json',
-                //         'X-Requested-With': 'XMLHttpRequest'
-                //     },
-                //     body: JSON.stringify(enquiryData)
-                // });
-                // 
-                // if (!response.ok) {
-                //     throw new Error('Network response was not ok');
-                // }
-                // 
-                // const result = await response.json();
-                // 
-                // if (!result.success) {
-                //     throw new Error(result.message || 'Submission failed');
-                // }
+                // Submit to Formspree
+                // Formspree will send email to hello@hevin.design
                 
-                // TODO: PRODUCTION - Remove console.log before deploying
-                // Simulate API call for development
-                if (window.DEBUG === true) {
-                    console.log('Enquiry Data:', enquiryData);
+                // Create abort controller for timeout
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), FORM_SUBMISSION_TIMEOUT);
+                
+                const response = await fetch(enquiryForm.action, {
+                    method: 'POST',
+                    headers: { 
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(enquiryData),
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                if (!response.ok) {
+                    throw new Error(`Server responded with status ${response.status}`);
                 }
-                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                const result = await response.json();
+                
+                // Formspree returns { ok: true } on success
+                if (!result.ok) {
+                    // Extract error message from Formspree response
+                    let errorMsg = 'Submission failed';
+                    if (result.error) {
+                        errorMsg = result.error;
+                    } else if (result.errors && Array.isArray(result.errors)) {
+                        errorMsg = result.errors.map(e => e.message).join(', ');
+                    }
+                    throw new Error(errorMsg);
+                }
                 
                 // Show success message
                 if (formMessage) {
@@ -439,11 +447,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 
             } catch (error) {
-                // TODO: PRODUCTION - Integrate with error monitoring service (e.g., Sentry)
                 console.error('Form submission error:', error);
-                // Show error message
+                // Show error message with more specific information
                 if (formMessage) {
-                    formMessage.textContent = 'Sorry, there was an error submitting your enquiry. Please email us directly at hello@hevin.design';
+                    let errorMessage = 'Sorry, there was an error submitting your enquiry. ';
+                    
+                    if (error.name === 'AbortError') {
+                        errorMessage += 'The request timed out. Please check your connection and try again, or ';
+                    } else if (error.message.includes('status')) {
+                        errorMessage += 'The server encountered an issue. Please try again later, or ';
+                    } else {
+                        errorMessage += 'Please try again, or ';
+                    }
+                    
+                    errorMessage += 'email us directly at hello@hevin.design';
+                    
+                    formMessage.textContent = errorMessage;
                     formMessage.className = 'form-message error';
                     formMessage.style.display = 'block';
                 }
