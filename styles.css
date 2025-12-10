@@ -661,6 +661,8 @@ section h2 {
     height: 240px;
     overflow: hidden;
     position: relative;
+    display: block;
+    text-decoration: none;
 }
 
 .portfolio-card-image img {
@@ -734,6 +736,7 @@ section h2 {
     
     .btn-portfolio:hover {
         background-color: var(--color-primary);
+        color: var(--color-black);
     }
 }
 

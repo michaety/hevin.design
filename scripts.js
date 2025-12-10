@@ -496,41 +496,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const portfolioCarousel = document.querySelector('.portfolio-carousel');
     
     if (portfolioCarousel) {
-        let isDown = false;
-        let startX;
-        let scrollLeft;
-        
-        // Mouse events for desktop drag
-        portfolioCarousel.addEventListener('mousedown', (e) => {
-            isDown = true;
-            portfolioCarousel.style.cursor = 'grabbing';
-            startX = e.pageX - portfolioCarousel.offsetLeft;
-            scrollLeft = portfolioCarousel.scrollLeft;
-        });
-        
-        portfolioCarousel.addEventListener('mouseleave', () => {
-            isDown = false;
-            portfolioCarousel.style.cursor = 'grab';
-        });
-        
-        portfolioCarousel.addEventListener('mouseup', () => {
-            isDown = false;
-            portfolioCarousel.style.cursor = 'grab';
-        });
-        
-        portfolioCarousel.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - portfolioCarousel.offsetLeft;
-            const walk = (x - startX) * 2; // Scroll speed multiplier
-            portfolioCarousel.scrollLeft = scrollLeft - walk;
-        });
-        
-        // Set initial cursor
-        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-            portfolioCarousel.style.cursor = 'grab';
-        }
-        
         // Touch events are handled natively by the browser with scroll-snap
         
         // Desktop Navigation Buttons for Portfolio Carousel
@@ -643,6 +608,90 @@ document.addEventListener('DOMContentLoaded', function() {
                     wheelTimeout = null;
                 }, 50);
             }, { passive: false });
+        }
+    }
+    
+    // ==================================
+    // Auto-scrolling Services Carousel on Mobile
+    // ==================================
+    
+    const servicesGrid = document.querySelector('.services-grid');
+    
+    if (servicesGrid && window.matchMedia('(max-width: 767px)').matches) {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        
+        if (!prefersReducedMotion) {
+            let autoScrollInterval;
+            let isUserInteracting = false;
+            let userInteractionTimeout;
+            
+            const AUTO_SCROLL_DELAY = 3000; // Wait 3 seconds between scrolls
+            const RESUME_AUTO_SCROLL_DELAY = 5000; // Resume auto-scroll 5 seconds after user stops interacting
+            
+            function autoScrollServices() {
+                if (isUserInteracting) return;
+                
+                const cardWidth = servicesGrid.querySelector('.service-card').offsetWidth;
+                const gap = parseInt(getComputedStyle(servicesGrid).gap);
+                const maxScroll = servicesGrid.scrollWidth - servicesGrid.clientWidth;
+                const currentScroll = servicesGrid.scrollLeft;
+                
+                // Calculate next scroll position
+                let nextScroll = currentScroll + cardWidth + gap;
+                
+                // If we've reached the end, reset to beginning
+                if (nextScroll >= maxScroll) {
+                    nextScroll = 0;
+                }
+                
+                servicesGrid.scrollTo({
+                    left: nextScroll,
+                    behavior: 'smooth'
+                });
+            }
+            
+            function startAutoScroll() {
+                autoScrollInterval = setInterval(autoScrollServices, AUTO_SCROLL_DELAY);
+            }
+            
+            function stopAutoScroll() {
+                if (autoScrollInterval) {
+                    clearInterval(autoScrollInterval);
+                    autoScrollInterval = null;
+                }
+            }
+            
+            function handleUserInteraction() {
+                isUserInteracting = true;
+                stopAutoScroll();
+                
+                // Clear existing timeout
+                if (userInteractionTimeout) {
+                    clearTimeout(userInteractionTimeout);
+                }
+                
+                // Resume auto-scroll after user stops interacting
+                userInteractionTimeout = setTimeout(() => {
+                    isUserInteracting = false;
+                    startAutoScroll();
+                }, RESUME_AUTO_SCROLL_DELAY);
+            }
+            
+            // Listen for user interactions
+            servicesGrid.addEventListener('touchstart', handleUserInteraction);
+            servicesGrid.addEventListener('scroll', handleUserInteraction);
+            
+            // Start auto-scrolling
+            startAutoScroll();
+            
+            // Cleanup on visibility change
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    stopAutoScroll();
+                } else if (!isUserInteracting) {
+                    startAutoScroll();
+                }
+            });
         }
     }
     
