@@ -1,5 +1,14 @@
 # Enquiry Form Configuration
 
+## ⚠️ IMPORTANT: Initial Setup Required
+
+Before the form can work, you need to:
+1. Create a Formspree account at https://formspree.io
+2. Create a new form and get your unique form ID
+3. Replace `xanykkdg` in `index.html` with your actual Formspree form ID
+4. Configure Formspree to send emails to hello@hevin.design
+5. Set up email forwarding at your domain provider (see below)
+
 ## Overview
 The enquiry form on hevin.design is configured to send submissions to **hello@hevin.design** using Formspree, a third-party form handling service.
 
@@ -16,17 +25,28 @@ The enquiry form on hevin.design is configured to send submissions to **hello@he
 
 ## Formspree Configuration
 
-### Endpoint
-- **URL**: `https://formspree.io/f/xanykkdg`
+### Creating Your Formspree Form
+1. Go to https://formspree.io and sign up for a free account
+2. Click "New Form" or "Add Form"
+3. Enter `hello@hevin.design` as the email address where submissions should be sent
+4. Copy the Form ID (it will look like `xanykkdg`)
+5. Update `index.html` line 543:
+   ```html
+   <form id="enquiry-form" class="enquiry-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+   ```
+6. Replace `YOUR_FORM_ID` with your actual Form ID from step 4
+
+### Endpoint Details
+- **URL Pattern**: `https://formspree.io/f/{FORM_ID}`
+- **Current Form ID**: `xanykkdg` (placeholder - replace with your actual ID)
 - **Method**: POST
 - **Format**: JSON
-
-### Form ID
-The form is registered with Formspree under the ID `xanykkdg`. This endpoint is configured to send emails to `hello@hevin.design`.
+- **Timeout**: 30 seconds (configurable in scripts.js)
 
 ### Security Features
 - Honeypot field (`_gotcha`) for spam protection
 - AJAX submission prevents page reload
+- 30-second request timeout to prevent hanging
 - CSP headers already configured to allow Formspree connections
 - Form validation on both client and server side
 
@@ -73,6 +93,49 @@ To manage the Formspree form:
    - Set up auto-replies
    - Add reCAPTCHA protection
    - Export submissions
+
+## Testing the Setup
+
+### End-to-End Testing Checklist
+After setting up Formspree and email forwarding, test the complete flow:
+
+1. **Test Form Submission**:
+   - Visit the website enquiry form
+   - Fill out all required fields
+   - Select a package and optional add-ons
+   - Submit the form
+   - Verify success message appears
+
+2. **Verify Formspree Receipt**:
+   - Log in to Formspree dashboard
+   - Check that submission appears in form history
+   - Verify all form data was captured correctly
+
+3. **Verify Email Delivery**:
+   - Check hello@hevin.design inbox (if accessible)
+   - Confirm email from Formspree was received
+   - Verify email contains all form data
+
+4. **Verify Email Forwarding**:
+   - Check michaelpaulfrancis@gmail.com inbox
+   - Confirm forwarded email was received
+   - Verify sender shows as hello@hevin.design
+   - Confirm all form data is present
+
+5. **Test Error Handling**:
+   - Disconnect from internet and submit form (should show timeout error)
+   - Re-enable internet and verify form works again
+   - Check that error messages are helpful and include fallback email
+
+### Expected Email Content
+The email should include:
+- Contact information (name, business, email, phone)
+- Business type and location
+- Selected package with pricing
+- Selected add-ons
+- Cost breakdown (setup, monthly, first year total)
+- Project description message
+- Timestamp and user agent
 
 ## Troubleshooting
 
