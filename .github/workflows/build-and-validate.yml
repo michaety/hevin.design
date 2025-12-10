@@ -19,6 +19,10 @@ jobs:
   build-and-validate:
     runs-on: ubuntu-latest
     
+    # Limit permissions to minimum required (security best practice)
+    permissions:
+      contents: read
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
