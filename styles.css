@@ -224,7 +224,7 @@ a:hover {
 /* Dark mode: increase nav link contrast */
 @media (prefers-color-scheme: dark) {
     .nav-menu li a {
-        color: #ffffff;
+        color: #d9d9d9;
         font-weight: 600;
     }
     
@@ -366,7 +366,8 @@ a:hover {
     }
     
     .btn-outline:hover {
-        background-color: #1a1a1a;
+        background-color: #ffffff;
+        color: #000000;
         border-color: #ffffff;
     }
 }
