@@ -295,6 +295,7 @@ a:hover {
 /* Dark mode: black hamburger icon for better visibility */
 @media (prefers-color-scheme: dark) {
     .menu-toggle span {
+        /* Use pure black (#000000) instead of var(--color-black) which inverts to white in dark mode */
         background-color: #000000;
     }
 }
