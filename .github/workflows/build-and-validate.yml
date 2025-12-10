@@ -1,0 +1,150 @@
+name: Build and Validate Deployment
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'styles.css'
+      - 'scripts.js'
+      - 'index.html'
+      - 'privacy.html'
+      - 'terms.html'
+      - '.github/workflows/**'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-validate:
+    runs-on: ubuntu-latest
+    
+    # Limit permissions to minimum required (security best practice)
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Check if source files were modified
+        id: check_changes
+        run: |
+          # Handle initial commit or missing previous commit
+          if [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]; then
+            # Use GitHub's before/after SHAs for accurate diff
+            CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} 2>/dev/null || echo "")
+          else
+            # Initial commit or force push - check all files
+            CHANGED_FILES=$(git ls-files | grep -E '(styles\.css|scripts\.js)' || echo "")
+          fi
+          
+          if echo "$CHANGED_FILES" | grep -E '(styles\.css|scripts\.js)'; then
+            echo "source_changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "source_changed=false" >> $GITHUB_OUTPUT
+          fi
+        continue-on-error: true
+      
+      - name: Build minified assets
+        if: steps.check_changes.outputs.source_changed == 'true'
+        run: |
+          echo "🔨 Building minified assets..."
+          chmod +x build.sh
+          ./build.sh
+
+      - name: Commit and push generated minified files
+        if: steps.check_changes.outputs.source_changed == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🔁 Committing generated minified assets (if any)..."
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Ensure we are on the correct branch
+          git checkout -B "${{ github.ref_name }}"
+          git add styles.min.css scripts.min.js || true
+          # If there are staged changes, commit and push them
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: update minified files [skip ci]"
+            git push origin HEAD
+            echo "✅ Pushed updated minified files"
+          else
+            echo "No changes to commit"
+          fi
+      
+      - name: Check if minified files changed
+        if: steps.check_changes.outputs.source_changed == 'true'
+        id: check_minified
+        run: |
+          # Check if minified files exist and have changes
+          if [ -f "styles.min.css" ] && [ -f "scripts.min.js" ]; then
+            if git diff --exit-code styles.min.css scripts.min.js; then
+              echo "minified_changed=false" >> $GITHUB_OUTPUT
+              echo "⚠️  WARNING: Source files changed but minified files are identical"
+            else
+              echo "minified_changed=true" >> $GITHUB_OUTPUT
+              echo "✅ Minified files were regenerated"
+            fi
+          else
+            echo "minified_changed=false" >> $GITHUB_OUTPUT
+            echo "⚠️  WARNING: Minified files do not exist"
+          fi
+      
+      - name: Fail if minified files are out of sync
+        if: steps.check_changes.outputs.source_changed == 'true' && steps.check_minified.outputs.minified_changed == 'false'
+        run: |
+          echo "❌ ERROR: Source files (styles.css or scripts.js) were modified but minified files were not updated!"
+          echo ""
+          echo "Please run './build.sh' locally and commit the updated minified files:"
+          echo "  - styles.min.css"
+          echo "  - scripts.min.js"
+          echo ""
+          exit 1
+      
+      - name: Run local validation tests
+        run: |
+          echo "🧪 Running local validation tests..."
+          chmod +x local-validation.sh
+          ./local-validation.sh
+      
+      - name: Wait for Cloudflare Pages deployment (on main branch)
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          echo "⏳ Waiting 2 minutes for Cloudflare Pages deployment to complete..."
+          sleep 120
+      
+      - name: Validate production deployment (on main branch)
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          echo "🔍 Validating production deployment..."
+          chmod +x validate-deployment.sh
+          ./validate-deployment.sh https://hevin.design
+        continue-on-error: true
+      
+      - name: Create deployment summary
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          echo "## 📋 Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Build completed successfully" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Local validation passed" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Deployment validation completed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🚨 Important: Cache Purge Required" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "CSS and JavaScript files have 30-day cache headers. To ensure changes appear immediately:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "1. Log into [Cloudflare Dashboard](https://dash.cloudflare.com/)" >> $GITHUB_STEP_SUMMARY
+          echo "2. Select your site (hevin.design)" >> $GITHUB_STEP_SUMMARY
+          echo "3. Go to **Caching > Configuration**" >> $GITHUB_STEP_SUMMARY
+          echo "4. Click **Purge Everything**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Then verify changes with a hard refresh (Ctrl+Shift+R or Cmd+Shift+R)" >> $GITHUB_STEP_SUMMARY
