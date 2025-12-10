@@ -611,6 +611,15 @@ document.addEventListener('DOMContentLoaded', function() {
             let wheelTimeout;
             
             portfolioCarousel.addEventListener('wheel', (e) => {
+                // Allow vertical scrolling to pass through for normal page scroll
+                // Only intercept horizontal scrolling or when shift+wheel is used
+                const isHorizontalScroll = Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.shiftKey;
+                
+                if (!isHorizontalScroll) {
+                    // Let vertical scroll pass through to enable page scrolling
+                    return;
+                }
+                
                 e.preventDefault();
                 
                 // Clear existing timeout
@@ -618,8 +627,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     clearTimeout(wheelTimeout);
                 }
                 
-                // Reduce wheel sensitivity for slower, more controlled scroll
-                const scrollAmount = e.deltaY * WHEEL_SENSITIVITY;
+                // Use deltaX for horizontal scroll, or deltaY when shift is pressed
+                const scrollAmount = (e.deltaX || e.deltaY) * WHEEL_SENSITIVITY;
                 const maxScroll = portfolioCarousel.scrollWidth - portfolioCarousel.clientWidth;
                 const targetScroll = Math.max(0, Math.min(maxScroll, portfolioCarousel.scrollLeft + scrollAmount));
                 
