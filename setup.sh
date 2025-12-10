@@ -8,14 +8,6 @@ echo ""
 echo "🚀 Setting up hevin.design development environment..."
 echo ""
 
-# Check if git is available
-if ! command -v git &> /dev/null; then
-    echo "❌ Error: git is not installed"
-    exit 1
-fi
-
-echo "✅ Git is installed"
-
 # Check if build tools are available
 echo ""
 echo "Checking build dependencies..."
@@ -61,12 +53,18 @@ chmod +x .githooks/pre-commit 2>/dev/null && echo "✅ .githooks/pre-commit"
 # Test build script
 echo ""
 echo "🧪 Testing build script..."
-if ./build.sh &> /dev/null; then
-    echo "✅ Build script works correctly"
+if [ -x ./build.sh ]; then
+    if ./build.sh &> /tmp/build-test.log; then
+        echo "✅ Build script works correctly"
+    else
+        echo "⚠️  Build script test failed"
+        echo "   Error log:"
+        cat /tmp/build-test.log | head -10
+        echo "   Full log: /tmp/build-test.log"
+    fi
 else
-    echo "⚠️  Build script test failed"
-    echo "   Try running: ./build.sh"
-    echo "   You may need to install clean-css-cli and terser"
+    echo "⚠️  Build script is not executable"
+    echo "   Run: chmod +x build.sh"
 fi
 
 # Show git status

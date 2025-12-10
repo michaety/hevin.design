@@ -40,6 +40,19 @@ fi
 
 if [ $MISSING_MINIFIED -eq 1 ]; then
     echo ""
+    
+    # Check if build script exists and is executable
+    if [ ! -f "./build.sh" ]; then
+        echo -e "${RED}❌ build.sh not found!${NC}"
+        echo "Cannot regenerate minified files."
+        exit 1
+    fi
+    
+    if [ ! -x "./build.sh" ]; then
+        echo -e "${YELLOW}⚠️  build.sh is not executable, fixing...${NC}"
+        chmod +x ./build.sh
+    fi
+    
     echo -e "${YELLOW}🔨 Running build script to regenerate minified files...${NC}"
     echo ""
     
