@@ -496,33 +496,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const portfolioCarousel = document.querySelector('.portfolio-carousel');
     
     if (portfolioCarousel) {
-        let isDown = false;
-        let startX;
-        let scrollLeft;
-        
-        // Mouse events for desktop drag
-        portfolioCarousel.addEventListener('mousedown', (e) => {
-            isDown = true;
-            startX = e.pageX - portfolioCarousel.offsetLeft;
-            scrollLeft = portfolioCarousel.scrollLeft;
-        });
-        
-        portfolioCarousel.addEventListener('mouseleave', () => {
-            isDown = false;
-        });
-        
-        portfolioCarousel.addEventListener('mouseup', () => {
-            isDown = false;
-        });
-        
-        portfolioCarousel.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - portfolioCarousel.offsetLeft;
-            const walk = (x - startX) * 2; // Scroll speed multiplier
-            portfolioCarousel.scrollLeft = scrollLeft - walk;
-        });
-        
         // Touch events are handled natively by the browser with scroll-snap
         
         // Desktop Navigation Buttons for Portfolio Carousel
