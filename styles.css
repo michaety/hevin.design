@@ -292,6 +292,14 @@ a:hover {
     }
 }
 
+/* Dark mode: black hamburger icon for better visibility */
+@media (prefers-color-scheme: dark) {
+    .menu-toggle span {
+        /* Use pure black (#000000) instead of var(--color-black) which inverts to white in dark mode */
+        background-color: #000000;
+    }
+}
+
 /* Buttons */
 .btn {
     display: inline-flex;
@@ -1166,18 +1174,18 @@ section h2 {
     }
     
     .pricing-toggle svg {
-        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        transition: all 0.4s ease;
         position: relative;
         z-index: 1;
     }
     
     .pricing-toggle:hover svg {
-        transform: translateX(8px) scale(1.1);
+        transform: scale(1.15);
         color: var(--color-primary);
     }
     
     .pricing-card.expanded .pricing-toggle svg {
-        transform: rotate(90deg) scale(1.1);
+        transform: rotate(90deg);
     }
     
     .pricing-card.expanded .pricing-toggle:hover svg {
