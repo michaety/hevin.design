@@ -1,0 +1,109 @@
+name: Build and Validate Deployment
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'styles.css'
+      - 'scripts.js'
+      - 'index.html'
+      - 'privacy.html'
+      - 'terms.html'
+      - '.github/workflows/**'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Check if source files were modified
+        id: check_changes
+        run: |
+          if git diff --name-only HEAD~1 HEAD | grep -E '(styles\.css|scripts\.js)'; then
+            echo "source_changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "source_changed=false" >> $GITHUB_OUTPUT
+          fi
+        continue-on-error: true
+      
+      - name: Build minified assets
+        if: steps.check_changes.outputs.source_changed == 'true'
+        run: |
+          echo "🔨 Building minified assets..."
+          chmod +x build.sh
+          ./build.sh
+      
+      - name: Check if minified files changed
+        if: steps.check_changes.outputs.source_changed == 'true'
+        id: check_minified
+        run: |
+          if git diff --exit-code styles.min.css scripts.min.js; then
+            echo "minified_changed=false" >> $GITHUB_OUTPUT
+            echo "⚠️  WARNING: Source files changed but minified files are identical"
+          else
+            echo "minified_changed=true" >> $GITHUB_OUTPUT
+            echo "✅ Minified files were regenerated"
+          fi
+      
+      - name: Fail if minified files are out of sync
+        if: steps.check_changes.outputs.source_changed == 'true' && steps.check_minified.outputs.minified_changed == 'false'
+        run: |
+          echo "❌ ERROR: Source files (styles.css or scripts.js) were modified but minified files were not updated!"
+          echo ""
+          echo "Please run './build.sh' locally and commit the updated minified files:"
+          echo "  - styles.min.css"
+          echo "  - scripts.min.js"
+          echo ""
+          exit 1
+      
+      - name: Run local validation tests
+        run: |
+          echo "🧪 Running local validation tests..."
+          chmod +x local-validation.sh
+          ./local-validation.sh
+      
+      - name: Wait for Cloudflare Pages deployment (on main branch)
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          echo "⏳ Waiting 2 minutes for Cloudflare Pages deployment to complete..."
+          sleep 120
+      
+      - name: Validate production deployment (on main branch)
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          echo "🔍 Validating production deployment..."
+          chmod +x validate-deployment.sh
+          ./validate-deployment.sh https://hevin.design
+        continue-on-error: true
+      
+      - name: Create deployment summary
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          echo "## 📋 Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Build completed successfully" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Local validation passed" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Deployment validation completed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🚨 Important: Cache Purge Required" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "CSS and JavaScript files have 30-day cache headers. To ensure changes appear immediately:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "1. Log into [Cloudflare Dashboard](https://dash.cloudflare.com/)" >> $GITHUB_STEP_SUMMARY
+          echo "2. Select your site (hevin.design)" >> $GITHUB_STEP_SUMMARY
+          echo "3. Go to **Caching > Configuration**" >> $GITHUB_STEP_SUMMARY
+          echo "4. Click **Purge Everything**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Then verify changes with a hard refresh (Ctrl+Shift+R or Cmd+Shift+R)" >> $GITHUB_STEP_SUMMARY

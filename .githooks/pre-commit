@@ -1,0 +1,67 @@
+#!/bin/bash
+# Pre-commit hook to ensure minified files are in sync with source files
+# To install: git config core.hooksPath .githooks
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+# Check if source files are being committed
+STYLES_STAGED=$(git diff --cached --name-only | grep -E '^styles\.css$' || true)
+SCRIPTS_STAGED=$(git diff --cached --name-only | grep -E '^scripts\.js$' || true)
+
+# If neither source file is staged, exit early
+if [ -z "$STYLES_STAGED" ] && [ -z "$SCRIPTS_STAGED" ]; then
+    exit 0
+fi
+
+echo -e "${YELLOW}⚠️  Source file(s) detected in commit:${NC}"
+[ -n "$STYLES_STAGED" ] && echo "  - styles.css"
+[ -n "$SCRIPTS_STAGED" ] && echo "  - scripts.js"
+echo ""
+
+# Check if minified files are also staged
+STYLES_MIN_STAGED=$(git diff --cached --name-only | grep -E '^styles\.min\.css$' || true)
+SCRIPTS_MIN_STAGED=$(git diff --cached --name-only | grep -E '^scripts\.min\.js$' || true)
+
+MISSING_MINIFIED=0
+
+if [ -n "$STYLES_STAGED" ] && [ -z "$STYLES_MIN_STAGED" ]; then
+    echo -e "${RED}❌ styles.min.css is not staged but styles.css is!${NC}"
+    MISSING_MINIFIED=1
+fi
+
+if [ -n "$SCRIPTS_STAGED" ] && [ -z "$SCRIPTS_MIN_STAGED" ]; then
+    echo -e "${RED}❌ scripts.min.js is not staged but scripts.js is!${NC}"
+    MISSING_MINIFIED=1
+fi
+
+if [ $MISSING_MINIFIED -eq 1 ]; then
+    echo ""
+    echo -e "${YELLOW}🔨 Running build script to regenerate minified files...${NC}"
+    echo ""
+    
+    if ! ./build.sh; then
+        echo ""
+        echo -e "${RED}❌ Build script failed!${NC}"
+        echo "Please fix the errors and try again."
+        exit 1
+    fi
+    
+    echo ""
+    echo -e "${GREEN}✅ Minified files regenerated successfully!${NC}"
+    echo ""
+    echo -e "${YELLOW}📝 Adding minified files to commit...${NC}"
+    
+    [ -n "$STYLES_STAGED" ] && git add styles.min.css
+    [ -n "$SCRIPTS_STAGED" ] && git add scripts.min.js
+    
+    echo ""
+    echo -e "${GREEN}✅ Minified files added to commit${NC}"
+    echo ""
+    echo "Proceeding with commit..."
+fi
+
+exit 0
