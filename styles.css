@@ -224,7 +224,7 @@ a:hover {
 /* Dark mode: increase nav link contrast */
 @media (prefers-color-scheme: dark) {
     .nav-menu li a {
-        color: #ffffff;
+        color: #404040;
         font-weight: 600;
     }
     
@@ -357,17 +357,18 @@ a:hover {
     color: var(--color-white);
 }
 
-/* Dark mode: black background with white text for outline buttons in pricing section */
+/* Dark mode: white background with black text for outline buttons in pricing section, blue on hover */
 @media (prefers-color-scheme: dark) {
     .btn-outline {
-        background-color: #000000;
-        color: #ffffff;
-        border-color: rgba(255, 255, 255, 0.2);
+        background-color: #ffffff;
+        color: #000000;
+        border-color: #ffffff;
     }
     
     .btn-outline:hover {
-        background-color: #1a1a1a;
-        border-color: #ffffff;
+        background-color: #00b8db;
+        color: #000000;
+        border-color: #00b8db;
     }
 }
 
@@ -812,6 +813,20 @@ section h2 {
 @media (max-width: 1024px) {
     .carousel-nav {
         display: none;
+    }
+}
+
+/* Dark mode: ensure carousel nav buttons have black text on hover */
+@media (prefers-color-scheme: dark) {
+    .carousel-nav:hover:not(:disabled) {
+        background-color: #ffffff;
+        color: #000000;
+        border-color: #ffffff;
+    }
+    
+    .btn-portfolio:hover {
+        background-color: var(--color-primary);
+        color: #000000;
     }
 }
 
