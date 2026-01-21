@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker - Enhanced Goals System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .date-selector {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .date-selector h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .date-controls button {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .date-controls button:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .section-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .daily-habits,
+        .anytime-tasks {
+            margin-bottom: 32px;
+        }
+
+        .task-item {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .task-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .task-item.completed {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+
+        .task-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .task-name-with-icon {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .task-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .task-checkbox:hover {
+            border-color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .task-checkbox.checked {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        .task-checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .scheduled-time {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            font-weight: 500;
+        }
+
+        .progress-bar-container {
+            margin-top: 8px;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+        }
+
+        .progress-fill.avoidance {
+            background: linear-gradient(90deg, #ef4444 0%, #f87171 100%);
+        }
+
+        .goal-info {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        .grouped-goals-section {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .task-item.grouped-goal {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .task-item.grouped-goal:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .task-item.grouped-goal.expanded {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .expand-icon {
+            transition: transform 0.3s;
+            font-size: 0.9rem;
+            margin-left: 8px;
+        }
+
+        .task-item.grouped-goal.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .grouped-progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .grouped-progress-fill {
+            height: 100%;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #8b5cf6 0%, #a78bfa 100%);
+            transition: width 0.5s ease;
+        }
+
+        .subtasks {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            display: none;
+        }
+
+        .task-item.grouped-goal.expanded .subtasks {
+            display: block;
+        }
+
+        .subtask-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            font-size: 0.95rem;
+        }
+
+        .subtask-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            flex-shrink: 0;
+        }
+
+        .subtask-indicator.completed {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        .subtask-days {
+            margin-left: auto;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .add-btn {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 12px;
+        }
+
+        .add-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .number-input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 30px;
+            margin-top: 10px;
+        }
+
+        .number-input-group input {
+            width: 80px;
+        }
+
+        .btn-primary {
+            background: rgba(16, 185, 129, 0.3);
+            border: 2px solid rgba(16, 185, 129, 0.5);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: rgba(16, 185, 129, 0.4);
+            border-color: rgba(16, 185, 129, 0.7);
+        }
+
+        .habit-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .habit-checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .date-selector {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .task-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✨ Habit Tracker</h1>
+            <p>Track your daily habits and achieve your goals</p>
+        </div>
+
+        <div class="date-selector">
+            <h2 id="current-date">📅 Loading...</h2>
+            <div class="date-controls">
+                <button id="prev-day">← Previous</button>
+                <button id="today-btn">Today</button>
+                <button id="next-day">Next →</button>
+            </div>
+        </div>
+
+        <!-- Daily Habits Section -->
+        <div class="daily-habits">
+            <h3 class="section-header">Daily Habits</h3>
+            <div id="daily-habits-list"></div>
+            <button class="add-btn" id="add-daily-habit">+ Add Daily Habit</button>
+        </div>
+
+        <!-- Grouped Goals Section -->
+        <div class="grouped-goals-section">
+            <h3 class="section-header">Grouped Goals</h3>
+            <div id="grouped-goals-list"></div>
+            <button class="add-btn" id="add-grouped-goal">+ Create Grouped Goal</button>
+        </div>
+
+        <!-- Anytime Tasks Section -->
+        <div class="anytime-tasks">
+            <h3 class="section-header">Anytime Tasks</h3>
+            <div id="anytime-tasks-list"></div>
+            <button class="add-btn" id="add-anytime-task">+ Add Anytime Task</button>
+        </div>
+    </div>
+
+    <!-- Add Habit Modal -->
+    <div id="habit-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="habit-modal-title">Add Habit</h2>
+                <button class="close-btn" id="close-habit-modal">×</button>
+            </div>
+            <form id="habit-form">
+                <div class="form-group">
+                    <label for="habit-name">Habit Name</label>
+                    <input type="text" id="habit-name" placeholder="e.g., Code, Workout, Read" required>
+                </div>
+                <div class="form-group">
+                    <label for="habit-emoji">Emoji (optional)</label>
+                    <input type="text" id="habit-emoji" placeholder="💻" maxlength="2">
+                </div>
+                <div class="form-group">
+                    <label for="habit-type">Type</label>
+                    <select id="habit-type" required>
+                        <option value="daily">Daily Habit</option>
+                        <option value="anytime">Anytime Task</option>
+                    </select>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="habit-scheduled">
+                    <label for="habit-scheduled">Scheduled</label>
+                </div>
+                <div id="scheduled-time-group" class="number-input-group" style="display: none;">
+                    <label>Time:</label>
+                    <input type="time" id="habit-time">
+                </div>
+                
+                <h3 style="margin: 20px 0 10px;">Goals (Optional)</h3>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="goal-weekly-enabled">
+                    <label for="goal-weekly-enabled">Weekly Target</label>
+                </div>
+                <div id="goal-weekly-input" class="number-input-group" style="display: none;">
+                    <input type="number" id="goal-weekly-target" min="1" max="7" value="5">
+                    <span>times per week</span>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="goal-streak-enabled">
+                    <label for="goal-streak-enabled">Streak Goal</label>
+                </div>
+                <div id="goal-streak-input" class="number-input-group" style="display: none;">
+                    <input type="number" id="goal-streak-target" min="1" value="7">
+                    <span>day streak</span>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="goal-monthly-enabled">
+                    <label for="goal-monthly-enabled">Monthly Target</label>
+                </div>
+                <div id="goal-monthly-input" class="number-input-group" style="display: none;">
+                    <input type="number" id="goal-monthly-target" min="1" max="31" value="20">
+                    <span>times per month</span>
+                </div>
+
+                <button type="submit" class="btn-primary" style="margin-top: 20px;">Save Habit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Grouped Goal Modal -->
+    <div id="grouped-goal-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create Grouped Goal</h2>
+                <button class="close-btn" id="close-grouped-goal-modal">×</button>
+            </div>
+            <form id="grouped-goal-form">
+                <div class="form-group">
+                    <label for="group-name">Goal Name</label>
+                    <input type="text" id="group-name" placeholder="e.g., Creative Goal" required>
+                </div>
+                <div class="form-group">
+                    <label for="group-emoji">Emoji</label>
+                    <input type="text" id="group-emoji" placeholder="🎨" maxlength="2">
+                </div>
+                <div class="form-group">
+                    <label for="group-type">Goal Type</label>
+                    <select id="group-type" required>
+                        <option value="aggregate">Aggregate Counting (any X from group)</option>
+                        <option value="combined">Combined Achievement (all on same day)</option>
+                        <option value="mutual_exclusion">Mutual Exclusion (avoid all)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Select Habits (minimum 2)</label>
+                    <div id="habit-selection-list" class="habit-list"></div>
+                </div>
+                <div class="form-group">
+                    <label for="group-period">Time Period</label>
+                    <select id="group-period" required>
+                        <option value="week">Weekly</option>
+                        <option value="month">Monthly</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="group-target">Target</label>
+                    <input type="number" id="group-target" min="1" value="5" required>
+                </div>
+                <button type="submit" class="btn-primary">Create Grouped Goal</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="habit-tracker.js"></script>
+</body>
+</html>
