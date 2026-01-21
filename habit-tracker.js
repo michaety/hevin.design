@@ -271,6 +271,12 @@ function calculateStreak(habit) {
 
 function calculateGroupedGoalProgress(group) {
     const groupHabits = habits.filter(h => group.habitIds.includes(h.id));
+    
+    // Return 0 if no valid habits found (e.g., habits were deleted)
+    if (groupHabits.length === 0) {
+        return 0;
+    }
+    
     const startDate = group.period === 'week' ? getStartOfWeek(currentDate) : getStartOfMonth(currentDate);
     const endDate = new Date(currentDate);
     const days = getDaysBetween(startDate, endDate);
@@ -565,7 +571,8 @@ function toggleHabit(habitId) {
     if (!habit) return;
     
     const dateKey = getDateKey(currentDate);
-    habit.completions[dateKey] = !habit.completions[dateKey];
+    // Toggle completion: if true, set to false; if false or undefined, set to true
+    habit.completions[dateKey] = habit.completions[dateKey] === true ? false : true;
     
     saveData();
     renderAll();
@@ -603,7 +610,7 @@ function saveHabit(e) {
     const scheduledTime = document.getElementById('habit-time').value;
     
     const habit = {
-        id: 'habit-' + Date.now(),
+        id: 'habit-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
         name,
         emoji,
         type,
@@ -689,7 +696,7 @@ function saveGroupedGoal(e) {
     }
     
     const group = {
-        id: 'group-' + Date.now(),
+        id: 'group-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
         name,
         emoji,
         type,
