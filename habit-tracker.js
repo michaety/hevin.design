@@ -211,7 +211,7 @@ function calculateWeeklyProgress(habit) {
     let count = 0;
     days.forEach(day => {
         const key = getDateKey(day);
-        if (habit.completions[key]) {
+        if (habit.completions[key] === true) {
             count++;
         }
     });
@@ -227,7 +227,7 @@ function calculateMonthlyProgress(habit) {
     let count = 0;
     days.forEach(day => {
         const key = getDateKey(day);
-        if (habit.completions[key]) {
+        if (habit.completions[key] === true) {
             count++;
         }
     });
@@ -245,10 +245,10 @@ function calculateStreak(habit) {
     const todayKey = getDateKey(today);
     const yesterdayKey = getDateKey(new Date(today.getTime() - 86400000));
     
-    if (habit.completions[todayKey]) {
+    if (habit.completions[todayKey] === true) {
         // Start from today
         checkDate = new Date(today);
-    } else if (habit.completions[yesterdayKey]) {
+    } else if (habit.completions[yesterdayKey] === true) {
         // Start from yesterday
         checkDate = new Date(today.getTime() - 86400000);
     } else {
@@ -258,7 +258,7 @@ function calculateStreak(habit) {
     // Count backwards
     while (true) {
         const key = getDateKey(checkDate);
-        if (habit.completions[key]) {
+        if (habit.completions[key] === true) {
             streak++;
             checkDate.setDate(checkDate.getDate() - 1);
         } else {
@@ -281,7 +281,7 @@ function calculateGroupedGoalProgress(group) {
         days.forEach(day => {
             const key = getDateKey(day);
             groupHabits.forEach(habit => {
-                if (habit.completions[key]) {
+                if (habit.completions[key] === true) {
                     totalCompletions++;
                 }
             });
@@ -292,7 +292,7 @@ function calculateGroupedGoalProgress(group) {
         let combinedDays = 0;
         days.forEach(day => {
             const key = getDateKey(day);
-            const allCompleted = groupHabits.every(habit => habit.completions[key]);
+            const allCompleted = groupHabits.every(habit => habit.completions[key] === true);
             if (allCompleted) {
                 combinedDays++;
             }
@@ -307,7 +307,7 @@ function calculateGroupedGoalProgress(group) {
         
         while (true) {
             const key = getDateKey(checkDate);
-            const anyCompleted = groupHabits.some(habit => habit.completions[key]);
+            const anyCompleted = groupHabits.some(habit => habit.completions[key] === true);
             if (!anyCompleted) {
                 streak++;
                 checkDate.setDate(checkDate.getDate() - 1);
@@ -342,7 +342,7 @@ function renderDailyHabits() {
     
     container.innerHTML = dailyHabits.map(habit => {
         const dateKey = getDateKey(currentDate);
-        const isCompleted = habit.completions[dateKey] || false;
+        const isCompleted = habit.completions[dateKey] === true;
         
         let progressHTML = '';
         
@@ -422,9 +422,7 @@ function renderGroupedGoals() {
     container.innerHTML = groupedGoals.map(group => {
         const current = calculateGroupedGoalProgress(group);
         const target = group.target;
-        const percentage = group.type === 'mutual_exclusion' 
-            ? Math.min((current / target) * 100, 100)
-            : Math.min((current / target) * 100, 100);
+        const percentage = Math.min((current / target) * 100, 100);
         
         const goalText = group.type === 'mutual_exclusion' 
             ? `${current}-day streak`
@@ -433,12 +431,12 @@ function renderGroupedGoals() {
         const groupHabits = habits.filter(h => group.habitIds.includes(h.id));
         const subtasksHTML = groupHabits.map(habit => {
             const dateKey = getDateKey(currentDate);
-            const isCompleted = habit.completions[dateKey] || false;
+            const isCompleted = habit.completions[dateKey] === true;
             
             // Get days completed this week/month
             const startDate = group.period === 'week' ? getStartOfWeek(currentDate) : getStartOfMonth(currentDate);
             const days = getDaysBetween(startDate, currentDate);
-            const completedDays = days.filter(day => habit.completions[getDateKey(day)]);
+            const completedDays = days.filter(day => habit.completions[getDateKey(day)] === true);
             const dayNames = completedDays.map(day => 
                 day.toLocaleDateString('en-US', { weekday: 'short' })
             ).join(', ') || '—';
@@ -485,7 +483,7 @@ function renderAnytimeTasks() {
     
     container.innerHTML = anytimeTasks.map(habit => {
         const dateKey = getDateKey(currentDate);
-        const isCompleted = habit.completions[dateKey] || false;
+        const isCompleted = habit.completions[dateKey] === true;
         
         return `
             <div class="task-item ${isCompleted ? 'completed' : ''}" data-habit-id="${habit.id}">
