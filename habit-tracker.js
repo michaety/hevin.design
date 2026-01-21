@@ -610,7 +610,7 @@ function saveHabit(e) {
     const scheduledTime = document.getElementById('habit-time').value;
     
     const habit = {
-        id: 'habit-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+        id: 'habit-' + Date.now() + '-' + Math.random().toString(36).substring(2, 11),
         name,
         emoji,
         type,
@@ -624,7 +624,7 @@ function saveHabit(e) {
     if (document.getElementById('goal-weekly-enabled').checked) {
         habit.goals.weekly = {
             enabled: true,
-            target: parseInt(document.getElementById('goal-weekly-target').value),
+            target: parseInt(document.getElementById('goal-weekly-target').value, 10),
             current: 0
         };
     }
@@ -632,7 +632,7 @@ function saveHabit(e) {
     if (document.getElementById('goal-streak-enabled').checked) {
         habit.goals.streak = {
             enabled: true,
-            target: parseInt(document.getElementById('goal-streak-target').value),
+            target: parseInt(document.getElementById('goal-streak-target').value, 10),
             current: 0,
             best: 0
         };
@@ -641,7 +641,7 @@ function saveHabit(e) {
     if (document.getElementById('goal-monthly-enabled').checked) {
         habit.goals.monthly = {
             enabled: true,
-            target: parseInt(document.getElementById('goal-monthly-target').value),
+            target: parseInt(document.getElementById('goal-monthly-target').value, 10),
             current: 0
         };
     }
@@ -684,7 +684,7 @@ function saveGroupedGoal(e) {
     const emoji = document.getElementById('group-emoji').value;
     const type = document.getElementById('group-type').value;
     const period = document.getElementById('group-period').value;
-    const target = parseInt(document.getElementById('group-target').value);
+    const target = parseInt(document.getElementById('group-target').value, 10);
     
     // Get selected habits
     const selectedHabits = Array.from(document.querySelectorAll('#habit-selection-list input:checked'))
@@ -696,7 +696,7 @@ function saveGroupedGoal(e) {
     }
     
     const group = {
-        id: 'group-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+        id: 'group-' + Date.now() + '-' + Math.random().toString(36).substring(2, 11),
         name,
         emoji,
         type,
