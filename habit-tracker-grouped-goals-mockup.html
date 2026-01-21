@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker - Grouped Goals Mockup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .date-selector {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .date-selector h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .date-controls button {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .date-controls button:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Section Headers */
+        .section-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        /* Daily Habits Section */
+        .daily-habits {
+            margin-bottom: 32px;
+        }
+
+        /* Task Item Base */
+        .task-item {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .task-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .task-item.completed {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+
+        .task-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .task-name-with-icon {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .task-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .task-checkbox:hover {
+            border-color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .task-checkbox.checked {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        .task-checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .scheduled-time {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            font-weight: 500;
+        }
+
+        /* Individual Progress Bar */
+        .progress-bar-container {
+            margin-top: 8px;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+        }
+
+        .progress-fill.avoidance {
+            background: linear-gradient(90deg, #ef4444 0%, #f87171 100%);
+        }
+
+        .goal-info {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        /* Grouped Goals Section */
+        .grouped-goals-section {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .task-item.grouped-goal {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .task-item.grouped-goal:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .task-item.grouped-goal.expanded {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .expand-icon {
+            transition: transform 0.3s;
+            font-size: 0.9rem;
+            margin-left: 8px;
+        }
+
+        .task-item.grouped-goal.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .grouped-progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .grouped-progress-fill {
+            height: 100%;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #8b5cf6 0%, #a78bfa 100%);
+            transition: width 0.5s ease;
+        }
+
+        .subtasks {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            display: none;
+        }
+
+        .task-item.grouped-goal.expanded .subtasks {
+            display: block;
+        }
+
+        .subtask-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            font-size: 0.95rem;
+        }
+
+        .subtask-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .subtask-indicator.completed {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        .subtask-days {
+            margin-left: auto;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        /* Anytime Tasks Section */
+        .anytime-tasks {
+            margin-bottom: 32px;
+        }
+
+        /* Add Goal Button */
+        .add-goal-btn {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .add-goal-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .date-selector {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .task-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✨ Habit Tracker</h1>
+            <p>Track your daily habits and achieve your goals</p>
+        </div>
+
+        <div class="date-selector">
+            <h2>📅 Today - January 21, 2026</h2>
+            <div class="date-controls">
+                <button>← Previous</button>
+                <button>Today</button>
+                <button>Next →</button>
+            </div>
+        </div>
+
+        <!-- Daily Habits Section -->
+        <div class="daily-habits">
+            <h3 class="section-header">Daily Habits</h3>
+
+            <!-- Habit with Goal: Code -->
+            <div class="task-item completed">
+                <div class="task-content">
+                    <div class="task-header">
+                        <div class="task-name-with-icon">
+                            <div class="task-checkbox checked"></div>
+                            <span>💻 Code</span>
+                        </div>
+                        <span class="scheduled-time">8:30 PM</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 60%;"></div>
+                        </div>
+                        <div class="goal-info">3/5 times this week</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Habit with Goal: Workout -->
+            <div class="task-item">
+                <div class="task-content">
+                    <div class="task-header">
+                        <div class="task-name-with-icon">
+                            <div class="task-checkbox"></div>
+                            <span>💪 Workout</span>
+                        </div>
+                        <span class="scheduled-time">7:00 AM</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 40%;"></div>
+                        </div>
+                        <div class="goal-info">2/5 times this week</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Habit with Streak Goal: Avoid Vaping -->
+            <div class="task-item completed">
+                <div class="task-content">
+                    <div class="task-header">
+                        <div class="task-name-with-icon">
+                            <div class="task-checkbox checked"></div>
+                            <span>🚫 Avoid Vaping</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill avoidance" style="width: 40%;"></div>
+                        </div>
+                        <div class="goal-info">12-day streak (Goal: 30 days)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Habit without Goal: Read the Bible -->
+            <div class="task-item">
+                <div class="task-content">
+                    <div class="task-header">
+                        <div class="task-name-with-icon">
+                            <div class="task-checkbox"></div>
+                            <span>📖 Read the Bible</span>
+                        </div>
+                        <span class="scheduled-time">9:00 PM</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grouped Goals Section -->
+        <div class="grouped-goals-section">
+            <h3 class="section-header">Grouped Goals</h3>
+
+            <!-- Creative Goal (Aggregate) -->
+            <div class="task-item grouped-goal expanded">
+                <div class="task-content">
+                    <div class="task-header">
+                        <div class="task-name-with-icon">
+                            <span>🎨 Creative Goal</span>
+                            <span class="expand-icon">▼</span>
+                        </div>
+                        <div class="goal-info">3/5 this week</div>
+                    </div>
+                    <div class="grouped-progress-bar">
+                        <div class="grouped-progress-fill" style="width: 60%;"></div>
+                    </div>
+
+                    <div class="subtasks">
+                        <div class="subtask-item">
+                            <div class="subtask-indicator completed"></div>
+                            <span>🎵 Music</span>
+                            <span class="subtask-days">Mon, Wed</span>
+                        </div>
+                        <div class="subtask-item">
+                            <div class="subtask-indicator completed"></div>
+                            <span>✍️ Writing</span>
+                            <span class="subtask-days">Tue</span>
+                        </div>
+                        <div class="subtask-item">
+                            <div class="subtask-indicator"></div>
+                            <span>🎨 Painting</span>
+                            <span class="subtask-days">—</span>
+                        </div>
+                        <div class="subtask-item">
+                            <div class="subtask-indicator"></div>
+                            <span>✏️ Drawing</span>
+                            <span class="subtask-days">—</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Health & Spirit Goal (Combined) -->
+            <div class="task-item grouped-goal">
+                <div class="task-content">
+                    <div class="task-header">
+                        <div class="task-name-with-icon">
+                            <span>💪 Health & Spirit</span>
+                            <span class="expand-icon">▼</span>
+                        </div>
+                        <div class="goal-info">1/3 this week</div>
+                    </div>
+                    <div class="grouped-progress-bar">
+                        <div class="grouped-progress-fill" style="width: 33%;"></div>
+                    </div>
+
+                    <div class="subtasks">
+                        <div class="subtask-item">
+                            <div class="subtask-indicator completed"></div>
+                            <span>💪 Workout</span>
+                            <span class="subtask-days">Mon</span>
+                        </div>
+                        <div class="subtask-item">
+                            <div class="subtask-indicator"></div>
+                            <span>📖 Bible Reading</span>
+                            <span class="subtask-days">—</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Staying Clean Goal (Mutual Exclusion) -->
+            <div class="task-item grouped-goal">
+                <div class="task-content">
+                    <div class="task-header">
+                        <div class="task-name-with-icon">
+                            <span>🚫 Staying Clean</span>
+                            <span class="expand-icon">▼</span>
+                        </div>
+                        <div class="goal-info">12-day streak</div>
+                    </div>
+                    <div class="grouped-progress-bar">
+                        <div class="grouped-progress-fill" style="width: 40%;"></div>
+                    </div>
+
+                    <div class="subtasks">
+                        <div class="subtask-item">
+                            <div class="subtask-indicator"></div>
+                            <span>🚫 No Porn</span>
+                            <span class="subtask-days">Clean</span>
+                        </div>
+                        <div class="subtask-item">
+                            <div class="subtask-indicator"></div>
+                            <span>🚫 No Vaping</span>
+                            <span class="subtask-days">Clean</span>
+                        </div>
+                        <div class="subtask-item">
+                            <div class="subtask-indicator"></div>
+                            <span>🚫 No Smoking</span>
+                            <span class="subtask-days">Clean</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="add-goal-btn">+ Create New Grouped Goal</button>
+        </div>
+
+        <!-- Anytime Tasks Section -->
+        <div class="anytime-tasks">
+            <h3 class="section-header">Anytime Tasks</h3>
+
+            <div class="task-item">
+                <div class="task-content">
+                    <div class="task-header">
+                        <div class="task-name-with-icon">
+                            <div class="task-checkbox"></div>
+                            <span>🛒 Buy groceries</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="task-item">
+                <div class="task-content">
+                    <div class="task-header">
+                        <div class="task-name-with-icon">
+                            <div class="task-checkbox"></div>
+                            <span>📧 Reply to emails</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="task-item completed">
+                <div class="task-content">
+                    <div class="task-header">
+                        <div class="task-name-with-icon">
+                            <div class="task-checkbox checked"></div>
+                            <span>🧹 Clean desk</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle grouped goal expansion
+        document.querySelectorAll('.task-item.grouped-goal').forEach(item => {
+            item.addEventListener('click', function(e) {
+                // Don't toggle if clicking on checkbox or button
+                if (e.target.closest('.task-checkbox') || e.target.closest('button')) {
+                    return;
+                }
+                this.classList.toggle('expanded');
+            });
+        });
+
+        // Toggle task completion
+        document.querySelectorAll('.task-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.classList.toggle('checked');
+                const taskItem = this.closest('.task-item');
+                if (taskItem && !taskItem.classList.contains('grouped-goal')) {
+                    taskItem.classList.toggle('completed');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
