@@ -376,11 +376,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const enquiryData = {
                 // Personal Info
                 name: formData.get('name'),
-                business: formData.get('business'),
                 email: formData.get('email'),
                 phone: formData.get('phone'),
-                business_type: formData.get('business-type'),
-                location: formData.get('suburb'),
                 
                 // Package Selection
                 package: packageData,
@@ -399,7 +396,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Legal Acknowledgements
                 privacy_agreed: privacyAgree.checked,
-                contract_agreed: contractAgree.checked,
                 
                 // Metadata
                 submitted_at: new Date().toISOString(),
