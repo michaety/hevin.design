@@ -262,6 +262,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const setupCostEl = document.getElementById('setup-cost');
     const monthlyCostEl = document.getElementById('monthly-cost');
     const firstYearCostEl = document.getElementById('first-year-cost');
+    const priceEstimatorEl = document.getElementById('price-estimator');
     
     function updatePriceCalculator() {
         let setupCost = 0;
@@ -270,6 +271,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get selected package
         const selectedPackage = document.querySelector('input[name="package"]:checked');
         if (selectedPackage) {
+            // Skip if "not-sure" is selected
+            if (selectedPackage.value === 'not-sure') {
+                if (priceEstimatorEl) {
+                    priceEstimatorEl.style.display = 'none';
+                }
+                return;
+            }
             setupCost += parseInt(selectedPackage.getAttribute('data-setup')) || 0;
             monthlyCost += parseInt(selectedPackage.getAttribute('data-monthly')) || 0;
         }
@@ -293,6 +301,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         if (firstYearCostEl) {
             firstYearCostEl.textContent = '$' + firstYearCost.toLocaleString();
+        }
+        
+        // Show estimator if package is selected
+        if (selectedPackage && priceEstimatorEl) {
+            priceEstimatorEl.style.display = 'block';
         }
     }
     
@@ -318,11 +331,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Validate legal checkboxes
             const privacyAgree = document.getElementById('privacy-agree');
-            const contractAgree = document.getElementById('contract-agree');
             
-            if (!privacyAgree.checked || !contractAgree.checked) {
+            if (!privacyAgree.checked) {
                 if (formMessage) {
-                    formMessage.textContent = 'Please accept both legal acknowledgements to proceed.';
+                    formMessage.textContent = 'Please accept the Privacy Policy to proceed.';
                     formMessage.className = 'form-message error';
                     formMessage.style.display = 'block';
                 }
@@ -364,11 +376,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const enquiryData = {
                 // Personal Info
                 name: formData.get('name'),
-                business: formData.get('business'),
                 email: formData.get('email'),
                 phone: formData.get('phone'),
-                business_type: formData.get('business-type'),
-                location: formData.get('suburb'),
                 
                 // Package Selection
                 package: packageData,
@@ -387,7 +396,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Legal Acknowledgements
                 privacy_agreed: privacyAgree.checked,
-                contract_agreed: contractAgree.checked,
                 
                 // Metadata
                 submitted_at: new Date().toISOString(),
